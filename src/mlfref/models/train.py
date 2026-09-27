@@ -24,7 +24,7 @@ from mlfref.data.cifar import Augmentation, TensorBatches
 from mlfref.logging_utils import get_logger
 from mlfref.models.evaluate import evaluate
 
-log = get_logger("train")
+log = get_logger("pipeline.train")
 
 
 class TrainingHooks:

@@ -88,3 +88,39 @@ def get_logger(component: str) -> logging.Logger:
     """Logger for a component, e.g. get_logger('train') -> 'mlfref.train'."""
     name = component if component.startswith(_ROOT) else f"{_ROOT}.{component}"
     return logging.getLogger(name)
+
+
+# --------------------------------------------------------------------------- evidence app log
+
+PIPELINE_LOGGER = f"{_ROOT}.pipeline"
+
+
+def get_pipeline_logger(component: str) -> logging.Logger:
+    """Logger for a *pipeline* component (its output is investigator-visible app.log)."""
+    return logging.getLogger(f"{PIPELINE_LOGGER}.{component}")
+
+
+def attach_evidence_log(path: str | Path, run_ref: str) -> logging.Handler:
+    """Write pipeline-component log records to an investigator-visible ``app.log``.
+
+    Only loggers under ``mlfref.pipeline`` reach this handler, so harness and attack
+    messages (which may reveal the attack) are never written to evidence. The run is
+    identified by the opaque ``run_ref`` (``RUN-<uuid>``) baked into the format,
+    never by the human-readable experiment ID (D-021).
+    """
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    handler = logging.FileHandler(path, encoding="utf-8")
+    handler.setFormatter(
+        _UTCFormatter(f"%(asctime)s | %(levelname)s | {run_ref} | %(name)s | %(message)s")
+    )
+    handler.setLevel(logging.INFO)
+    logger = logging.getLogger(PIPELINE_LOGGER)
+    logger.setLevel(logging.INFO)
+    logger.addHandler(handler)
+    return handler
+
+
+def detach_evidence_log(handler: logging.Handler) -> None:
+    logging.getLogger(PIPELINE_LOGGER).removeHandler(handler)
+    handler.close()
