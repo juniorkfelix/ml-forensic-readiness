@@ -144,6 +144,22 @@ def main() -> int:
     }
     (manifests / SUMMARY_FILE).write_text(json.dumps(summary, indent=2), encoding="utf-8")
 
+    # 5. clean dataset version (harness reference record, spec §8)
+    from mlfref.config import config_hash
+    from mlfref.data.manifest import write_manifest
+    from mlfref.data.versioning import create_version, save_version
+
+    alias = cfg["dataset"]["clean_dataset_id"]
+    version, records = create_version(
+        train, configuration_hash=config_hash(cfg), harness_alias=alias
+    )
+    write_manifest(manifests / f"{alias}.manifest.json", version.dataset_id, records)
+    save_version(version, manifests / f"{alias}.version.json")
+    print(
+        f"clean version: {alias} = {version.dataset_id} "
+        f"(manifest_sha256 {version.manifest_sha256[:16]}...)"
+    )
+
     fig_path = PROJECT_ROOT / "results" / "figures" / "cifar10_clean_samples.png"
     shown = save_sample_grid(train, fig_path)
     from mlfref.reporting.metadata import record_output_metadata

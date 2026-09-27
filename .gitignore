@@ -32,8 +32,9 @@ data/raw/*
 data/clean/*
 data/poisoned/*
 !data/*/.gitkeep
-# Manifests are small and are part of the evidence trail: keep them tracked
-# (data/manifests/ is NOT ignored)
+# Small manifest/version records are tracked; full per-sample manifests (~5 MB each)
+# are regenerated deterministically by scripts/prepare_dataset.py.
+data/manifests/*.manifest.json
 
 # Model weights
 models/checkpoints/*
