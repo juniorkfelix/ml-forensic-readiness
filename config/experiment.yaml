@@ -31,7 +31,7 @@ model:
   cifar_stem: true        # 3x3 stride-1 first conv, no max-pool (documented in Phase 4)
 
 training:
-  epochs: 30              # CALIBRATE after measuring per-epoch time on this GPU
+  epochs: 30              # fixed 2026-09-27 after calibration (D-027), researcher-approved
   batch_size: 128
   optimizer: sgd
   learning_rate: 0.1
@@ -43,7 +43,8 @@ training:
   augmentation:
     random_crop_padding: 4
     horizontal_flip: true
-  num_workers: 0          # 0 = main process (most reproducible on Windows)
+  amp: true               # CUDA automatic mixed precision (fp16 autocast + GradScaler) (D-027)
+  num_workers: 0          # unused: batches are built on-device by mlfref.data.cifar.TensorBatches
   device: auto            # auto | cuda | cpu
 
 reproducibility:

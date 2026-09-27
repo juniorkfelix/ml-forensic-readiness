@@ -1,0 +1,76 @@
+{
+  "created_at_utc": "2026-09-27T20:25:57.066371+00:00",
+  "clean_dataset_id": "CIFAR10-CLEAN-V1",
+  "train": {
+    "store": "data/clean/cifar10_train.npz",
+    "source_files": [
+      "data_batch_1",
+      "data_batch_2",
+      "data_batch_3",
+      "data_batch_4",
+      "data_batch_5"
+    ],
+    "num_samples": 50000,
+    "class_distribution": {
+      "airplane": 5000,
+      "automobile": 5000,
+      "bird": 5000,
+      "cat": 5000,
+      "deer": 5000,
+      "dog": 5000,
+      "frog": 5000,
+      "horse": 5000,
+      "ship": 5000,
+      "truck": 5000
+    },
+    "content_digest_sha256": "c8be9ed3959a52965df6b2b9266d91afe4d3c013ead22dae8742b672e1bc0a50",
+    "channel_statistics": {
+      "mean": [
+        0.4914,
+        0.4822,
+        0.4465
+      ],
+      "std": [
+        0.247,
+        0.2435,
+        0.2616
+      ]
+    }
+  },
+  "test": {
+    "store": "data/clean/cifar10_test.npz",
+    "source_files": [
+      "test_batch"
+    ],
+    "num_samples": 10000,
+    "class_distribution": {
+      "airplane": 1000,
+      "automobile": 1000,
+      "bird": 1000,
+      "cat": 1000,
+      "deer": 1000,
+      "dog": 1000,
+      "frog": 1000,
+      "horse": 1000,
+      "ship": 1000,
+      "truck": 1000
+    },
+    "content_digest_sha256": "2b99393d367b569030fe7606eae7492032b876cbaa4ae76018158a67748f8f5e"
+  },
+  "normalisation_constants_used": {
+    "mean": [
+      0.4914,
+      0.4822,
+      0.4465
+    ],
+    "std": [
+      0.247,
+      0.2435,
+      0.2616
+    ]
+  },
+  "timing_seconds": {
+    "download_or_check": 3.3,
+    "build_stores": 0.62
+  }
+}

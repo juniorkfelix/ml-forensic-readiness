@@ -1,0 +1,15 @@
+{
+  "cifar10_clean_samples.png": {
+    "created_utc": "2026-09-27T20:25:59+00:00",
+    "description": "First 8 training images per class; sample_ids [29, 30, 35]... (80 total)",
+    "experiments_included": [],
+    "filename": "cifar10_clean_samples.png",
+    "generation_script": "scripts/prepare_dataset.py",
+    "git_commit": "89b2db6c0d1dc5e7e89e3b4750e07a2cb30df998",
+    "git_dirty": true,
+    "metric": "none (illustrative dataset samples)",
+    "source_data": [
+      "data/clean/cifar10_train.npz"
+    ]
+  }
+}
