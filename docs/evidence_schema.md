@@ -63,7 +63,10 @@ run, as an investigator could.
 | Inference | as A (MLflow does not track inference) |
 | Integrity | MLflow dataset digests (not a dedicated integrity check) |
 
-No `attack_type` or `poison_rate` parameter is logged (D-014). The data-registration and training
+No `attack_type`, `poison_rate` or ASR is logged (D-014, D-031). Dataset digests are MLflow's
+native `from_numpy` digests (a 32-bit truncated MD5 over the first 10,000 values of each array,
+D-032), so they are not integrity hashes. Runs are tagged with the service account
+`svc-ml-pipeline` instead of the OS user (D-035). The data-registration and training
 runs each log a dataset input. Any difference in digest or class profile between the two is genuine,
 organic evidence.
 
