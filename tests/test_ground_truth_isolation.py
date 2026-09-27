@@ -31,6 +31,9 @@ FORBIDDEN_IMPORTS = {
     "models": ("mlfref.ground_truth", "mlfref.attacks"),
     "provenance": ("mlfref.ground_truth", "mlfref.attacks"),
     "forensic": ("mlfref.ground_truth", "mlfref.attacks"),
+    # Top-level pipeline modules (single files).
+    "pipeline": ("mlfref.ground_truth", "mlfref.attacks", "mlfref.simulation"),
+    "instrumentation": ("mlfref.ground_truth", "mlfref.attacks", "mlfref.simulation"),
 }
 # String literals the reconstruction engine must not contain (e.g. a path to GT storage,
 # or a dynamic import of the GT module).
@@ -89,6 +92,9 @@ def _string_literals(path: Path) -> list[str]:
 
 
 def _py_files(package: str) -> list[Path]:
+    single = PKG / f"{package}.py"
+    if single.is_file():
+        return [single]
     return sorted((PKG / package).rglob("*.py"))
 
 

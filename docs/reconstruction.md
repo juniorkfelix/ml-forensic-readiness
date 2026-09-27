@@ -1,6 +1,6 @@
 # Reconstruction Engine
 
-**Status:** DRAFT design (implemented in Phase 14).
+**Status:** implemented in Phase 14 (`src/mlfref/reconstruction/`). Neutral event vocabulary: see `timeline.py` (D-045).
 
 ## 1. Fairness contract (§45, §46)
 

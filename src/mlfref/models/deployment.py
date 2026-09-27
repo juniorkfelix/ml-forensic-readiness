@@ -18,6 +18,7 @@ a request is adversarial is known only to the research harness.
 
 from __future__ import annotations
 
+import dataclasses
 import hashlib
 import shutil
 import time
@@ -79,7 +80,7 @@ def deploy_model(
         model_sha256=model_sha256,
         registry_version=registry_version,
     )
-    log.info("deployed model file %s -> %s", source_model_path.name, target.as_posix())
+    log.info("deployed model file %s -> %s", instr.rel(source_model_path), instr.rel(target))
 
     if instr.has_provenance and registry_version is not None:
         instr.tracker.set_production_alias(registry_version)
@@ -98,8 +99,8 @@ def deploy_model(
             deployment_id=dep.deployment_id,
             metadata={
                 "model_id": model_id_for(model_sha256),
-                "deployed_path": target.as_posix(),
-                "source_path": source_model_path.as_posix(),
+                "deployed_path": instr.rel(target),
+                "source_path": instr.rel(source_model_path),
                 "registry_version": registry_version,
             },
         )
@@ -143,13 +144,16 @@ class InferenceService:
                 deployment.registry_version,
             )
         else:
-            self.log.info("serving model file %s", deployment.model_path.as_posix())
+            self.log.info("serving model file %s", instr.rel(deployment.model_path))
 
         if instr.has_forensic:
             # Record-only integrity check of the deployed file against the trained model hash.
             log_integrity_check(
                 instr.forensic,
-                verify_file(deployment.model_path, deployment.model_sha256),
+                dataclasses.replace(
+                    verify_file(deployment.model_path, deployment.model_sha256),
+                    artifact=instr.rel(deployment.model_path),
+                ),
                 artifact_type="model",
                 artifact_id=model_id_for(deployment.model_sha256),
                 actor=SERVING_ACTOR,

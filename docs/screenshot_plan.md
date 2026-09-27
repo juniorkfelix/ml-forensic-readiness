@@ -15,6 +15,9 @@ given below, once the corresponding phase has run.
   `results/screenshots/screenshot_manifest.csv`.
 - Note the experiment ID and date for every screenshot. Prefer the pilot or main run that the
   thesis tables use.
+- MLflow UI (S06–S08): MLflow stores artefact locations as absolute file URIs, which contain the
+  local user directory. Crop or redact the "Artifact Location" and artefact path fields
+  (D-049). Run tags show the service account `svc-ml-pipeline`, not the OS user (D-035).
 - Covert-attack rule (D-014): screenshots of *investigator-visible* evidence (S09–S16) must not
   show ground truth side by side, except S17, which exists to compare the two.
 

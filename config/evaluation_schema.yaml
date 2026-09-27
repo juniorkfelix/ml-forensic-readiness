@@ -19,15 +19,16 @@ amendments: []
 # Event classes shared by ground truth and reconstruction output.
 # Reconstructed events carry `event_class`; GT events carry `action`.
 # ---------------------------------------------------------------------
+# Keys = neutral reconstruction vocabulary (mlfref/reconstruction/timeline.py, D-045).
 event_classes:
-  CLEAN_DATASET_CREATED:     {gt_actions: [CLEAN_DATASET_CREATED],     stage: dataset}
-  POISONED_DATASET_CREATED:  {gt_actions: [POISONED_DATASET_CREATED],  stage: dataset}
-  TRAINING_STARTED:          {gt_actions: [TRAINING_STARTED],          stage: training}
-  TRAINING_COMPLETED:        {gt_actions: [TRAINING_COMPLETED],        stage: training}
-  MODEL_CREATED:             {gt_actions: [COMPROMISED_MODEL_CREATED, MODEL_CREATED], stage: model}
-  MODEL_DEPLOYED:            {gt_actions: [MODEL_DEPLOYED],            stage: deployment}
-  TRIGGER_SUBMITTED:         {gt_actions: [TRIGGER_SUBMITTED],         stage: inference}
-  MALICIOUS_PREDICTION:      {gt_actions: [MALICIOUS_PREDICTION],      stage: inference}
+  DATASET_REGISTERED:   {gt_actions: [CLEAN_DATASET_CREATED],     stage: dataset}
+  DATASET_MODIFIED:     {gt_actions: [POISONED_DATASET_CREATED],  stage: dataset}
+  TRAINING_STARTED:     {gt_actions: [TRAINING_STARTED],          stage: training}
+  TRAINING_COMPLETED:   {gt_actions: [TRAINING_COMPLETED],        stage: training}
+  MODEL_CREATED:        {gt_actions: [COMPROMISED_MODEL_CREATED, MODEL_CREATED], stage: model}
+  MODEL_DEPLOYED:       {gt_actions: [MODEL_DEPLOYED],            stage: deployment}
+  INPUT_SUBMITTED:      {gt_actions: [TRIGGER_SUBMITTED],         stage: inference}
+  INCIDENT_PREDICTION:  {gt_actions: [MALICIOUS_PREDICTION],      stage: inference}
 
 # ---------------------------------------------------------------------
 # B. Event Recovery Rate — relevant GT events per attack type
@@ -65,6 +66,17 @@ event_matching:
   #    hash (dataset content hash / model file SHA-256), or the same request_id for
   #    inference events; a missing artefact reference counts as a mismatch;
   # 3. its time is consistent with the GT timestamp (rules below).
+  # REVIEW: how reconstructed artefact references are resolved to canonical content (D-048).
+  # A reference counts only if it resolves to the SAME canonical artefact as the GT event.
+  artifact_resolution:
+    dataset_manifest_sha256: "compared directly with the GT dataset manifest SHA-256"
+    mlflow_digest: "evaluator computes MLflow's native digest of the GT dataset and compares"
+    store: "path only: resolved by hashing the file's CURRENT content (the store was tampered
+            in place, so a path cannot identify its earlier, registered state)"
+    model_sha256: "compared directly with the GT model file SHA-256"
+    model_path: "resolved by hashing the file's current content"
+    registry_version: "resolved via the MLflow model registry to the version's run and model"
+    request_id: "compared directly with the GT request_id"
   time_tolerance_seconds: 5          # REVIEW
   time_basis_rules:
     exact:    "abs(t_reconstructed - t_gt) <= tolerance"
