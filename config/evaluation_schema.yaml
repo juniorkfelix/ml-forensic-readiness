@@ -34,6 +34,12 @@ event_classes:
 # B. Event Recovery Rate — relevant GT events per attack type
 # ---------------------------------------------------------------------
 required_gt_events:
+  none:                           # clean control runs (ticket = natural misclassification)
+    - CLEAN_DATASET_CREATED
+    - TRAINING_STARTED
+    - TRAINING_COMPLETED
+    - MODEL_CREATED
+    - MODEL_DEPLOYED
   label_flip:
     - CLEAN_DATASET_CREATED
     - POISONED_DATASET_CREATED
@@ -113,7 +119,8 @@ required_evidence_items:
   - {id: TR1, stage: training,   description: "training run identity"}
   - {id: TR2, stage: training,   description: "training start and end times"}
   - {id: TR3, stage: training,   description: "link training run -> dataset used"}
-  - {id: TR4, stage: training,   description: "training configuration (hyper-parameters, code version)"}
+  - {id: TR4, stage: training,   description: "training hyper-parameters (epochs, batch size) correct"}
+  - {id: TR5, stage: training,   description: "code version (Git commit) of the training run"}
   - {id: MO1, stage: model,      description: "identity of the model artefact (path, registry version or hash)"}
   - {id: MO2, stage: model,      description: "cryptographic hash of the model recorded at creation"}
   - {id: MO3, stage: model,      description: "link model -> training run"}

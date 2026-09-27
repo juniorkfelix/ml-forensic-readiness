@@ -203,19 +203,75 @@ def trace(bundle: EvidenceBundle, ticket: dict[str, Any]) -> dict[str, Any]:
             path=mod.value.get("path") or o.refs["model_path"],
             time=mod.value.get("time") or o.time,
         )
+    if mod.status == "IDENTIFIED":
+        # Creation time = earliest record of this model's creation, from any source.
+        model_id, model_path = mod.value.get("model_id"), mod.value.get("path")
+        creation = (
+            hashed
+            + registered
+            + created_app
+            + [
+                o
+                for o in bundle.find("MODEL_CREATED")
+                if model_id and o.refs.get("artifact_id") == model_id
+            ]
+            + [
+                o
+                for o in bundle.find("MODEL_CREATED", source="app_log")
+                if model_path and o.refs.get("model_path") == model_path
+            ]
+        )
+        times = [o.time for o in creation if o.time]
+        if times:
+            mod.value["time"] = min(times)
     if mod.status == "IDENTIFIED" and mod.value.get("path"):
         mod.value["post_hoc_sha256"] = _post_hoc_hash(bundle, mod.value["path"])
         if not mod.value.get("model_sha256") and mod.value["post_hoc_sha256"]:
             mod.basis.append("model file hashed post hoc (current state, not historical)")
 
     # ---------------------------------------------------------------- TRAINING RUN
+    # Generic rule for every pipeline: training start = latest start record before the model
+    # was created; completion = earliest completion record after that start. Records linked
+    # to the run ID and application-log records are both candidates.
     tr = hops["training_run"]
     run_id = mod.value.get("run_id")
+    model_time = mod.value.get("time")
     starts = bundle.find("TRAINING_STARTED")
     ends = bundle.find("TRAINING_COMPLETED")
+
+    def linked(obs: list[Observation]) -> list[Observation]:
+        return [
+            o for o in obs if (run_id and o.refs.get("run_id") == run_id) or o.source == "app_log"
+        ]
+
+    start = _last_before(linked(starts), model_time)
+    end = None
+    if start:
+        after = [
+            o
+            for o in linked(ends)
+            if o.time
+            and o.time >= start.time
+            and (model_time is None or o.time <= model_time or o.source != "app_log")
+        ]
+        end = _first(after)
+    run_starts = [o for o in starts if run_id and o.refs.get("run_id") == run_id]
+    params = (
+        next((o.attrs.get("parameters") for o in run_starts if o.source == "mlflow"), None)
+        or next((o.attrs.get("hyperparameters") for o in run_starts), None)
+        or (start.attrs.get("parameters") if start else None)
+    )
+    code = next(
+        (o.attrs.get("git_commit") for o in run_starts if o.attrs.get("git_commit")), None
+    ) or next(
+        (
+            o.attrs.get("git_commit")
+            for o in bundle.find("EXPERIMENT_STARTED")
+            if o.attrs.get("git_commit")
+        ),
+        None,
+    )
     if run_id:
-        s = [o for o in starts if o.refs.get("run_id") == run_id]
-        e = [o for o in ends if o.refs.get("run_id") == run_id]
         conf = STRONG if hashed and hashed[0].refs.get("run_id") == run_id else MODERATE
         basis = (
             "run ID recorded with the model hash"
@@ -226,22 +282,20 @@ def trace(bundle: EvidenceBundle, ticket: dict[str, Any]) -> dict[str, Any]:
             conf,
             basis,
             run_id=run_id,
-            start_time=_first(s).time if s else None,
-            end_time=_first(e).time if e else None,
-            parameters=next((o.attrs.get("parameters") for o in s if o.source == "mlflow"), None)
-            or next((o.attrs.get("hyperparameters") for o in s), None),
+            start_time=start.time if start else None,
+            end_time=end.time if end else None,
+            parameters=params,
+            code_version=code,
         )
-    elif mod.status == "IDENTIFIED":
-        s = _last_before([o for o in starts if o.source == "app_log"], mod.value.get("time"))
-        e = _last_before([o for o in ends if o.source == "app_log"], mod.value.get("time"))
-        if s:
-            tr.identify(
-                WEAK,
-                "training start/completion logged before the model was saved",
-                start_time=s.time,
-                end_time=e.time if e else None,
-                parameters=s.attrs.get("parameters"),
-            )
+    elif mod.status == "IDENTIFIED" and start:
+        tr.identify(
+            WEAK,
+            "training start/completion logged before the model was saved",
+            start_time=start.time,
+            end_time=end.time if end else None,
+            parameters=params,
+            code_version=code,
+        )
 
     # ---------------------------------------------------------------- TRAINING DATASET
     tds = hops["training_dataset"]
@@ -289,7 +343,16 @@ def trace(bundle: EvidenceBundle, ticket: dict[str, Any]) -> dict[str, Any]:
         for o in bundle.find("DATASET_INTEGRITY_VERIFIED")
         if o.refs.get("artifact_id") == tds.value.get("dataset_id")
     ]
-    ds_meta = observed_version[0].attrs if observed_version else {}
+    same_as_registered = [
+        o
+        for o in bundle.find("DATASET_REGISTERED", source="forensic")
+        if tds.value.get("dataset_id") and o.refs.get("artifact_id") == tds.value.get("dataset_id")
+    ]
+    ds_meta = (
+        observed_version[0].attrs
+        if observed_version
+        else same_as_registered[0].attrs if same_as_registered else {}
+    )
     if ds_meta.get("class_distribution"):
         tds.value["profile"] = ds_meta["class_distribution"]
     if ds_meta.get("manifest_path"):

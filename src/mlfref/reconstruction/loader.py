@@ -216,7 +216,10 @@ def load_mlflow(ref_path: Path, workspace_root: Path | None = None) -> list[Obse
             _ms(run.info.start_time),
             "exact",
             {"run_id": run_id},
-            {"parameters": dict(run.data.params)},
+            {
+                "parameters": dict(run.data.params),
+                "git_commit": run.data.tags.get("mlflow.source.git.commit"),
+            },
         )
     )
     if run.info.end_time:
