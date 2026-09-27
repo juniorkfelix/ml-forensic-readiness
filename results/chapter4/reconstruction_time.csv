@@ -1,0 +1,7 @@
+experiment_id,phase,fidelity,pipeline,attack,poison_rate,seed,status,reason,reconstruction_start,reconstruction_end,reconstruction_time_seconds,note,source
+EXP-CLEAN-A-00-S001,pilot,full protocol (30 epochs),A,CLEAN,0.0,1,NOT AVAILABLE,"run predates the pipeline runner (clean-baseline script; no evidence store, ground truth or reconstruction)",,,,,
+EXP-LF-C-05-S001,pilot_cpu,"reduced CPU pilot (1 epoch, 5000-sample subset)",C,LF,0.05,1,NOT AVAILABLE,run did not reach reconstruction,,,,,
+EXP-BD-C-05-S001,smoke,smoke check (1 epoch),C,BD,0.05,1,NOT AVAILABLE,no incident observed (attack not learned after 1 epoch; reconstruction correctly skipped),,,,,
+EXP-CLEAN-A-00-S001,smoke,smoke check (1 epoch),A,CLEAN,0.0,1,NOT AVAILABLE,"run predates the pipeline runner (clean-baseline script; no evidence store, ground truth or reconstruction)",,,,,
+EXP-CLEAN-C-00-S001,smoke,smoke check (1 epoch),C,CLEAN,0.0,1,MEASURED,,NOT AVAILABLE,NOT AVAILABLE,0.2279750999296084,"engine records elapsed time only (time.perf_counter), not start/end wall-clock timestamps",experiments/smoke/EXP-CLEAN-C-00-S001/reconstruction.json
+AGGREGATE,,,,,,,"AGGREGATE A/B/C: NOT AVAILABLE. Only one evaluated run exists (pipeline C, clean control, 1-epoch smoke check); no A or B run was evaluated; n<2.",,,,,,

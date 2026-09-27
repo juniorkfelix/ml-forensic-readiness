@@ -1,0 +1,7 @@
+experiment_id,pipeline,phase,status,reason,normal_logs_mb,forensic_sqlite_mb,json_jsonl_evidence_mb,manifests_mb,other_evidence_mb,mlflow_run_artifacts_mb,mlflow_logged_model_mb,mlflow_metadata_db_mb,integrity_records_mb,evidence_total_mb_excl_mlflow_model,evidence_total_mb_incl_mlflow_model,storage_overhead_vs_A_percent,source
+EXP-CLEAN-A-00-S001,A,pilot,NOT AVAILABLE,storage not measured (baseline script or interrupted run),,,,,,,,,,,,,
+EXP-LF-C-05-S001,C,pilot_cpu,NOT AVAILABLE,storage not measured (baseline script or interrupted run),,,,,,,,,,,,,
+EXP-BD-C-05-S001,C,smoke,MEASURED (+ CALCULATED MLflow model size),,0.033,0.3359,0.3839,10.6603,0.001,0.0009,NOT AVAILABLE,NOT AVAILABLE per run (shared mlflow.db),included in forensic_sqlite,11.415,NOT AVAILABLE,NOT AVAILABLE (no pipeline-A evidence measured),experiments/smoke/EXP-BD-C-05-S001/run_summary.json; NOT AVAILABLE
+EXP-CLEAN-A-00-S001,A,smoke,NOT AVAILABLE,storage not measured (baseline script or interrupted run),,,,,,,,,,,,,
+EXP-CLEAN-C-00-S001,C,smoke,MEASURED (+ CALCULATED MLflow model size),,0.0329,0.332,0.3814,5.3301,0.0146,0.0009,NOT AVAILABLE,NOT AVAILABLE per run (shared mlflow.db),included in forensic_sqlite,6.092,NOT AVAILABLE,NOT AVAILABLE (no pipeline-A evidence measured),experiments/smoke/EXP-CLEAN-C-00-S001/run_summary.json; NOT AVAILABLE
+NOTE,,,"Storage overhead (%) vs A cannot be computed: no genuine pipeline-A or B run measured evidence storage. Measured values are pipeline C, 1-epoch smoke checks.",,,,,,,,,,,,,,

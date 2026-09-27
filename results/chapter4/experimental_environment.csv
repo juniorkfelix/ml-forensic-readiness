@@ -1,0 +1,23 @@
+item,value,status,source_file,source_field
+Operating system,Windows 11 (10.0.26100),MEASURED,results/environment/environment_manifest.json,os
+Python,3.14.3,MEASURED,environment_manifest.json,software.python
+PyTorch,2.14.0+cu130,MEASURED,environment_manifest.json,software.torch
+torchvision,0.29.0+cu130,MEASURED,environment_manifest.json,software.torchvision
+CUDA (PyTorch build),13.0,MEASURED,environment_manifest.json,software.cuda_build
+cuDNN,92400,MEASURED,environment_manifest.json,software.cudnn
+GPU,NVIDIA RTX 1000 Ada Generation Laptop GPU,MEASURED,environment_manifest.json,hardware.gpu.name
+GPU memory (MB),6140,MEASURED,environment_manifest.json,hardware.gpu.total_memory_mb
+CPU,Intel(R) Core(TM) Ultra 7 165H,MEASURED,environment_manifest.json,hardware.cpu
+CPU cores (physical/logical),16/22,MEASURED,environment_manifest.json,hardware.cpu_*_cores
+System RAM (GB),31.5,MEASURED,environment_manifest.json,hardware.ram_total_gb
+MLflow,3.16.1,MEASURED,requirements-lock.txt,mlflow
+NumPy,2.5.2,MEASURED,environment_manifest.json,software.numpy
+pandas,3.0.6,MEASURED,requirements-lock.txt,pandas
+scikit-learn,1.9.1,MEASURED,requirements-lock.txt,scikit-learn
+SciPy,1.18.1,MEASURED,requirements-lock.txt,scipy
+Git commit (clean baseline run),9d731ac (current main: 8dcb331),MEASURED,experiments/pilot/EXP-CLEAN-A-00-S001/environment.json,git.commit
+Git branch (clean baseline run),main,MEASURED,experiments/pilot/EXP-CLEAN-A-00-S001/environment.json,git.branch
+Config SHA-256 (clean baseline run),617d8e0d4dcf76e2171af626893186693867873e65b621e77a99f2cff7dfaf98,MEASURED,experiments/pilot/EXP-CLEAN-A-00-S001/environment.json,config_sha256
+Clean dataset manifest SHA-256 (CIFAR10-CLEAN-V1),f7285605e556be1f453be1f05ea295de43e5e5a1c1d01b7de8d3f449dedb1649,MEASURED,data/manifests/CIFAR10-CLEAN-V1.version.json,manifest_sha256
+Evaluation schema freeze commit,9bccbc0 (current main: 96a509d),MEASURED,config/evaluation_schema.yaml,frozen_commit
+Repository HEAD at audit,11b1642,MEASURED,git,HEAD

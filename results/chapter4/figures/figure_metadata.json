@@ -1,0 +1,17 @@
+{
+  "figure4_1_clean_baseline.png": {
+    "created_utc": "2026-09-27T22:57:18+00:00",
+    "description": "MEASURED (genuine full-protocol run)",
+    "experiments_included": [
+      "EXP-CLEAN-A-00-S001"
+    ],
+    "filename": "figure4_1_clean_baseline.png",
+    "generation_script": "scripts/chapter4_figures.py",
+    "git_commit": "11b1642e9eb073d90500bc2759b24dee81c789ae",
+    "git_dirty": true,
+    "metric": "train/test loss and accuracy by epoch",
+    "source_data": [
+      "experiments/pilot/EXP-CLEAN-A-00-S001/training_metrics.csv"
+    ]
+  }
+}

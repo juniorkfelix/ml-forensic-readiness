@@ -1,0 +1,49 @@
+filename,format,description,experiments_represented,metric_represented,values_genuine,recommended_location
+results/chapter4/figures/figure4_1_clean_baseline.png,png,Clean baseline loss/accuracy curves,EXP-CLEAN-A-00-S001,"loss, accuracy",YES,USE IN CHAPTER 4
+results/chapter4/figures/figure4_1_clean_baseline.svg,svg,Clean baseline loss/accuracy curves,EXP-CLEAN-A-00-S001,"loss, accuracy",YES,USE IN CHAPTER 4
+results/figures/backdoor_trigger_example.png,png,"Clean vs triggered images, 3x3 trigger",none (attack illustration),none,YES,USE IN CHAPTER 3
+results/figures/backdoor_trigger_example.svg,svg,"Clean vs triggered images, 3x3 trigger",none (attack illustration),none,YES,USE IN CHAPTER 3
+results/figures/baseline_accuracy.png,png,Clean baseline accuracy by epoch,EXP-CLEAN-A-00-S001,accuracy,YES,MOVE TO APPENDIX (superseded by Fig 4.1)
+results/figures/baseline_accuracy.svg,svg,Clean baseline accuracy by epoch,EXP-CLEAN-A-00-S001,accuracy,YES,MOVE TO APPENDIX (superseded by Fig 4.1)
+results/figures/baseline_training_loss.png,png,Clean baseline loss by epoch,EXP-CLEAN-A-00-S001,loss,YES,MOVE TO APPENDIX (superseded by Fig 4.1)
+results/figures/baseline_training_loss.svg,svg,Clean baseline loss by epoch,EXP-CLEAN-A-00-S001,loss,YES,MOVE TO APPENDIX (superseded by Fig 4.1)
+results/figures/cifar10_clean_samples.png,png,CIFAR-10 samples per class,none (dataset),none,YES,USE IN CHAPTER 3
+results/figures/cifar10_clean_samples.svg,svg,CIFAR-10 samples per class,none (dataset),none,YES,USE IN CHAPTER 3
+results/figures/figure01_architecture.png,png,Experimental architecture diagram,none,none,YES,USE IN CHAPTER 3
+results/figures/figure01_architecture.svg,svg,Experimental architecture diagram,none,none,YES,USE IN CHAPTER 3
+results/figures/figure02_evidence_points.png,png,Evidence collection points A/B/C (design),none,none,YES (design),USE IN CHAPTER 3
+results/figures/figure02_evidence_points.svg,svg,Evidence collection points A/B/C (design),none,none,YES (design),USE IN CHAPTER 3
+results/figures/figure03_attack_lifecycle.png,png,Attack lifecycle diagram,none,none,YES,USE IN CHAPTER 3
+results/figures/figure03_attack_lifecycle.svg,svg,Attack lifecycle diagram,none,none,YES,USE IN CHAPTER 3
+results/smoke/baseline_accuracy.png,png,Smoke-check (1-epoch) baseline figure,EXP-CLEAN-A-00-S001 (smoke),baseline_accuracy,YES (smoke check),DO NOT USE
+results/smoke/baseline_accuracy.svg,svg,Smoke-check (1-epoch) baseline figure,EXP-CLEAN-A-00-S001 (smoke),baseline_accuracy,YES (smoke check),DO NOT USE
+results/smoke/baseline_training_loss.png,png,Smoke-check (1-epoch) baseline figure,EXP-CLEAN-A-00-S001 (smoke),baseline_training_loss,YES (smoke check),DO NOT USE
+results/smoke/baseline_training_loss.svg,svg,Smoke-check (1-epoch) baseline figure,EXP-CLEAN-A-00-S001 (smoke),baseline_training_loss,YES (smoke check),DO NOT USE
+results/synthetic/chapter4/figures/figure05_clean_accuracy_by_pipeline.png,png,Synthetic demonstration figure (watermarked),synthetic set (D-056),clean_accuracy_by_pipeline,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure05_clean_accuracy_by_pipeline.svg,svg,Synthetic demonstration figure (watermarked),synthetic set (D-056),clean_accuracy_by_pipeline,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure06_asr_by_rate.png,png,Synthetic demonstration figure (watermarked),synthetic set (D-056),asr_by_rate,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure06_asr_by_rate.svg,svg,Synthetic demonstration figure (watermarked),synthetic set (D-056),asr_by_rate,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure07_evidence_completeness.png,png,Synthetic demonstration figure (watermarked),synthetic set (D-056),evidence_completeness,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure07_evidence_completeness.svg,svg,Synthetic demonstration figure (watermarked),synthetic set (D-056),evidence_completeness,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure08_event_recovery.png,png,Synthetic demonstration figure (watermarked),synthetic set (D-056),event_recovery,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure08_event_recovery.svg,svg,Synthetic demonstration figure (watermarked),synthetic set (D-056),event_recovery,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure09_timeline_accuracy.png,png,Synthetic demonstration figure (watermarked),synthetic set (D-056),timeline_accuracy,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure09_timeline_accuracy.svg,svg,Synthetic demonstration figure (watermarked),synthetic set (D-056),timeline_accuracy,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure10_root_cause.png,png,Synthetic demonstration figure (watermarked),synthetic set (D-056),root_cause,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure10_root_cause.svg,svg,Synthetic demonstration figure (watermarked),synthetic set (D-056),root_cause,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure11_reconstruction_time.png,png,Synthetic demonstration figure (watermarked),synthetic set (D-056),reconstruction_time,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure11_reconstruction_time.svg,svg,Synthetic demonstration figure (watermarked),synthetic set (D-056),reconstruction_time,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure12_storage.png,png,Synthetic demonstration figure (watermarked),synthetic set (D-056),storage,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure12_storage.svg,svg,Synthetic demonstration figure (watermarked),synthetic set (D-056),storage,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure13_training_runtime.png,png,Synthetic demonstration figure (watermarked),synthetic set (D-056),training_runtime,NO (SYNTHETIC),DO NOT USE
+results/synthetic/chapter4/figures/figure13_training_runtime.svg,svg,Synthetic demonstration figure (watermarked),synthetic set (D-056),training_runtime,NO (SYNTHETIC),DO NOT USE
+(Figure 4.2),,Clean accuracy by poisoning rate,,,,FIGURE NOT GENERATED - MISSING EXPERIMENTAL DATA
+(Figure 4.3),,Backdoor ASR by poisoning rate,,,,FIGURE NOT GENERATED - MISSING EXPERIMENTAL DATA
+(Figure 4.4),,Evidence completeness by pipeline,,,,FIGURE NOT GENERATED - MISSING EXPERIMENTAL DATA
+(Figure 4.5),,Event recovery rate by pipeline,,,,FIGURE NOT GENERATED - MISSING EXPERIMENTAL DATA
+(Figure 4.6),,Timeline reconstruction accuracy by pipeline,,,,FIGURE NOT GENERATED - MISSING EXPERIMENTAL DATA
+(Figure 4.7),,Root-cause identification by pipeline,,,,FIGURE NOT GENERATED - MISSING EXPERIMENTAL DATA
+(Figure 4.8),,Reconstruction time by pipeline,,,,FIGURE NOT GENERATED - MISSING EXPERIMENTAL DATA
+(Figure 4.9),,Evidence storage by pipeline,,,,FIGURE NOT GENERATED - MISSING EXPERIMENTAL DATA
+(Figure 4.10),,Runtime overhead by pipeline,,,,FIGURE NOT GENERATED - MISSING EXPERIMENTAL DATA
+(Figure 4.11),,A/B/C reconstruction comparison,,,,FIGURE NOT GENERATED - MISSING EXPERIMENTAL DATA
