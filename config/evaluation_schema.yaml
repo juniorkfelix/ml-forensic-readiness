@@ -13,7 +13,7 @@
 schema_version: 0.1
 status: FROZEN
 frozen_at_utc: 2026-09-27T22:02:05Z
-frozen_commit: null
+frozen_commit: 9bccbc04454e57c4d75927c74ecda4b74a5a5546
 amendments: []
 
 # ---------------------------------------------------------------------
