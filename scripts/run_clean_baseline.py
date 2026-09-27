@@ -69,6 +69,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--epochs", type=int)
     p.add_argument("--set", dest="overrides", action="append", default=[], metavar="KEY=VALUE")
     p.add_argument("--force", action="store_true", help="supersede an existing run package")
+    p.add_argument(
+        "--smoke",
+        action="store_true",
+        help="1-epoch pipeline check; all outputs go to results/smoke/ and experiments/smoke/, "
+        "never into the official result tables",
+    )
     return p.parse_args()
 
 
@@ -164,6 +170,11 @@ def main() -> int:
     overrides = list(args.overrides)
     if args.seed is not None:
         overrides.append(f"experiment.seed={args.seed}")
+    if args.smoke:
+        global RAW, BASELINE_CSV, FAILED_CSV, FIGURES, TABLES
+        RAW = FIGURES = TABLES = PROJECT_ROOT / "results" / "smoke"
+        BASELINE_CSV, FAILED_CSV = RAW / "baseline_results.csv", RAW / "failed_runs.csv"
+        overrides += ["experiment.phase=smoke", "training.epochs=1"]
     if args.epochs is not None:
         overrides.append(f"training.epochs={args.epochs}")
     cfg = load_config(args.config, overrides)

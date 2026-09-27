@@ -56,3 +56,7 @@ mlflow.db
 # Logs
 logs/*
 !logs/.gitkeep
+
+# Smoke-test outputs (pipeline checks, never results)
+results/smoke/
+experiments/smoke/
