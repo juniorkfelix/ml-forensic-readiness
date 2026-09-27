@@ -1,0 +1,17 @@
+# Pipeline A — CONVENTIONAL
+# A functioning, realistic ML pipeline: trained model, normal application
+# logging and standard evaluation results. No MLflow tracking, no dedicated
+# forensic evidence. Also used for the clean baseline:
+#   python scripts/run_clean_baseline.py --config config/baseline.yaml
+extends: experiment.yaml
+
+pipeline:
+  mode: conventional
+
+mlflow:
+  enabled: false
+
+evidence:
+  forensic_enabled: false
+  event_chain_hashing: false
+  export_jsonl: false

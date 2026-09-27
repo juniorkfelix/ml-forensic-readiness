@@ -1,0 +1,149 @@
+# =====================================================================
+# ML-FREF evaluation schema (pre-registration, spec §24)
+# ---------------------------------------------------------------------
+# STATUS: DRAFT — written before any experiment has been run.
+# Items marked "REVIEW:" need researcher approval before freezing.
+# Freeze procedure: set status: FROZEN, fill frozen_at_utc, commit, then
+# record the commit hash in frozen_commit (in a follow-up commit).
+# Freezing happens BEFORE the pilot (docs/experimental_protocol.md §9).
+# Post-freeze changes: append to `amendments` with date + justification.
+# =====================================================================
+
+schema_version: 0.1
+status: DRAFT
+frozen_at_utc: null
+frozen_commit: null
+amendments: []
+
+# ---------------------------------------------------------------------
+# Event classes shared by ground truth and reconstruction output.
+# Reconstructed events carry `event_class`; GT events carry `action`.
+# ---------------------------------------------------------------------
+event_classes:
+  CLEAN_DATASET_CREATED:     {gt_actions: [CLEAN_DATASET_CREATED],     stage: dataset}
+  POISONED_DATASET_CREATED:  {gt_actions: [POISONED_DATASET_CREATED],  stage: dataset}
+  TRAINING_STARTED:          {gt_actions: [TRAINING_STARTED],          stage: training}
+  TRAINING_COMPLETED:        {gt_actions: [TRAINING_COMPLETED],        stage: training}
+  MODEL_CREATED:             {gt_actions: [COMPROMISED_MODEL_CREATED, MODEL_CREATED], stage: model}
+  MODEL_DEPLOYED:            {gt_actions: [MODEL_DEPLOYED],            stage: deployment}
+  TRIGGER_SUBMITTED:         {gt_actions: [TRIGGER_SUBMITTED],         stage: inference}
+  MALICIOUS_PREDICTION:      {gt_actions: [MALICIOUS_PREDICTION],      stage: inference}
+
+# ---------------------------------------------------------------------
+# B. Event Recovery Rate — relevant GT events per attack type
+# ---------------------------------------------------------------------
+required_gt_events:
+  label_flip:
+    - CLEAN_DATASET_CREATED
+    - POISONED_DATASET_CREATED
+    - TRAINING_STARTED
+    - TRAINING_COMPLETED
+    - COMPROMISED_MODEL_CREATED
+    - MODEL_DEPLOYED
+    - MALICIOUS_PREDICTION        # the ticketed request
+  backdoor:
+    - CLEAN_DATASET_CREATED
+    - POISONED_DATASET_CREATED
+    - TRAINING_STARTED
+    - TRAINING_COMPLETED
+    - COMPROMISED_MODEL_CREATED
+    - MODEL_DEPLOYED
+    - TRIGGER_SUBMITTED           # the ticketed request
+    - MALICIOUS_PREDICTION        # the ticketed request
+
+# REVIEW: POISONING_STARTED / POISONING_COMPLETED are recorded in GT but NOT
+# scored as separate events. Under the store-tampering threat model (D-015) no
+# pipeline observes the attack's start/end instants. The attack's existence is
+# scored through POISONED_DATASET_CREATED, which may be matched by a bounded-time
+# reconstructed event. Counting both would lower all pipelines equally.
+unscored_gt_events: [POISONING_STARTED, POISONING_COMPLETED]
+
+event_matching:
+  # A reconstructed event correctly recovers a GT event iff ALL hold:
+  # 1. its event_class maps to the GT action (table above);
+  # 2. every artefact the GT event names resolves to the same canonical content
+  #    hash (dataset content hash / model file SHA-256), or the same request_id for
+  #    inference events; a missing artefact reference counts as a mismatch;
+  # 3. its time is consistent with the GT timestamp (rules below).
+  time_tolerance_seconds: 5          # REVIEW
+  time_basis_rules:
+    exact:    "abs(t_reconstructed - t_gt) <= tolerance"
+    bounded:  "t_lower - tolerance <= t_gt <= t_upper + tolerance"
+    inferred: "treated as exact"
+    unknown:  "time check fails; event counts toward coverage only if time_optional"
+  time_optional_classes: []          # REVIEW: none; every scored event must be placed in time
+  one_to_one: true                   # each GT event may be matched at most once
+
+# ---------------------------------------------------------------------
+# C. Timeline reconstruction accuracy
+# ---------------------------------------------------------------------
+timeline:
+  coverage_metric: "matched GT events / required GT events (same as ERR)"
+  ordering_metric: kendall_tau_b
+  ordering_sort_key: "exact/inferred: t; bounded: midpoint of [t_lower, t_upper]"
+  # REVIEW: tau is computed over commonly recovered events only, and only when
+  # at least this many are recovered; otherwise ordering is reported as NA
+  # (never imputed).
+  min_events_for_tau: 4
+  pairwise_order_accuracy: true      # also report fraction of correctly ordered pairs
+
+# ---------------------------------------------------------------------
+# A. Evidence Completeness — predefined required evidence items
+# An item counts as recovered iff the reconstruction reports it with a value
+# AND (where GT can verify it) the value is correct.
+# ---------------------------------------------------------------------
+required_evidence_items:
+  - {id: DS1, stage: dataset,    description: "identity of dataset state used for training (ID or content hash)"}
+  - {id: DS2, stage: dataset,    description: "identity of an earlier registered dataset state"}
+  - {id: DS3, stage: dataset,    description: "lineage link between the two dataset states"}
+  - {id: DS4, stage: dataset,    description: "per-class profile of the training dataset"}
+  - {id: DS5, stage: dataset,    description: "sample-level description of the change (changed sample IDs)"}
+  - {id: TR1, stage: training,   description: "training run identity"}
+  - {id: TR2, stage: training,   description: "training start and end times"}
+  - {id: TR3, stage: training,   description: "link training run -> dataset used"}
+  - {id: TR4, stage: training,   description: "training configuration (hyper-parameters, code version)"}
+  - {id: MO1, stage: model,      description: "identity of the model artefact (path, registry version or hash)"}
+  - {id: MO2, stage: model,      description: "cryptographic hash of the model recorded at creation"}
+  - {id: MO3, stage: model,      description: "link model -> training run"}
+  - {id: DE1, stage: deployment, description: "deployment record: time and deployed model identity"}
+  - {id: IN1, stage: inference,  description: "record of the ticketed request with its prediction"}
+  - {id: IN2, stage: inference,  description: "link ticketed request -> deployed model"}
+  - {id: IN3, stage: inference,  description: "identity (hash) of the submitted input"}
+  - {id: IG1, stage: integrity,  description: "dataset integrity check result at training time"}
+  - {id: IG2, stage: integrity,  description: "deployed model integrity check (deployed == trained)"}
+  - {id: IG3, stage: integrity,  description: "evidence-store integrity (hash chain verification)"}
+# REVIEW: SYSTEM-stage evidence (environment, config hash) is collected but not
+# scored, because it does not bear on reconstructing this incident.
+
+# ---------------------------------------------------------------------
+# D. Root cause identification (component score = correct / 4)
+# ---------------------------------------------------------------------
+root_cause_components:
+  dataset:        "identified training dataset resolves to GT POISONED_DATASET content hash"
+  training_run:   "identified training run is the run that produced the deployed model (MLflow run ID or RUN ref + time match)"
+  model:          "identified model resolves to GT compromised-model SHA-256"
+  poisoning_source:
+    description: "reconstructed changed-sample set matches GT poisoned_sample_ids"
+    criterion: "F1 >= 0.90"          # REVIEW: threshold
+    also_report: [precision, recall, f1]   # continuous values always reported
+rci_overall_binary: "all four components correct"
+
+# ---------------------------------------------------------------------
+# Clean control runs
+# ---------------------------------------------------------------------
+# REVIEW (optional design element): clean runs get a ticket for a natural
+# misclassification. The correct finding is "no dataset modification found".
+# Reported as a false-attribution rate (specificity), separately from RCI.
+clean_control:
+  investigate_natural_misclassification: true
+  correct_finding: NO_DATASET_MODIFICATION_FOUND
+
+# ---------------------------------------------------------------------
+# E–G. Runtime and overhead (definitions only; not "required evidence")
+# ---------------------------------------------------------------------
+runtime:
+  reconstruction_runtime: "wall clock of reconstruct(); excludes evaluation"
+  training_runtime: "wall clock of training loop incl. in-loop instrumentation"
+  evidence_logging_time: "sum of instrumented evidence-write sections"
+storage_categories: [model_files, mlflow_backend_db, mlflow_artifacts, forensic_sqlite,
+                     forensic_jsonl, manifests, logs]

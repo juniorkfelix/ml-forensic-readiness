@@ -1,0 +1,88 @@
+# =====================================================================
+# ML-FREF shared experiment defaults
+# ---------------------------------------------------------------------
+# Every other config file `extends:` this one. Composition order:
+#   experiment.yaml  ->  pipeline overlay  ->  attack overlay  ->  CLI overrides
+# The fully resolved configuration is archived with every run and hashed
+# (SHA-256 of canonical JSON) to give the experiment configuration hash.
+#
+# Values marked CALIBRATE are provisional and will be fixed from measured
+# pilot behaviour (Phase 4/5 and Phase 16), not assumed.
+# =====================================================================
+
+experiment:
+  name: ml-fref
+  seed: 1
+  phase: pilot            # pilot | main  (controls output location experiments/<phase>/)
+
+dataset:
+  name: CIFAR10
+  data_dir: data/raw      # the official download; never modified
+  clean_dataset_id: CIFAR10-CLEAN-V1
+  download: true
+  # Official train/test split is always kept. No validation split is carved
+  # out of the training set by default (see docs/experimental_protocol.md).
+  validation_split: 0.0
+
+model:
+  architecture: resnet18
+  num_classes: 10
+  pretrained: false       # train from scratch; no ImageNet weights
+  cifar_stem: true        # 3x3 stride-1 first conv, no max-pool (documented in Phase 4)
+
+training:
+  epochs: 30              # CALIBRATE after measuring per-epoch time on this GPU
+  batch_size: 128
+  optimizer: sgd
+  learning_rate: 0.1
+  momentum: 0.9
+  weight_decay: 0.0005
+  nesterov: false
+  lr_scheduler: cosine
+  loss: cross_entropy
+  augmentation:
+    random_crop_padding: 4
+    horizontal_flip: true
+  num_workers: 0          # 0 = main process (most reproducible on Windows)
+  device: auto            # auto | cuda | cpu
+
+reproducibility:
+  deterministic: true     # torch.use_deterministic_algorithms(True) where supported
+  cudnn_benchmark: false
+  warn_only: true         # log (not crash) on ops lacking deterministic kernels
+
+attack:
+  type: none              # none | label_flip | backdoor
+  poison_rate: 0.0
+
+pipeline:
+  mode: conventional      # conventional (A) | provenance (B) | forensic (C)
+
+mlflow:
+  enabled: false
+  tracking_uri: sqlite:///mlruns/mlflow.db
+  artifact_location: mlruns/artifacts
+  experiment_name: ml-fref
+
+evidence:
+  forensic_enabled: false
+  forensic_db: evidence/forensic/forensic_evidence.sqlite
+  event_chain_hashing: false
+  export_jsonl: false
+
+deployment:
+  simulate: true
+  inference_requests: 200 # CALIBRATE: number of simulated inference requests per run
+
+ground_truth:
+  db: ground_truth/ground_truth.sqlite
+
+output:
+  experiments_dir: experiments
+  results_dir: results
+  models_dir: models
+  logs_dir: logs
+  manifests_dir: data/manifests
+
+logging:
+  level: INFO

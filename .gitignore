@@ -1,0 +1,58 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- Environments ---
+.venv/
+venv/
+env/
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+.claude/settings.local.json
+
+# --- Install logs written during environment setup ---
+logs_install_*.txt
+
+# --- Large / regenerable experimental artefacts ---
+# Datasets (CIFAR-10 is downloaded; derived datasets are regenerated from manifests)
+data/raw/*
+data/clean/*
+data/poisoned/*
+!data/*/.gitkeep
+# Manifests are small and are part of the evidence trail: keep them tracked
+# (data/manifests/ is NOT ignored)
+
+# Model weights
+models/checkpoints/*
+models/deployed/*
+!models/*/.gitkeep
+*.pt
+*.pth
+*.ckpt
+
+# Runtime evidence stores, ground truth and MLflow tracking data.
+# These are generated per run and archived in experiment packages instead.
+evidence/*/*
+!evidence/*/.gitkeep
+ground_truth/*
+!ground_truth/.gitkeep
+mlruns/*
+!mlruns/.gitkeep
+mlflow.db
+
+# Logs
+logs/*
+!logs/.gitkeep

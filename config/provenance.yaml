@@ -1,0 +1,16 @@
+# Pipeline B — PROVENANCE
+# Pipeline A plus MLflow experiment tracking (local SQLite backend):
+# parameters, metrics, dataset inputs and model artefacts. No forensic-specific
+# evidence and no incident conclusions.
+extends: experiment.yaml
+
+pipeline:
+  mode: provenance
+
+mlflow:
+  enabled: true
+
+evidence:
+  forensic_enabled: false
+  event_chain_hashing: false
+  export_jsonl: false

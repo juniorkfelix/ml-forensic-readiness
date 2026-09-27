@@ -1,0 +1,16 @@
+# Pipeline C — FORENSIC READY
+# Pipeline B plus a dedicated forensic evidence store (SQLite) with a common
+# event header, SHA-256 artefact hashes, hash-chained events (tamper-EVIDENT,
+# not tamper-proof), deployment and inference event records, and JSONL export.
+extends: experiment.yaml
+
+pipeline:
+  mode: forensic
+
+mlflow:
+  enabled: true
+
+evidence:
+  forensic_enabled: true
+  event_chain_hashing: true
+  export_jsonl: true

@@ -1,0 +1,11 @@
+# Pilot attack overlay — LABEL FLIPPING (5%)
+# Pipeline is chosen at run time, e.g.:
+#   python scripts/run_label_flip.py --pipeline forensic --poison-rate 0.05 --seed 1
+# which composes: experiment.yaml -> forensic.yaml -> this file -> CLI overrides.
+extends: experiment.yaml
+
+attack:
+  type: label_flip
+  poison_rate: 0.05       # fraction of the SOURCE class that is relabelled
+  source_class: automobile
+  target_class: truck
