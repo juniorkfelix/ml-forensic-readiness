@@ -241,6 +241,7 @@ class Pipeline:
         train_arrays: cifar.CifarArrays,
         test_arrays: cifar.CifarArrays,
         generator: torch.Generator,
+        extra_hooks=(),
     ) -> tuple[torch.nn.Module, TrainingResult]:
         tr = self.cfg["training"]
         model = build_model(self.cfg["model"]).to(self.device)
@@ -288,7 +289,7 @@ class Pipeline:
             tr,
             generator,
             monitor_data=cifar.TensorBatches(test_arrays, self.device),
-            hooks=CompositeHooks(*hooks),
+            hooks=CompositeHooks(*hooks, *extra_hooks),
         )
         tlog.info("training completed: %d epochs in %.1fs", tr["epochs"], result.training_seconds)
         return model, result

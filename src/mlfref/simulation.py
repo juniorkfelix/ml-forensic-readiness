@@ -108,6 +108,7 @@ def run_traffic(
                 affected_artifact=model_sha256,
                 metadata={
                     "request_id": req.request_id,
+                    "input_sha256": hashlib.sha256(req.image.tobytes()).hexdigest(),
                     "test_sample_id": req.test_sample_id,
                     "true_label": req.true_label,
                 },
@@ -119,6 +120,7 @@ def run_traffic(
                 affected_artifact=model_sha256,
                 metadata={
                     "request_id": req.request_id,
+                    "input_sha256": hashlib.sha256(req.image.tobytes()).hexdigest(),
                     "predicted_class": rec.predicted_class,
                     "true_label": req.true_label,
                     "confidence": rec.confidence,

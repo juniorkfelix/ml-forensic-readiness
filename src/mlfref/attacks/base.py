@@ -49,6 +49,7 @@ def run_attack(
     clean: CifarArrays,
     clean_version: DatasetVersion,
     recorder: GroundTruthRecorder,
+    annotate=None,
 ) -> tuple[AttackResult, DatasetVersion]:
     """Apply ``attack`` and record the ground truth. Returns the result and the new version."""
     if recorder.attack_type != attack.attack_type:
@@ -85,6 +86,7 @@ def run_attack(
             "attack_type": attack.attack_type,
             "poisoning_rate": result.params.get("poison_rate"),
             "class_distribution": version.class_distribution,
+            **(annotate(result.poisoned) if annotate else {}),
         },
     )
     recorder.record_attack(
