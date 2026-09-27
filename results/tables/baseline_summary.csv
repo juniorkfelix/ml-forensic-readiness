@@ -1,0 +1,7 @@
+metric,n,mean,sd,min,max
+clean_test_accuracy,1,0.9334,nan,0.9334,0.9334
+final_train_loss,1,0.0270273486328125,nan,0.0270273486328125,0.0270273486328125
+training_seconds,1,693.861,nan,693.861,693.861
+test_seconds,1,1.384,nan,1.384,1.384
+peak_gpu_allocated_mb,1,764.1,nan,764.1,764.1
+peak_rss_mb,1,1721.6,nan,1721.6,1721.6

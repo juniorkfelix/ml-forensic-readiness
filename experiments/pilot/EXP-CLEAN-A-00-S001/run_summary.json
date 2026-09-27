@@ -1,0 +1,36 @@
+{
+  "experiment_id": "EXP-CLEAN-A-00-S001",
+  "experiment_uuid": "1894700f-3fb6-4d76-8485-8d8404872b57",
+  "status": "completed",
+  "started_utc": "2026-09-27T20:28:01.499065Z",
+  "completed_utc": "2026-09-27T20:39:40.410762Z",
+  "seed": 1,
+  "pipeline_mode": "conventional",
+  "attack_type": "none",
+  "device": "cuda",
+  "config_sha256": "617d8e0d4dcf76e2171af626893186693867873e65b621e77a99f2cff7dfaf98",
+  "git_commit": "9d731ac50873afc834efe92a3b9693187347ec19",
+  "git_dirty": false,
+  "dataset_id": "CIFAR10-CLEAN-V1",
+  "dataset_content_sha256": "c8be9ed3959a52965df6b2b9266d91afe4d3c013ead22dae8742b672e1bc0a50",
+  "model_sha256": "a57d5e9561203953bfaf8e19d1c625b3bf51e947a1c1565a89ae3b62d274cf89",
+  "model_size_bytes": 44770315,
+  "clean_test_accuracy": 0.9334,
+  "timings": {
+    "setup_seconds": 0.636,
+    "data_loading_seconds": 0.508,
+    "training_seconds": 693.861,
+    "test_seconds": 1.384,
+    "save_model_seconds": 0.356,
+    "training_loop_seconds": 693.86,
+    "monitoring_eval_seconds": 41.498,
+    "hook_seconds": 0.0
+  },
+  "resources": {
+    "peak_rss_mb": 1721.6,
+    "mean_cpu_percent": 103.7,
+    "resource_samples": 689,
+    "peak_gpu_allocated_mb": 764.1,
+    "peak_gpu_reserved_mb": 1128.0
+  }
+}

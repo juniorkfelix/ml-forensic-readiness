@@ -111,9 +111,40 @@ This writes `results/environment/environment_check.json` and prints PASS or FAIL
 `training.device: auto` uses CUDA when it is available and falls back to CPU otherwise. The device
 used for each run is recorded in that run's environment manifest.
 
-## 6. Dataset preparation — *Phase 3*
+## 6. Dataset preparation
+
+```bash
+python scripts/prepare_dataset.py
+```
+- Downloads CIFAR-10 (python version, ~163 MB) into `data/raw/` once. torchvision verifies the
+  archive MD5. The official files are never modified.
+- On the first run, records the SHA-256 of every official file in
+  `data/manifests/cifar10_raw_integrity.json`. Later runs **verify** the files against it and
+  abort on any mismatch.
+- Builds the pipeline data stores `data/clean/cifar10_train.npz` (from `data_batch_1..5`) and
+  `data/clean/cifar10_test.npz` (from `test_batch`), and writes
+  `data/manifests/cifar10_clean_summary.json` and `results/figures/cifar10_clean_samples.png`.
+
 ## 7. MLflow setup — *Phase 10*
-## 8. Baseline execution — *Phases 4–5*
+
+## 8. Baseline execution
+
+```bash
+python scripts/run_clean_baseline.py --config config/baseline.yaml --seed 1
+python scripts/run_clean_baseline.py --smoke          # 1-epoch check; outputs isolated
+```
+Trains ResNet-18 (CIFAR stem, from scratch) for 30 epochs with AMP, then writes:
+- the run package `experiments/pilot/EXP-CLEAN-A-00-S001/` (config, environment manifest, per-epoch
+  metrics, model metadata and SHA-256, evaluation, resource samples, run summary)
+- one appended row in `results/raw/baseline_results.csv`
+- `results/figures/baseline_training_loss.png` and `baseline_accuracy.png`
+- `results/tables/baseline_summary.csv`, regenerated from all baseline runs on record
+
+Rerunning an existing experiment ID needs `--force`. The old package is moved to
+`experiments/<phase>/_superseded/`, never deleted. Failed runs are recorded in
+`results/raw/failed_runs.csv`.
+
+Training-speed calibration (planning only): `python scripts/calibrate_training_speed.py`.
 ## 9. Attack execution — *Phases 8–9*
 ## 10. Pipeline configurations
 
