@@ -3,8 +3,8 @@ Generated (UTC): 2026-09-27T21:48:25Z
 Scope: Phases 1-15
 
 ============================= test session starts =============================
-platform win32 -- Python 3.14.3, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\onsaref\Documents\projects\uel-thesis-project\.venv\Scripts\python.exe
-rootdir: C:\Users\onsaref\Documents\projects\uel-thesis-project
+platform win32 -- Python 3.14.3, pytest-9.1.1, pluggy-1.6.0 -- <project>\.venv\Scripts\python.exe
+rootdir: <project>
 configfile: pyproject.toml
 testpaths: tests
 plugins: anyio-4.15.1, platformdirs-4.12.0
@@ -218,7 +218,7 @@ tests/test_reproducibility.py::test_initialise_run_returns_device_and_manifest P
 
 ============================== warnings summary ===============================
 tests/test_deployment.py::test_predictions_identical_across_pipelines
-  C:\Users\onsaref\Documents\projects\uel-thesis-project\.venv\Lib\site-packages\mlflow\store\tracking\utils\sql_trace_metrics_utils.py:155: SADeprecationWarning: The ``noload`` loader strategy is deprecated and will be removed in a future release.  This option produces incorrect results by returning ``None`` for related items. (deprecated since: 2.1) (This warning originated from the `configure_mappers()` process, which was invoked automatically in response to a user-initiated operation.)
+  <project>\.venv\Lib\site-packages\mlflow\store\tracking\utils\sql_trace_metrics_utils.py:155: SADeprecationWarning: The ``noload`` loader strategy is deprecated and will be removed in a future release.  This option produces incorrect results by returning ``None`` for related items. (deprecated since: 2.1) (This warning originated from the `configure_mappers()` process, which was invoked automatically in response to a user-initiated operation.)
     _SESSION_TRACE_METADATA = aliased(SqlTraceMetadata)
 
 tests/test_provenance.py::test_mlflow_logging
@@ -228,7 +228,7 @@ tests/test_provenance.py::test_data_registration_and_training_digests_differ_whe
 tests/test_provenance.py::test_lineage_from_mlflow
 tests/test_provenance.py::test_hooks_do_not_change_training
 tests/test_reconstruction.py::test_conventional_reconstruction_limits
-  C:\Users\onsaref\Documents\projects\uel-thesis-project\.venv\Lib\site-packages\mlflow\data\dataset_source_registry.py:148: UserWarning: The specified dataset source can be interpreted in multiple ways: LocalArtifactDatasetSource, LocalArtifactDatasetSource. MLflow will assume that this is a LocalArtifactDatasetSource source.
+  <project>\.venv\Lib\site-packages\mlflow\data\dataset_source_registry.py:148: UserWarning: The specified dataset source can be interpreted in multiple ways: LocalArtifactDatasetSource, LocalArtifactDatasetSource. MLflow will assume that this is a LocalArtifactDatasetSource source.
     return _dataset_source_registry.resolve(
 
 tests/test_provenance.py::test_mlflow_logging
@@ -238,7 +238,7 @@ tests/test_provenance.py::test_lineage_from_mlflow
 tests/test_reconstruction.py::test_conventional_reconstruction_limits
 tests/test_reconstruction.py::test_conventional_reconstruction_limits
 tests/test_reconstruction.py::test_conventional_reconstruction_limits
-  C:\Users\onsaref\Documents\projects\uel-thesis-project\.venv\Lib\site-packages\mlflow\utils\file_utils.py:304: DeprecationWarning: codecs.open() is deprecated. Use open() instead.
+  <project>\.venv\Lib\site-packages\mlflow\utils\file_utils.py:304: DeprecationWarning: codecs.open() is deprecated. Use open() instead.
     with codecs.open(filename, mode="w", encoding=ENCODING) as handle:
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
