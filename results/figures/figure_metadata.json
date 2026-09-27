@@ -1,4 +1,18 @@
 {
+  "backdoor_trigger_example.png": {
+    "created_utc": "2026-09-27T20:51:35+00:00",
+    "description": "clean vs triggered training images, sample_ids [47, 54, 96, 130]",
+    "experiments_included": [],
+    "filename": "backdoor_trigger_example.png",
+    "generation_script": "scripts/inspect_backdoor.py",
+    "git_commit": "5a03d8f3e1d26a7e9485ce208954cf321d00eb95",
+    "git_dirty": true,
+    "metric": "none (illustrative trigger)",
+    "source_data": [
+      "data/clean/cifar10_train.npz",
+      "config/pilot_backdoor.yaml"
+    ]
+  },
   "baseline_accuracy.png": {
     "created_utc": "2026-09-27T20:39:43+00:00",
     "description": "",

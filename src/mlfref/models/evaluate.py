@@ -1,7 +1,10 @@
 """Model evaluation: loss, accuracy, per-class accuracy, confusion matrix, predictions.
 
 Clean Accuracy (CA) = correct clean predictions / total clean predictions.
-(Attack Success Rate is added in Phase 9.)
+
+Attack Success Rate (ASR) = triggered test samples predicted as the target class /
+total triggered test samples. The triggered test set excludes images whose true
+class is the target (mlfref.attacks.backdoor.BackdoorAttack.triggered_test_set).
 """
 
 from __future__ import annotations
@@ -84,3 +87,36 @@ def evaluate(
         labels=label_arr,
         sample_ids=torch.cat(ids).numpy().astype(np.int64),
     )
+
+
+@dataclass
+class AttackSuccessResult:
+    asr: float
+    n: int
+    successes: int
+    target_class: int
+    eval: EvalResult = field(repr=False)
+
+    def summary(self) -> dict[str, Any]:
+        return {
+            "asr": self.asr,
+            "n": self.n,
+            "successes": self.successes,
+            "target_class": self.target_class,
+            "target_class_name": CIFAR10_CLASSES[self.target_class],
+        }
+
+
+def attack_success_rate(
+    model: nn.Module,
+    triggered: TensorBatches,
+    target_class: int,
+    batch_size: int = 512,
+    amp: bool = False,
+) -> AttackSuccessResult:
+    """ASR over a triggered test set whose true labels are all != target_class."""
+    ev = evaluate(model, triggered, batch_size=batch_size, amp=amp)
+    if (ev.labels == target_class).any():
+        raise ValueError("triggered test set must exclude samples of the target class")
+    successes = int((ev.predictions == target_class).sum())
+    return AttackSuccessResult(successes / ev.n, ev.n, successes, target_class, ev)
