@@ -55,5 +55,47 @@
     "source_data": [
       "data/clean/cifar10_train.npz"
     ]
+  },
+  "figure01_architecture.png": {
+    "created_utc": "2026-09-27T22:10:54+00:00",
+    "description": "architecture",
+    "experiments_included": [],
+    "filename": "figure01_architecture.png",
+    "generation_script": "scripts/generate_thesis_figures.py",
+    "git_commit": "9780b7dc1f73d58380100f8b61364aafff23772f",
+    "git_dirty": true,
+    "metric": "none (diagram)",
+    "source_data": [
+      "docs/architecture.md",
+      "docs/evidence_schema.md"
+    ]
+  },
+  "figure02_evidence_points.png": {
+    "created_utc": "2026-09-27T22:10:54+00:00",
+    "description": "evidence points",
+    "experiments_included": [],
+    "filename": "figure02_evidence_points.png",
+    "generation_script": "scripts/generate_thesis_figures.py",
+    "git_commit": "9780b7dc1f73d58380100f8b61364aafff23772f",
+    "git_dirty": true,
+    "metric": "none (diagram)",
+    "source_data": [
+      "docs/architecture.md",
+      "docs/evidence_schema.md"
+    ]
+  },
+  "figure03_attack_lifecycle.png": {
+    "created_utc": "2026-09-27T22:10:55+00:00",
+    "description": "attack lifecycle",
+    "experiments_included": [],
+    "filename": "figure03_attack_lifecycle.png",
+    "generation_script": "scripts/generate_thesis_figures.py",
+    "git_commit": "9780b7dc1f73d58380100f8b61364aafff23772f",
+    "git_dirty": true,
+    "metric": "none (diagram)",
+    "source_data": [
+      "docs/architecture.md",
+      "docs/evidence_schema.md"
+    ]
   }
 }

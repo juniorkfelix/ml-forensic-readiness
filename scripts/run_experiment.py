@@ -89,6 +89,20 @@ def mlflow_digest(arrays: cifar.CifarArrays) -> str:
     return mlflow.data.from_numpy(arrays.images, targets=arrays.labels).digest
 
 
+def stratified_subset(arrays: cifar.CifarArrays, n: int | None) -> cifar.CifarArrays:
+    """First n/10 samples of each class by sample_id (deterministic). None = full set."""
+    if not n:
+        return arrays
+    import numpy as np
+
+    per = n // 10
+    keep = np.sort(
+        np.concatenate([np.sort(arrays.sample_ids[arrays.labels == c])[:per] for c in range(10)])
+    )
+    idx = np.searchsorted(arrays.sample_ids, keep)
+    return cifar.CifarArrays(arrays.images[idx], arrays.labels[idx], arrays.sample_ids[idx])
+
+
 class GroundTruthTrainingHooks(TrainingHooks):
     """Harness-owned hooks: record GT training start/end at the true instants (D-052)."""
 
@@ -133,11 +147,9 @@ def run(cfg: dict, force: bool = False) -> dict:
     exp_id, uid = identity.experiment_id, identity.experiment_uuid
     run_ref, mode, attack_type = f"RUN-{uid}", cfg["pipeline"]["mode"], cfg["attack"]["type"]
     phase = cfg["experiment"]["phase"]
-    # Smoke checks never write into the official result locations.
-    results_root = (
-        PROJECT_ROOT / "results" / "smoke" if phase == "smoke" else PROJECT_ROOT / "results"
-    )
-    run_index = results_root / "run_index_smoke.csv" if phase == "smoke" else RUN_INDEX
+    # Smoke checks and the reduced CPU pilot never write into the official result locations.
+    results_root = PROJECT_ROOT / "results" / (phase if phase in ("smoke", "pilot_cpu") else "")
+    run_index = RUN_INDEX if phase in ("pilot", "main") else results_root / "run_index.csv"
     setup_logging("INFO", PROJECT_ROOT / "logs" / f"{exp_id}_{uid[:8]}.log", experiment_id=exp_id)
     pkg = PROJECT_ROOT / "experiments" / phase / exp_id
     if pkg.exists():
@@ -156,6 +168,8 @@ def run(cfg: dict, force: bool = False) -> dict:
             save_environment_manifest(env, pkg / "environment.json")
             clean_train = cifar.read_store(PROJECT_ROOT / "data/clean/cifar10_train.npz")
             test = cifar.read_store(PROJECT_ROOT / "data/clean/cifar10_test.npz")
+            clean_train = stratified_subset(clean_train, cfg["dataset"].get("train_subset"))
+            test = stratified_subset(test, cfg["dataset"].get("test_subset"))
             paths = PipelinePaths.for_run(PROJECT_ROOT, mode, run_ref)
             gt = GroundTruthRecorder(GT_DB, exp_id, uid, attack_type, project_root=PROJECT_ROOT)
             pipe = Pipeline(cfg, uid, paths, device, git_commit=env["git"]["commit"])
@@ -442,7 +456,7 @@ def main() -> int:
     p.add_argument("--pipeline", required=True, help="A|B|C or conventional|provenance|forensic")
     p.add_argument("--poison-rate", type=float, default=0.05)
     p.add_argument("--seed", type=int, default=1)
-    p.add_argument("--phase", choices=["pilot", "main", "smoke"], default="pilot")
+    p.add_argument("--phase", choices=["pilot", "main", "smoke", "pilot_cpu"], default="pilot")
     p.add_argument("--epochs", type=int)
     p.add_argument("--set", dest="overrides", action="append", default=[])
     p.add_argument("--force", action="store_true")

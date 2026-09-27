@@ -1,0 +1,22 @@
+data_origin,pipeline,attack_type,poison_rate,Seeds,Model,Dataset
+SYNTHETIC,A,backdoor,0.01,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,A,backdoor,0.03,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,A,backdoor,0.05,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,A,label_flip,0.01,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,A,label_flip,0.03,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,A,label_flip,0.05,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,A,none,0.0,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,B,backdoor,0.01,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,B,backdoor,0.03,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,B,backdoor,0.05,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,B,label_flip,0.01,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,B,label_flip,0.03,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,B,label_flip,0.05,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,B,none,0.0,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,C,backdoor,0.01,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,C,backdoor,0.03,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,C,backdoor,0.05,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,C,label_flip,0.01,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,C,label_flip,0.03,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,C,label_flip,0.05,5,ResNet-18 (CIFAR stem),CIFAR-10
+SYNTHETIC,C,none,0.0,5,ResNet-18 (CIFAR stem),CIFAR-10

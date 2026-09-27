@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="572.4pt" height="333.463437pt" viewBox="0 0 572.4 333.463437" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-28T01:10:53.934497</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 333.463437 
+L 572.4 333.463437 
+L 572.4 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 23.94 144.327838 
+L 113.22 144.327838 
+Q 114.336 144.327838 114.336 143.311438 
+L 114.336 97.573437 
+Q 114.336 96.557037 113.22 96.557037 
+L 23.94 96.557037 
+Q 22.824 96.557037 22.824 97.573437 
+L 22.824 143.311438 
+Q 22.824 144.327838 23.94 144.327838 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #e8f0fb; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 132.75 144.327838 
+L 222.03 144.327838 
+Q 223.146 144.327838 223.146 143.311438 
+L 223.146 97.573437 
+Q 223.146 96.557037 222.03 96.557037 
+L 132.75 96.557037 
+Q 131.634 96.557037 131.634 97.573437 
+L 131.634 143.311438 
+Q 131.634 144.327838 132.75 144.327838 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #e8f0fb; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 241.56 144.327838 
+L 330.84 144.327838 
+Q 331.956 144.327838 331.956 143.311438 
+L 331.956 97.573437 
+Q 331.956 96.557037 330.84 96.557037 
+L 241.56 96.557037 
+Q 240.444 96.557037 240.444 97.573437 
+L 240.444 143.311438 
+Q 240.444 144.327838 241.56 144.327838 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #e8f0fb; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 350.37 144.327838 
+L 439.65 144.327838 
+Q 440.766 144.327838 440.766 143.311438 
+L 440.766 97.573437 
+Q 440.766 96.557037 439.65 96.557037 
+L 350.37 96.557037 
+Q 349.254 96.557037 349.254 97.573437 
+L 349.254 143.311438 
+Q 349.254 144.327838 350.37 144.327838 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #e8f0fb; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 459.18 144.327838 
+L 548.46 144.327838 
+Q 549.576 144.327838 549.576 143.311438 
+L 549.576 97.573437 
+Q 549.576 96.557037 548.46 96.557037 
+L 459.18 96.557037 
+Q 458.064 96.557037 458.064 97.573437 
+L 458.064 143.311438 
+Q 458.064 144.327838 459.18 144.327838 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #e8f0fb; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 23.94 73.179837 
+L 113.22 73.179837 
+Q 114.336 73.179837 114.336 72.163438 
+L 114.336 36.589437 
+Q 114.336 35.573037 113.22 35.573037 
+L 23.94 35.573037 
+Q 22.824 35.573037 22.824 36.589437 
+L 22.824 72.163438 
+Q 22.824 73.179837 23.94 73.179837 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #f7d0d0; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 23.94 210.393838 
+L 548.46 210.393838 
+Q 549.576 210.393838 549.576 209.377438 
+L 549.576 168.721438 
+Q 549.576 167.705038 548.46 167.705038 
+L 23.94 167.705038 
+Q 22.824 167.705038 22.824 168.721438 
+L 22.824 209.377438 
+Q 22.824 210.393838 23.94 210.393838 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #eef7f2; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 23.94 296.787838 
+L 191.34 296.787838 
+Q 192.456 296.787838 192.456 295.771437 
+L 192.456 239.869438 
+Q 192.456 238.853037 191.34 238.853037 
+L 23.94 238.853037 
+Q 22.824 238.853037 22.824 239.869438 
+L 22.824 295.771437 
+Q 22.824 296.787838 23.94 296.787838 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #eef7f2; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 213.66 296.787838 
+L 358.74 296.787838 
+Q 359.856 296.787838 359.856 295.771437 
+L 359.856 239.869438 
+Q 359.856 238.853037 358.74 238.853037 
+L 213.66 238.853037 
+Q 212.544 238.853037 212.544 239.869438 
+L 212.544 295.771437 
+Q 212.544 296.787838 213.66 296.787838 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #e8f0fb; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 381.06 296.787838 
+L 548.46 296.787838 
+Q 549.576 296.787838 549.576 295.771437 
+L 549.576 239.869438 
+Q 549.576 238.853037 548.46 238.853037 
+L 381.06 238.853037 
+Q 379.944 238.853037 379.944 239.869438 
+L 379.944 295.771437 
+Q 379.944 296.787838 381.06 296.787838 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #fdf1d6; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 381.06 75.720837 
+L 548.46 75.720837 
+Q 549.576 75.720837 549.576 74.704438 
+L 549.576 34.048437 
+Q 549.576 33.032038 548.46 33.032038 
+L 381.06 33.032038 
+Q 379.944 33.032038 379.944 34.048437 
+L 379.944 74.704438 
+Q 379.944 75.720837 381.06 75.720837 
+z
+" clip-path="url(#p511edcfc6d)" style="fill: #f7d0d0; opacity: 0.9; stroke: #0b0b0b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(52.435625 118.184312)">CIFAR-10</text>
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(50.82375 126.841187)">data store</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(163.788125 118.145641)">training</text>
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(156.559375 126.903141)">(ResNet-18)</text>
+   </g>
+   <g id="patch_13">
+    <path d="M 115.21782 120.442437 
+Q 122.984456 120.442437 129.409451 120.442437 
+" style="fill: none; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 125.409451 118.442437 
+L 129.409451 120.442437 
+L 125.409451 122.442437 
+z
+" style="fill: #0b0b0b; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; text-anchor: middle; fill: #0b0b0b" x="286.2" y="122.561891" transform="rotate(-0 286.2 122.561891)">model</text>
+   </g>
+   <g id="patch_14">
+    <path d="M 224.02782 120.442437 
+Q 231.794456 120.442437 238.219451 120.442437 
+" style="fill: none; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 234.219451 118.442437 
+L 238.219451 120.442437 
+L 234.219451 122.442437 
+z
+" style="fill: #0b0b0b; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; text-anchor: middle; fill: #0b0b0b" x="395.01" y="122.462437" transform="rotate(-0 395.01 122.462437)">deployment</text>
+   </g>
+   <g id="patch_15">
+    <path d="M 332.83782 120.442437 
+Q 340.604456 120.442437 347.029451 120.442437 
+" style="fill: none; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 343.029451 118.442437 
+L 347.029451 120.442437 
+L 343.029451 122.442437 
+z
+" style="fill: #0b0b0b; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(487.558125 118.313453)">inference</text>
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(491.815625 126.895328)">service</text>
+   </g>
+   <g id="patch_16">
+    <path d="M 441.64782 120.442437 
+Q 449.414456 120.442437 455.839451 120.442437 
+" style="fill: none; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 451.839451 118.442437 
+L 455.839451 120.442437 
+L 451.839451 122.442437 
+z
+" style="fill: #0b0b0b; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(51.731875 52.038938)">adversary</text>
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(41.823125 60.796438)">(tampers store)</text>
+   </g>
+   <g id="patch_17">
+    <path d="M 68.58 74.164103 
+Q 68.58 84.870044 68.58 94.234345 
+" style="fill: none; stroke: #d03b3b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 70.58 90.234345 
+L 68.58 94.234345 
+L 66.58 90.234345 
+z
+" style="fill: #d03b3b; stroke: #d03b3b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; text-anchor: middle; fill: #0b0b0b" x="286.2" y="191.166938" transform="rotate(-0 286.2 191.166938)">evidence instrumentation:  A app log  |  B + MLflow provenance  |  C + forensic event store (hash-chained)</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(57.610625 265.512)">investigator-visible evidence</text>
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(50.12875 274.367781)">evidence/&lt;mode&gt;/RUN-&lt;uuid&gt;</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(247.644375 265.4745)">reconstruction engine</text>
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(236.74 274.330281)">reconstruct(evidence, ticket)</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(448.359375 265.512)">evaluator</text>
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(411.455625 274.168875)">(only component seeing both)</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(426.253125 51.968547)">ground truth (hidden)</text>
+    <text style="font-size: 8px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; fill: #0b0b0b" transform="translate(431.191875 60.824328)">ground_truth.sqlite</text>
+   </g>
+   <g id="patch_18">
+    <path d="M 107.64 211.376242 
+Q 107.64 224.622865 107.64 236.527847 
+" style="fill: none; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 109.64 232.527847 
+L 107.64 236.527847 
+L 105.64 232.527847 
+z
+" style="fill: #0b0b0b; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 193.342588 267.820438 
+Q 202.501792 267.820438 210.319356 267.820438 
+" style="fill: none; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 206.319356 265.820438 
+L 210.319356 267.820438 
+L 206.319356 269.820438 
+z
+" style="fill: #0b0b0b; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 360.742588 267.820438 
+Q 369.901792 267.820438 377.719356 267.820438 
+" style="fill: none; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 373.719356 265.820438 
+L 377.719356 267.820438 
+L 373.719356 269.820438 
+z
+" style="fill: #0b0b0b; stroke: #0b0b0b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 464.76 76.70297 
+Q 464.76 157.287825 464.76 236.531039 
+" style="fill: none; stroke: #d03b3b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 466.76 232.531039 
+L 464.76 236.531039 
+L 462.76 232.531039 
+z
+" style="fill: #d03b3b; stroke: #d03b3b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 11px; font-family: 'Segoe UI', 'DejaVu Sans', 'Arial', sans-serif; text-anchor: start; fill: #0b0b0b" x="7.2" y="15.343437" transform="rotate(-0 7.2 15.343437)">Figure 1. ML-FREF experimental architecture and trust boundaries</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p511edcfc6d">
+   <rect x="7.2" y="21.343437" width="558" height="304.92"/>
+  </clipPath>
+ </defs>
+</svg>

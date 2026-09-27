@@ -1,0 +1,2 @@
+data_origin,Python,PyTorch,Torchvision,CUDA,GPU,CPU,RAM (GB),Operating System
+SYNTHETIC,3.14.3,2.14.0+cu130,0.29.0+cu130,13.0,NVIDIA RTX 1000 Ada Generation Laptop GPU,Intel(R) Core(TM) Ultra 7 165H,31.5,Windows 11
