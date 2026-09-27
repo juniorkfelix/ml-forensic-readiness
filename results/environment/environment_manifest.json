@@ -1,5 +1,5 @@
 {
-  "manifest_created_utc": "2026-09-27T19:46:37.898234+00:00",
+  "manifest_created_utc": "2026-09-27T19:50:06.377878+00:00",
   "experiment": null,
   "seed": 1,
   "config_sha256": "37564390b1ac95ea79210d23f50ae0573ff83aaf6c36422c1236a6cb80508c9c",
@@ -35,10 +35,10 @@
   "device": null,
   "determinism": null,
   "git": {
-    "commit": null,
-    "branch": null,
-    "dirty": true,
-    "available": false
+    "commit": "6d5f1d704ec1f9c113d946ce0f8ccab7e44bc640",
+    "branch": "main",
+    "dirty": false,
+    "available": true
   },
   "command_line": [
     "setup_environment.py"
