@@ -133,6 +133,11 @@ def run(cfg: dict, force: bool = False) -> dict:
     exp_id, uid = identity.experiment_id, identity.experiment_uuid
     run_ref, mode, attack_type = f"RUN-{uid}", cfg["pipeline"]["mode"], cfg["attack"]["type"]
     phase = cfg["experiment"]["phase"]
+    # Smoke checks never write into the official result locations.
+    results_root = (
+        PROJECT_ROOT / "results" / "smoke" if phase == "smoke" else PROJECT_ROOT / "results"
+    )
+    run_index = results_root / "run_index_smoke.csv" if phase == "smoke" else RUN_INDEX
     setup_logging("INFO", PROJECT_ROOT / "logs" / f"{exp_id}_{uid[:8]}.log", experiment_id=exp_id)
     pkg = PROJECT_ROOT / "experiments" / phase / exp_id
     if pkg.exists():
@@ -295,7 +300,7 @@ def run(cfg: dict, force: bool = False) -> dict:
             stage = "reconstruction"
             with timer.stage("reconstruction"):
                 recon = reconstruct(paths.evidence_dir, ticket, PROJECT_ROOT)
-            rdir = PROJECT_ROOT / "results" / "reconstruction"
+            rdir = results_root / "reconstruction"
             rpath = write_json(recon, rdir / f"{exp_id}.json")
             write_markdown(recon, rdir / f"{exp_id}.md", f"{exp_id} ({run_ref})")
             shutil.copyfile(rpath, pkg / "reconstruction.json")
@@ -318,10 +323,8 @@ def run(cfg: dict, force: bool = False) -> dict:
             (pkg / "evaluation.json").write_text(
                 json.dumps(evaluation, indent=2, default=str), encoding="utf-8"
             )
-            (PROJECT_ROOT / "results" / "evaluation").mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(
-                pkg / "evaluation.json", PROJECT_ROOT / "results" / "evaluation" / f"{exp_id}.json"
-            )
+            (results_root / "evaluation").mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(pkg / "evaluation.json", results_root / "evaluation" / f"{exp_id}.json")
             recon_summary = {
                 "reconstruction_seconds": recon["runtime_seconds"],
                 "root_cause_finding": recon["root_cause"]["finding"],
@@ -373,7 +376,7 @@ def run(cfg: dict, force: bool = False) -> dict:
         )
         e = evaluation or {}
         append_csv_row(
-            RUN_INDEX,
+            run_index,
             {
                 "experiment_id": exp_id,
                 "experiment_uuid": uid,

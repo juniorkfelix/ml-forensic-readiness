@@ -1,7 +1,7 @@
 # =====================================================================
 # ML-FREF evaluation schema (pre-registration, spec §24)
 # ---------------------------------------------------------------------
-# STATUS: DRAFT — written before any experiment has been run.
+# STATUS: FROZEN before the pilot (no pilot/main result existed at freeze time).
 # All former REVIEW items were approved by the researcher on 2026-09-28
 # (docs/methodology_decisions.md D-054, D-055).
 # Freeze procedure: set status: FROZEN, fill frozen_at_utc, commit, then
@@ -11,8 +11,8 @@
 # =====================================================================
 
 schema_version: 0.1
-status: DRAFT
-frozen_at_utc: null
+status: FROZEN
+frozen_at_utc: 2026-09-27T22:02:05Z
 frozen_commit: null
 amendments: []
 
