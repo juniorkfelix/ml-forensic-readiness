@@ -49,18 +49,20 @@ def dataset_correct(recon: dict[str, Any], gt_events, resolver: ArtifactResolver
     tds = recon["hops"]["training_dataset"]
     if tds["status"] != "IDENTIFIED":
         return False
+    # The training dataset is the poisoned state (attacked runs) or the clean state.
     gt = _gt(gt_events, "POISONED_DATASET_CREATED") or _gt(gt_events, "CLEAN_DATASET_CREATED")
-    v = tds["value"]
-    for key in ("manifest_sha256", "mlflow_digest", "store"):
-        if v.get(key):
-            ref_key = "dataset_manifest_sha256" if key == "manifest_sha256" else key
-            res = resolver.resolve(ref_key, v[key])
-            want = (
-                gt.get("result_artifact")
-                if res and res[0] == "dataset_manifest"
-                else (gt.get("metadata") or {}).get("mlflow_digest")
-            )
-            return res is not None and res[1] == want
+    return strongest_dataset_ref_matches(tds["value"], gt, resolver)
+
+
+def strongest_dataset_ref_matches(value: dict[str, Any], gt_event, resolver) -> bool:
+    """Compare the strongest dataset reference present (hash > digest > path)."""
+    for key, ref_key in (
+        ("manifest_sha256", "dataset_manifest_sha256"),
+        ("mlflow_digest", "mlflow_digest"),
+        ("store", "store"),
+    ):
+        if value.get(key):
+            return resolver.matches(ref_key, value[key], gt_event)
     return False
 
 
@@ -89,13 +91,13 @@ def model_correct(recon: dict[str, Any], gt_events, resolver: ArtifactResolver) 
     if mod["status"] != "IDENTIFIED" or gt is None:
         return False
     v = mod["value"]
-    if v.get("model_sha256"):
-        return v["model_sha256"] == gt["affected_artifact"]
-    if v.get("registry_version"):
-        return str(v["registry_version"]) == str((gt.get("metadata") or {}).get("registry_version"))
-    if v.get("path"):
-        res = resolver.resolve("model_path", v["path"])
-        return res is not None and res[1] == gt["affected_artifact"]
+    for key, ref_key in (
+        ("model_sha256", "model_sha256"),
+        ("registry_version", "registry_version"),
+        ("path", "model_path"),
+    ):
+        if v.get(key):
+            return resolver.matches(ref_key, v[key], gt)
     return False
 
 

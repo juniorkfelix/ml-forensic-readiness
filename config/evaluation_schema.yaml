@@ -2,7 +2,8 @@
 # ML-FREF evaluation schema (pre-registration, spec §24)
 # ---------------------------------------------------------------------
 # STATUS: DRAFT — written before any experiment has been run.
-# Items marked "REVIEW:" need researcher approval before freezing.
+# All former REVIEW items were approved by the researcher on 2026-09-28
+# (docs/methodology_decisions.md D-054, D-055).
 # Freeze procedure: set status: FROZEN, fill frozen_at_utc, commit, then
 # record the commit hash in frozen_commit (in a follow-up commit).
 # Freezing happens BEFORE the pilot (docs/experimental_protocol.md §9).
@@ -58,7 +59,7 @@ required_gt_events:
     - TRIGGER_SUBMITTED           # the ticketed request
     - MALICIOUS_PREDICTION        # the ticketed request
 
-# REVIEW: POISONING_STARTED / POISONING_COMPLETED are recorded in GT but NOT
+# APPROVED 2026-09-28: POISONING_STARTED / POISONING_COMPLETED are recorded in GT but NOT
 # scored as separate events. Under the store-tampering threat model (D-015) no
 # pipeline observes the attack's start/end instants. The attack's existence is
 # scored through POISONED_DATASET_CREATED, which may be matched by a bounded-time
@@ -72,24 +73,27 @@ event_matching:
   #    hash (dataset content hash / model file SHA-256), or the same request_id for
   #    inference events; a missing artefact reference counts as a mismatch;
   # 3. its time is consistent with the GT timestamp (rules below).
-  # REVIEW: how reconstructed artefact references are resolved to canonical content (D-048).
-  # A reference counts only if it resolves to the SAME canonical artefact as the GT event.
+  # How reconstructed artefact references are compared with ground truth (D-054, approved).
+  # The STRONGEST reference present decides (hash > ID/digest > path).
   artifact_resolution:
-    dataset_manifest_sha256: "compared directly with the GT dataset manifest SHA-256"
-    mlflow_digest: "evaluator computes MLflow's native digest of the GT dataset and compares"
-    store: "path only: resolved by hashing the file's CURRENT content (the store was tampered
-            in place, so a path cannot identify its earlier, registered state)"
-    model_sha256: "compared directly with the GT model file SHA-256"
-    model_path: "resolved by hashing the file's current content"
-    registry_version: "resolved via the MLflow model registry to the version's run and model"
-    request_id: "compared directly with the GT request_id"
-  time_tolerance_seconds: 5          # REVIEW
+    dataset_manifest_sha256: "compared with the GT dataset manifest SHA-256"
+    mlflow_digest: "compared with MLflow's native digest of the GT dataset (recorded by the harness)"
+    store: "CONTENT AT EVENT TIME: correct if, at the time of the event, that path held the GT
+            dataset (harness records the path with each GT dataset/training event). One path
+            may therefore correctly denote different content at different events."
+    model_sha256: "compared with the GT model file SHA-256"
+    model_path: "content at event time (GT records the model path)"
+    deployed_path: "content at event time (GT records the deployed path)"
+    registry_version: "compared with the registry version recorded in GT"
+    run_id: "compared with the MLflow run ID recorded in GT"
+    request_id: "compared with the GT request_id"
+  time_tolerance_seconds: 5          # APPROVED 2026-09-28
   time_basis_rules:
     exact:    "abs(t_reconstructed - t_gt) <= tolerance"
     bounded:  "t_lower - tolerance <= t_gt <= t_upper + tolerance"
     inferred: "treated as exact"
     unknown:  "time check fails; event counts toward coverage only if time_optional"
-  time_optional_classes: []          # REVIEW: none; every scored event must be placed in time
+  time_optional_classes: []          # none: every scored event must be placed in time
   one_to_one: true                   # each GT event may be matched at most once
 
 # ---------------------------------------------------------------------
@@ -99,7 +103,7 @@ timeline:
   coverage_metric: "matched GT events / required GT events (same as ERR)"
   ordering_metric: kendall_tau_b
   ordering_sort_key: "exact/inferred: t; bounded: midpoint of [t_lower, t_upper]"
-  # REVIEW: tau is computed over commonly recovered events only, and only when
+  # APPROVED 2026-09-28: tau is computed over commonly recovered events only, and only when
   # at least this many are recovered; otherwise ordering is reported as NA
   # (never imputed).
   min_events_for_tau: 4
@@ -131,7 +135,7 @@ required_evidence_items:
   - {id: IG1, stage: integrity,  description: "dataset integrity check result at training time"}
   - {id: IG2, stage: integrity,  description: "deployed model integrity check (deployed == trained)"}
   - {id: IG3, stage: integrity,  description: "evidence-store integrity (hash chain verification)"}
-# REVIEW: SYSTEM-stage evidence (environment, config hash) is collected but not
+# SYSTEM-stage evidence (environment, config hash) is collected but not
 # scored, because it does not bear on reconstructing this incident.
 
 # ---------------------------------------------------------------------
@@ -143,14 +147,14 @@ root_cause_components:
   model:          "identified model resolves to GT compromised-model SHA-256"
   poisoning_source:
     description: "reconstructed changed-sample set matches GT poisoned_sample_ids"
-    criterion: "F1 >= 0.90"          # REVIEW: threshold
+    criterion: "F1 >= 0.90"          # APPROVED 2026-09-28
     also_report: [precision, recall, f1]   # continuous values always reported
 rci_overall_binary: "all four components correct"
 
 # ---------------------------------------------------------------------
 # Clean control runs
 # ---------------------------------------------------------------------
-# REVIEW (optional design element): clean runs get a ticket for a natural
+# APPROVED 2026-09-28: clean runs get a ticket for a natural
 # misclassification. The correct finding is "no dataset modification found".
 # Reported as a false-attribution rate (specificity), separately from RCI.
 clean_control:

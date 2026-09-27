@@ -20,6 +20,7 @@ from mlfref.evaluation.root_cause import (
     dataset_correct,
     model_correct,
     set_scores,
+    strongest_dataset_ref_matches,
     training_run_correct,
 )
 
@@ -52,16 +53,10 @@ def _near(a: str | None, b: str | None, tol: float) -> bool:
 def _registered_correct(c: Ctx) -> bool:
     if not c.ok("prior_dataset"):
         return False
-    gt = _gt(c.gt, "CLEAN_DATASET_CREATED")
-    v = c.hop("prior_dataset")["value"]
-    if v.get("manifest_sha256"):
-        return v["manifest_sha256"] == gt["result_artifact"]
-    if v.get("mlflow_digest"):
-        return v["mlflow_digest"] == (gt.get("metadata") or {}).get("mlflow_digest")
-    if v.get("store"):
-        res = c.resolver.resolve("store", v["store"])  # current content (D-048)
-        return res is not None and res[1] == gt["result_artifact"]
-    return False
+    # Strongest reference; a path counts if it held the registered data at registration (D-054).
+    return strongest_dataset_ref_matches(
+        c.hop("prior_dataset")["value"], _gt(c.gt, "CLEAN_DATASET_CREATED"), c.resolver
+    )
 
 
 def _profile_correct(c: Ctx) -> bool:
@@ -143,14 +138,16 @@ def _deployment_record(c: Ctx) -> bool:
     gt = _gt(c.gt, "MODEL_DEPLOYED")
     if not _near(v.get("time"), gt["timestamp_utc"], c.tol):
         return False
-    if v.get("model_sha256"):
-        return v["model_sha256"] == gt["affected_artifact"]
-    for key in ("deployed_path", "source_path"):
+    # Strongest deployed-model reference present (hash > ID/version > path).
+    for key, ref_key in (
+        ("model_sha256", "model_sha256"),
+        ("deployment_id", "deployment_id"),
+        ("registry_version", "registry_version"),
+        ("deployed_path", "deployed_path"),
+        ("source_path", "model_path"),
+    ):
         if v.get(key):
-            res = c.resolver.resolve("model_path", v[key])
-            return res is not None and res[1] == gt["affected_artifact"]
-    if v.get("registry_version"):
-        return str(v["registry_version"]) == str((gt.get("metadata") or {}).get("registry_version"))
+            return c.resolver.matches(ref_key, v[key], gt)
     return False
 
 

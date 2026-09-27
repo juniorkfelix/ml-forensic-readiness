@@ -21,6 +21,9 @@ SCHEMA = load_schema()
 T = "2026-09-28T10:00:{:02d}.000000Z".format
 CLEAN, POISONED, MODEL = "c" * 64, "p" * 64, "m" * 64
 POISONED_IDS = [3, 7, 11, 19]
+STORE = "data/stores/RUN-x/cifar10_train.npz"
+MPATH = "models/checkpoints/RUN-x/model_final.pt"
+DPATH = "models/deployed/RUN-x/model.pt"
 
 
 def gt_events(attack=True):
@@ -29,7 +32,7 @@ def gt_events(attack=True):
             "CLEAN_DATASET_CREATED",
             T(0),
             {"result_artifact": CLEAN},
-            {"mlflow_digest": "d-clean", "class_distribution": {"a": 5}},
+            {"mlflow_digest": "d-clean", "class_distribution": {"a": 5}, "store_path": STORE},
         )
     ]
     if attack:
@@ -38,7 +41,7 @@ def gt_events(attack=True):
                 "POISONED_DATASET_CREATED",
                 T(5),
                 {"result_artifact": POISONED},
-                {"mlflow_digest": "d-pois", "class_distribution": {"a": 1}},
+                {"mlflow_digest": "d-pois", "class_distribution": {"a": 1}, "store_path": STORE},
             )
         )
     ev += [
@@ -62,9 +65,14 @@ def gt_events(attack=True):
             "COMPROMISED_MODEL_CREATED" if attack else "MODEL_CREATED",
             T(22),
             {"affected_artifact": MODEL},
-            {"registry_version": "4", "mlflow_run_id": "run-1"},
+            {"registry_version": "4", "mlflow_run_id": "run-1", "model_path": MPATH},
         ),
-        ("MODEL_DEPLOYED", T(25), {"affected_artifact": MODEL}, {"deployment_id": "DEP-1"}),
+        (
+            "MODEL_DEPLOYED",
+            T(25),
+            {"affected_artifact": MODEL},
+            {"deployment_id": "DEP-1", "deployed_path": DPATH, "model_path": MPATH},
+        ),
     ]
     if attack:
         ev += [
@@ -360,3 +368,28 @@ def test_relative_overhead():
     assert out.loc["B", "overhead_pct"] == pytest.approx(50.0)
     assert out.loc["C", "overhead_pct"] == pytest.approx(200.0)
     assert math.isclose(out.loc["A", "overhead_pct"], 0.0)
+
+
+def test_path_references_use_content_at_event_time():
+    """D-054: a path is correct if it held the GT artefact at the event's time. A's single
+    store path therefore correctly denotes BOTH the registered and the training dataset."""
+    r = copy.deepcopy(recon())
+    r["hops"]["prior_dataset"]["value"] = {"store": STORE, "time": T(0)}
+    r["hops"]["training_dataset"]["value"] = {"store": STORE}
+    r["hops"]["model"]["value"] = {"path": MPATH, "time": T(22)}
+    r["hops"]["deployment"]["value"] = {"time": T(25), "deployed_path": DPATH, "source_path": MPATH}
+    res = evidence_completeness(
+        r, gt_events(), {"poisoned_sample_ids": POISONED_IDS}, SCHEMA, ArtifactResolver(None)
+    )
+    got = {i["id"]: i["recovered"] for i in res["items"]}
+    assert got["DS1"] and got["DS2"] and got["MO1"] and got["DE1"]
+    assert not got["MO2"]  # no hash recorded at creation
+    wrong = copy.deepcopy(r)
+    wrong["hops"]["training_dataset"]["value"] = {"store": "data/stores/OTHER/x.npz"}
+    res2 = evidence_completeness(
+        wrong, gt_events(), {"poisoned_sample_ids": POISONED_IDS}, SCHEMA, ArtifactResolver(None)
+    )
+    assert not {i["id"]: i["recovered"] for i in res2["items"]}["DS1"]
+    events = [ev("DATASET_REGISTERED", T(0), {"store": STORE}, order=1)]
+    m = {x["gt_action"]: x for x in _matches(events)}
+    assert m["CLEAN_DATASET_CREATED"]["recovered"]
