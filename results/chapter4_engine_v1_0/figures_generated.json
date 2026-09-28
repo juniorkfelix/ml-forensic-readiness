@@ -1,0 +1,14 @@
+{
+  "figure4_1_clean_baseline_pilot.png": "GENERATED",
+  "figure4_2_clean_accuracy_by_condition.png": "GENERATED",
+  "figure4_2 note": "only one poisoning rate (5 %) exists; x-axis is condition",
+  "figure4_3_backdoor_asr.png": "GENERATED",
+  "figure4_4_evidence_completeness.png": "GENERATED",
+  "figure4_5_event_recovery.png": "GENERATED",
+  "figure4_6_timeline_accuracy.png": "GENERATED",
+  "figure4_7_root_cause.png": "GENERATED",
+  "figure4_8_reconstruction_time.png": "GENERATED",
+  "figure4_9_evidence_storage.png": "GENERATED",
+  "figure4_10_runtime_overhead.png": "GENERATED",
+  "figure4_11_abc_reconstruction.png": "GENERATED"
+}

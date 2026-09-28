@@ -1,0 +1,245 @@
+{
+  "schema_version": 0.1,
+  "schema_status": "FROZEN",
+  "attack_type": "none",
+  "event_recovery": {
+    "recovered": 5,
+    "required": 5,
+    "err": 1.0,
+    "matches": [
+      {
+        "gt_action": "CLEAN_DATASET_CREATED",
+        "gt_sequence": 1,
+        "gt_time": "2026-09-28T10:20:23.850046Z",
+        "recovered": true,
+        "reason": null,
+        "recon_index": 0,
+        "applicable": true,
+        "matched_via": "mlflow_digest",
+        "recon_event_class": "DATASET_REGISTERED"
+      },
+      {
+        "gt_action": "TRAINING_STARTED",
+        "gt_sequence": 2,
+        "gt_time": "2026-09-28T10:20:27.240962Z",
+        "recovered": true,
+        "reason": null,
+        "recon_index": 1,
+        "applicable": true,
+        "matched_via": "run_id",
+        "recon_event_class": "TRAINING_STARTED"
+      },
+      {
+        "gt_action": "TRAINING_COMPLETED",
+        "gt_sequence": 3,
+        "gt_time": "2026-09-28T10:31:42.114701Z",
+        "recovered": true,
+        "reason": null,
+        "recon_index": 2,
+        "applicable": true,
+        "matched_via": "run_id",
+        "recon_event_class": "TRAINING_COMPLETED"
+      },
+      {
+        "gt_action": "MODEL_CREATED",
+        "gt_sequence": 4,
+        "gt_time": "2026-09-28T10:31:43.828137Z",
+        "recovered": true,
+        "reason": null,
+        "recon_index": 3,
+        "applicable": true,
+        "matched_via": "registry_version",
+        "recon_event_class": "MODEL_CREATED"
+      },
+      {
+        "gt_action": "MODEL_DEPLOYED",
+        "gt_sequence": 5,
+        "gt_time": "2026-09-28T10:31:46.859848Z",
+        "recovered": true,
+        "reason": null,
+        "recon_index": 4,
+        "applicable": true,
+        "matched_via": "registry_version",
+        "recon_event_class": "MODEL_DEPLOYED"
+      }
+    ]
+  },
+  "timeline": {
+    "coverage": 1.0,
+    "n_ordered_events": 5,
+    "kendall_tau_b": 0.9999999999999999,
+    "kendall_p_value": 0.016666666666666666,
+    "pairwise_order_accuracy": 1.0,
+    "tau_status": "COMPUTED"
+  },
+  "evidence_completeness": {
+    "items": [
+      {
+        "id": "DS1",
+        "stage": "dataset",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "DS2",
+        "stage": "dataset",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "DS3",
+        "stage": "dataset",
+        "applicable": false,
+        "recovered": null
+      },
+      {
+        "id": "DS4",
+        "stage": "dataset",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "DS5",
+        "stage": "dataset",
+        "applicable": false,
+        "recovered": null
+      },
+      {
+        "id": "TR1",
+        "stage": "training",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "TR2",
+        "stage": "training",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "TR3",
+        "stage": "training",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "TR4",
+        "stage": "training",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "TR5",
+        "stage": "training",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "MO1",
+        "stage": "model",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "MO2",
+        "stage": "model",
+        "applicable": true,
+        "recovered": false
+      },
+      {
+        "id": "MO3",
+        "stage": "model",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "DE1",
+        "stage": "deployment",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "IN1",
+        "stage": "inference",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "IN2",
+        "stage": "inference",
+        "applicable": true,
+        "recovered": false
+      },
+      {
+        "id": "IN3",
+        "stage": "inference",
+        "applicable": true,
+        "recovered": false
+      },
+      {
+        "id": "IG1",
+        "stage": "integrity",
+        "applicable": true,
+        "recovered": false
+      },
+      {
+        "id": "IG2",
+        "stage": "integrity",
+        "applicable": true,
+        "recovered": true
+      },
+      {
+        "id": "IG3",
+        "stage": "integrity",
+        "applicable": true,
+        "recovered": false
+      }
+    ],
+    "recovered": 13,
+    "applicable": 18,
+    "ec": 0.7222222222222222,
+    "by_stage": {
+      "dataset": {
+        "recovered": 3,
+        "applicable": 3,
+        "fraction": 1.0
+      },
+      "training": {
+        "recovered": 5,
+        "applicable": 5,
+        "fraction": 1.0
+      },
+      "model": {
+        "recovered": 2,
+        "applicable": 3,
+        "fraction": 0.6666666666666666
+      },
+      "deployment": {
+        "recovered": 1,
+        "applicable": 1,
+        "fraction": 1.0
+      },
+      "inference": {
+        "recovered": 1,
+        "applicable": 3,
+        "fraction": 0.3333333333333333
+      },
+      "integrity": {
+        "recovered": 1,
+        "applicable": 3,
+        "fraction": 0.3333333333333333
+      }
+    }
+  },
+  "reconstruction_runtime_seconds": 0.572337600053288,
+  "clean_control": {
+    "finding": "NO_DATASET_MODIFICATION_FOUND",
+    "correct": true,
+    "false_attribution": false
+  },
+  "root_cause": null,
+  "provenance": {
+    "reconstruction_sha256": "14e0bf25634fb2988d3107515a5e3350ccebc4559b988ff2326c7233563372b9",
+    "ground_truth_opened_utc": "2026-09-28T10:31:50.577015Z"
+  }
+}

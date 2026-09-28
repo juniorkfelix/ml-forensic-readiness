@@ -22,7 +22,7 @@ from mlfref.reconstruction.loader import load_evidence
 from mlfref.reconstruction.report import LIMITATIONS
 from mlfref.reconstruction.timeline import build_events
 
-ENGINE_VERSION = "1.0"
+ENGINE_VERSION = "1.1"  # v1.1: D-061 registration-run link
 
 
 def _missing(findings: dict[str, Any], sources: dict[str, bool]) -> list[str]:

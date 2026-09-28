@@ -1,0 +1,26 @@
+{
+  "dataset_id": "CIFAR10-TRAIN-f7285605e556",
+  "parent_dataset_id": null,
+  "dataset_type": "train",
+  "created_at": "2026-09-28T08:07:57.304592Z",
+  "number_of_samples": 50000,
+  "class_distribution": {
+    "airplane": 5000,
+    "automobile": 5000,
+    "bird": 5000,
+    "cat": 5000,
+    "deer": 5000,
+    "dog": 5000,
+    "frog": 5000,
+    "horse": 5000,
+    "ship": 5000,
+    "truck": 5000
+  },
+  "manifest_sha256": "f7285605e556be1f453be1f05ea295de43e5e5a1c1d01b7de8d3f449dedb1649",
+  "content_sha256": "c8be9ed3959a52965df6b2b9266d91afe4d3c013ead22dae8742b672e1bc0a50",
+  "hash_algorithm": "SHA-256",
+  "seed": null,
+  "configuration_hash": null,
+  "harness_alias": null,
+  "extra": {}
+}

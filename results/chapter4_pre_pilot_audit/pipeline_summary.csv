@@ -1,0 +1,13 @@
+metric,conventional_A,provenance_B,forensic_C
+"Clean Accuracy (full protocol, 30 epochs)",0.9334 (n=1),NOT AVAILABLE,NOT AVAILABLE
+"Clean Accuracy (1-epoch smoke, clean)","0.3880 (n=1, smoke)",NOT AVAILABLE,"0.3880 (n=1, smoke)"
+Attack Success Rate,NOT AVAILABLE,NOT AVAILABLE,"0.0644 (n=1, 1-epoch smoke, BD 5%); dev check without pipeline: 1.0000"
+Evidence Completeness,NOT AVAILABLE,NOT AVAILABLE,"100.0% (n=1, clean control, smoke)"
+Event Recovery Rate,NOT AVAILABLE,NOT AVAILABLE,"1.000 (n=1, clean, smoke)"
+Timeline Accuracy (Kendall tau-b),NOT AVAILABLE,NOT AVAILABLE,"1.000 (n=1, 5 events, smoke)"
+Root Cause Identification,NOT AVAILABLE,NOT AVAILABLE,NOT APPLICABLE for the only evaluated run (clean control; finding correct)
+Reconstruction Time (s),NOT AVAILABLE,NOT AVAILABLE,"0.228 (n=1, smoke)"
+"Evidence Storage (MB, excl. MLflow logged model)",NOT AVAILABLE,NOT AVAILABLE,6.092 (clean smoke); 11.415 (BD smoke)
+Storage Overhead (%),NOT AVAILABLE,NOT AVAILABLE,NOT AVAILABLE (no A baseline storage)
+Training Runtime (s),"693.861 (30 epochs, n=1); 23.999 (1-epoch smoke)",NOT AVAILABLE,35.142 (clean smoke); 33.928 (BD smoke)
+Runtime Overhead (%),reference,NOT AVAILABLE,"46.43% (smoke, NOT a valid estimate)"

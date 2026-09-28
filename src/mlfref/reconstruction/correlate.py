@@ -321,7 +321,7 @@ def trace(bundle: EvidenceBundle, ticket: dict[str, Any]) -> dict[str, Any]:
             conf,
             "MLflow dataset input of the training run",
             mlflow_digest=o.refs["mlflow_digest"],
-            store=o.refs.get("store"),
+            mlflow_source=o.refs.get("mlflow_source"),
             profile=(o.attrs.get("profile") or {}).get("class_distribution"),
         )
     if loaded and tr.status == "IDENTIFIED":
@@ -370,7 +370,7 @@ def trace(bundle: EvidenceBundle, ticket: dict[str, Any]) -> dict[str, Any]:
     ml_reg = [
         o
         for o in bundle.find("DATASET_REGISTERED", source="mlflow")
-        if tds.value.get("store") and o.refs.get("store") == tds.value.get("store")
+        if run_id and o.refs.get("linked_training_run_id") == run_id
     ]
     app_reg = [
         o
@@ -399,9 +399,9 @@ def trace(bundle: EvidenceBundle, ticket: dict[str, Any]) -> dict[str, Any]:
         conf = pri.confidence if pri.status == "IDENTIFIED" else MODERATE
         pri.identify(
             conf,
-            "MLflow data-registration run for the same data source",
+            f"MLflow data-registration run ({o.attrs.get('link_basis', 'linked')})",
             mlflow_digest=o.refs["mlflow_digest"],
-            store=o.refs.get("store"),
+            mlflow_source=o.refs.get("mlflow_source"),
             time=pri.value.get("time") or o.time,
             profile=pri.value.get("profile")
             or (o.attrs.get("profile") or {}).get("class_distribution"),

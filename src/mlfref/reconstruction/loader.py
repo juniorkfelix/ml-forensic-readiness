@@ -239,6 +239,9 @@ def load_mlflow(ref_path: Path, workspace_root: Path | None = None) -> list[Obse
         if ctx != "training":
             continue
         sources.add(dsi.dataset.source)
+        # MLflow reuses one dataset record per (name, digest) across the tracking store, so
+        # the recorded source can be the path of the FIRST run that logged identical data
+        # (D-060). It is kept as ``mlflow_source`` and is not used as this run's store.
         obs.append(
             Observation(
                 "TRAINING_DATASET",
@@ -249,32 +252,50 @@ def load_mlflow(ref_path: Path, workspace_root: Path | None = None) -> list[Obse
                     "run_id": run_id,
                     "dataset_name": dsi.dataset.name,
                     "mlflow_digest": dsi.dataset.digest,
-                    "store": _source_path(dsi.dataset.source),
+                    "mlflow_source": _source_path(dsi.dataset.source),
                 },
                 {"profile": _profile(client, run_id, "training")},
             )
         )
-    # Data-registration runs that logged the same data source (path-based link).
+    # Data-registration run(s) linked to this training run. Preferred: the registration run ID
+    # the pipeline recorded (mlflow_ref.json), or a registration run carrying the same run_ref
+    # tag. Fallback when no such record exists: a registration run with the same data source.
+    # Engine v1.1 (D-061).
+    run_ref = run.data.tags.get("run_ref")
+    recorded = ref.get("data_registration_run_id")
     for reg in client.search_runs(
         [run.info.experiment_id], filter_string="tags.run_type = 'data_registration'"
     ):
+        if recorded:
+            link = "recorded registration run ID" if reg.info.run_id == recorded else None
+        elif run_ref and reg.data.tags.get("run_ref") == run_ref:
+            link = "same run_ref tag"
+        else:
+            link = None
         for dsi in reg.inputs.dataset_inputs:
-            if dsi.dataset.source in sources:
-                obs.append(
-                    Observation(
-                        "DATASET_REGISTERED",
-                        "mlflow",
-                        _ms(reg.info.start_time),
-                        "exact",
-                        {
-                            "run_id": reg.info.run_id,
-                            "dataset_name": dsi.dataset.name,
-                            "mlflow_digest": dsi.dataset.digest,
-                            "store": _source_path(dsi.dataset.source),
-                        },
-                        {"profile": _profile(client, reg.info.run_id, "registration")},
-                    )
+            if link is None and not recorded and dsi.dataset.source in sources:
+                link = "same recorded data source"
+            if link is None:
+                continue
+            obs.append(
+                Observation(
+                    "DATASET_REGISTERED",
+                    "mlflow",
+                    _ms(reg.info.start_time),
+                    "exact",
+                    {
+                        "run_id": reg.info.run_id,
+                        "dataset_name": dsi.dataset.name,
+                        "mlflow_digest": dsi.dataset.digest,
+                        "mlflow_source": _source_path(dsi.dataset.source),
+                        "linked_training_run_id": run_id,
+                    },
+                    {
+                        "profile": _profile(client, reg.info.run_id, "registration"),
+                        "link_basis": link,
+                    },
                 )
+            )
     for mv in client.search_model_versions(f"run_id = '{run_id}'"):
         obs.append(
             Observation(

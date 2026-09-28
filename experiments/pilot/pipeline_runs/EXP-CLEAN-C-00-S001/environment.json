@@ -1,0 +1,68 @@
+{
+  "manifest_created_utc": "2026-09-28T08:25:12.178664+00:00",
+  "experiment": {
+    "experiment_id": "EXP-CLEAN-C-00-S001",
+    "experiment_uuid": "8eab44eb-5c79-4777-90ed-c8bb591a5a35"
+  },
+  "seed": 1,
+  "config_sha256": "e38722ed21b6cec65efb3e947b45c3305d297c30bfd2d59c293056c547816638",
+  "software": {
+    "python": "3.14.3",
+    "python_implementation": "CPython",
+    "torch": "2.14.0+cu130",
+    "torchvision": "0.29.0+cu130",
+    "numpy": "2.5.2",
+    "cuda_build": "13.0",
+    "cudnn": 92400
+  },
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) Ultra 7 165H",
+    "cpu_physical_cores": 16,
+    "cpu_logical_cores": 22,
+    "ram_total_gb": 31.5,
+    "cuda_available": true,
+    "gpu": {
+      "name": "NVIDIA RTX 1000 Ada Generation Laptop GPU",
+      "total_memory_mb": 6140,
+      "compute_capability": "8.9",
+      "device_count": 1
+    }
+  },
+  "os": {
+    "system": "Windows",
+    "release": "11",
+    "version": "10.0.26100",
+    "machine": "AMD64"
+  },
+  "machine_id": "7573ef65db26941b",
+  "device": "cuda",
+  "determinism": {
+    "deterministic_algorithms_enabled": true,
+    "deterministic_warn_only": true,
+    "cudnn_deterministic": true,
+    "cudnn_benchmark": false,
+    "cublas_workspace_config": ":4096:8",
+    "notes": [
+      "warn_only=True: operations without a deterministic implementation emit a warning (captured in the run log) instead of raising an error"
+    ]
+  },
+  "git": {
+    "commit": "b143d9a3e0bc5c630299ddf653996f92f84b1aa5",
+    "branch": "main",
+    "dirty": true,
+    "available": true
+  },
+  "command_line": [
+    "run_experiment.py",
+    "--attack",
+    "none",
+    "--pipeline",
+    "C",
+    "--seed",
+    "1",
+    "--poison-rate",
+    "0.0",
+    "--phase",
+    "pilot"
+  ]
+}

@@ -52,3 +52,4 @@ select = ["E", "F", "W", "I", "B", "UP"]
 [tool.ruff.lint.per-file-ignores]
 # scripts add src/ to sys.path before importing the package
 "scripts/*.py" = ["E402", "E501"]
+"scripts/chapter4_results.py" = ["E402", "E501", "F841", "B007", "E731"]

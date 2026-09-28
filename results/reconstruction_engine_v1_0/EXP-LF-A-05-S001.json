@@ -1,0 +1,375 @@
+{
+  "engine_version": "1.0",
+  "incident": {
+    "ticket_id": "INC-cdc836fe",
+    "reported_issue": "unexpected prediction returned by the image classification service",
+    "request_id": "REQ-00005",
+    "request_time_utc": "2026-09-28T08:59:19.951521Z",
+    "observed_prediction": "truck",
+    "observed_confidence": 0.566549,
+    "expected_label": "automobile",
+    "input_sha256": "a9b3556efe09797b0fa8e7c9dd14a00ba7e66feea8a0d1fadc87b2340e2e92c2"
+  },
+  "evidence_sources": {
+    "app_log": true,
+    "artifact_listing": true,
+    "metrics": true,
+    "mlflow": false,
+    "forensic": false
+  },
+  "observations_used": 211,
+  "hops": {
+    "inference": {
+      "name": "inference",
+      "status": "IDENTIFIED",
+      "confidence": "MODERATE",
+      "basis": [
+        "request_id REQ-00005 recorded in app_log"
+      ],
+      "value": {
+        "request_id": "REQ-00005",
+        "time": "2026-09-28T08:59:19.963883Z",
+        "predicted_label": "truck",
+        "prediction_matches_ticket": true
+      }
+    },
+    "deployment": {
+      "name": "deployment",
+      "status": "IDENTIFIED",
+      "confidence": "WEAK",
+      "basis": [
+        "latest recorded deployment before the incident (time ordering)"
+      ],
+      "value": {
+        "time": "2026-09-28T08:59:19.493614Z",
+        "deployed_path": "models/deployed/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/model.pt",
+        "source_path": "models/checkpoints/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/model_final.pt"
+      }
+    },
+    "model": {
+      "name": "model",
+      "status": "IDENTIFIED",
+      "confidence": "MODERATE",
+      "basis": [
+        "deployed file copied from recorded model path",
+        "model file hashed post hoc (current state, not historical)"
+      ],
+      "value": {
+        "path": "models/checkpoints/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/model_final.pt",
+        "time": "2026-09-28T08:59:19.437661Z",
+        "post_hoc_sha256": "4d634c055d47477bb255f7edbceecd606948c790c4d20810d4c343393e8e9a36"
+      }
+    },
+    "training_run": {
+      "name": "training_run",
+      "status": "IDENTIFIED",
+      "confidence": "WEAK",
+      "basis": [
+        "training start/completion logged before the model was saved"
+      ],
+      "value": {
+        "start_time": "2026-09-28T08:42:25.718668Z",
+        "end_time": "2026-09-28T08:59:16.939555Z",
+        "parameters": {
+          "model": "resnet18",
+          "epochs": "30",
+          "batch_size": "128",
+          "optimizer": "sgd",
+          "lr": "0.1",
+          "seed": "1"
+        }
+      }
+    },
+    "training_dataset": {
+      "name": "training_dataset",
+      "status": "IDENTIFIED",
+      "confidence": "WEAK",
+      "basis": [
+        "training data store logged as loaded before training"
+      ],
+      "value": {
+        "store": "data/stores/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/cifar10_train.npz",
+        "load_time": "2026-09-28T08:42:25.510722Z",
+        "num_samples": 50000
+      }
+    },
+    "prior_dataset": {
+      "name": "prior_dataset",
+      "status": "IDENTIFIED",
+      "confidence": "WEAK",
+      "basis": [
+        "registration of the same data store logged earlier"
+      ],
+      "value": {
+        "store": "data/stores/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/cifar10_train.npz",
+        "time": "2026-09-28T08:42:22.233721Z",
+        "num_samples": 50000
+      }
+    }
+  },
+  "events": [
+    {
+      "event_class": "DATASET_REGISTERED",
+      "time": "2026-09-28T08:42:22.233721Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "store": "data/stores/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/cifar10_train.npz"
+      },
+      "evidence_basis": [
+        "registration of the same data store logged earlier"
+      ],
+      "confidence": "WEAK",
+      "order": 1
+    },
+    {
+      "event_class": "TRAINING_STARTED",
+      "time": "2026-09-28T08:42:25.718668Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "store": "data/stores/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/cifar10_train.npz"
+      },
+      "evidence_basis": [
+        "training start/completion logged before the model was saved"
+      ],
+      "confidence": "WEAK",
+      "order": 2
+    },
+    {
+      "event_class": "TRAINING_COMPLETED",
+      "time": "2026-09-28T08:59:16.939555Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "store": "data/stores/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/cifar10_train.npz"
+      },
+      "evidence_basis": [
+        "training start/completion logged before the model was saved"
+      ],
+      "confidence": "WEAK",
+      "order": 3
+    },
+    {
+      "event_class": "MODEL_CREATED",
+      "time": "2026-09-28T08:59:19.437661Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "model_path": "models/checkpoints/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/model_final.pt"
+      },
+      "evidence_basis": [
+        "deployed file copied from recorded model path",
+        "model file hashed post hoc (current state, not historical)"
+      ],
+      "confidence": "MODERATE",
+      "order": 4
+    },
+    {
+      "event_class": "MODEL_DEPLOYED",
+      "time": "2026-09-28T08:59:19.493614Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "model_path": "models/checkpoints/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/model_final.pt",
+        "deployed_path": "models/deployed/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/model.pt"
+      },
+      "evidence_basis": [
+        "latest recorded deployment before the incident (time ordering)"
+      ],
+      "confidence": "WEAK",
+      "order": 5
+    },
+    {
+      "event_class": "INPUT_SUBMITTED",
+      "time": "2026-09-28T08:59:19.963883Z",
+      "time_basis": "inferred",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "request_id": "REQ-00005"
+      },
+      "evidence_basis": [
+        "only the served result is recorded; submission time taken as result time"
+      ],
+      "confidence": "MODERATE",
+      "order": 6
+    },
+    {
+      "event_class": "INCIDENT_PREDICTION",
+      "time": "2026-09-28T08:59:19.963883Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "request_id": "REQ-00005",
+        "predicted_label": "truck"
+      },
+      "evidence_basis": [
+        "request_id REQ-00005 recorded in app_log"
+      ],
+      "confidence": "MODERATE",
+      "order": 7
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "deployment",
+        "confidence": "WEAK",
+        "label": "models/deployed/RUN-cdc8",
+        "kind": "activity",
+        "type": "deployment"
+      },
+      {
+        "id": "incident_input",
+        "label": "not recorded",
+        "kind": "entity",
+        "type": "inference_input"
+      },
+      {
+        "id": "inference",
+        "confidence": "MODERATE",
+        "label": "REQ-00005",
+        "kind": "activity",
+        "type": "inference"
+      },
+      {
+        "id": "model",
+        "confidence": "MODERATE",
+        "label": "models/checkpoints/RUN-c",
+        "kind": "entity",
+        "type": "model"
+      },
+      {
+        "id": "registered_dataset",
+        "confidence": "WEAK",
+        "label": "data/stores/RUN-cdc836fe",
+        "kind": "entity",
+        "type": "dataset"
+      },
+      {
+        "id": "training",
+        "confidence": "WEAK",
+        "label": "2026-09-28T08:42:25.7186",
+        "kind": "activity",
+        "type": "training"
+      },
+      {
+        "id": "training_dataset",
+        "confidence": "WEAK",
+        "label": "data/stores/RUN-cdc836fe",
+        "kind": "entity",
+        "type": "dataset"
+      }
+    ],
+    "relations": [
+      {
+        "from": "deployment",
+        "relation": "USED",
+        "to": "model"
+      },
+      {
+        "from": "inference",
+        "relation": "USED",
+        "to": "incident_input"
+      },
+      {
+        "from": "inference",
+        "relation": "USED",
+        "to": "model"
+      },
+      {
+        "from": "inference",
+        "relation": "WAS_INFORMED_BY",
+        "to": "deployment"
+      },
+      {
+        "from": "model",
+        "relation": "WAS_GENERATED_BY",
+        "to": "training"
+      },
+      {
+        "from": "training",
+        "relation": "USED",
+        "to": "training_dataset"
+      }
+    ]
+  },
+  "integrity": {
+    "evidence_chain": {
+      "status": "NOT_OBSERVABLE"
+    },
+    "dataset_check": {
+      "status": "NOT_OBSERVABLE"
+    },
+    "deployed_model_check": {
+      "status": "POST_HOC",
+      "result": "MATCH",
+      "basis": "deployed and trained model files hashed during the investigation (current state only)"
+    }
+  },
+  "dataset_change": {
+    "changed": "UNKNOWN",
+    "basis": "NOT_OBSERVABLE",
+    "finding": "INSUFFICIENT_EVIDENCE",
+    "changed_sample_ids": null,
+    "change_type": null,
+    "label_transitions": null,
+    "profile_delta": null,
+    "modification_window": null
+  },
+  "identified": {
+    "model": {
+      "path": "models/checkpoints/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/model_final.pt",
+      "time": "2026-09-28T08:59:19.437661Z",
+      "post_hoc_sha256": "4d634c055d47477bb255f7edbceecd606948c790c4d20810d4c343393e8e9a36"
+    },
+    "training_run": {
+      "start_time": "2026-09-28T08:42:25.718668Z",
+      "end_time": "2026-09-28T08:59:16.939555Z",
+      "parameters": {
+        "model": "resnet18",
+        "epochs": "30",
+        "batch_size": "128",
+        "optimizer": "sgd",
+        "lr": "0.1",
+        "seed": "1"
+      }
+    },
+    "training_dataset": {
+      "store": "data/stores/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/cifar10_train.npz",
+      "load_time": "2026-09-28T08:42:25.510722Z",
+      "num_samples": 50000
+    },
+    "prior_dataset": {
+      "store": "data/stores/RUN-cdc836fe-e672-4190-a73f-bc6fd2f85ee6/cifar10_train.npz",
+      "time": "2026-09-28T08:42:22.233721Z",
+      "num_samples": 50000
+    }
+  },
+  "root_cause": {
+    "finding": "INSUFFICIENT_EVIDENCE",
+    "changed_sample_ids": null,
+    "change_type": null
+  },
+  "missing_evidence": [
+    "evidence source not available: mlflow",
+    "evidence source not available: forensic",
+    "dataset change between registration and training: NOT_OBSERVABLE",
+    "integrity/evidence_chain: NOT_OBSERVABLE",
+    "integrity/dataset_check: NOT_OBSERVABLE"
+  ],
+  "limitations": [
+    "Only investigator-visible evidence of this pipeline was used; no external reference data.",
+    "Post-hoc file hashes show the current state of a file, not its state at the time of the event.",
+    "MLflow dataset digests cover only the first 10,000 values of each array; equal digests do not prove identical datasets.",
+    "The forensic hash chain gives tamper evidence, not tamper prevention."
+  ],
+  "runtime_seconds": 0.1126957000233233
+}

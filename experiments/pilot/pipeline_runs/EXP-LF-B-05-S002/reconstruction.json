@@ -1,0 +1,525 @@
+{
+  "engine_version": "1.1",
+  "incident": {
+    "ticket_id": "INC-b9cbe476",
+    "reported_issue": "unexpected prediction returned by the image classification service",
+    "request_id": "REQ-00038",
+    "request_time_utc": "2026-09-28T11:07:35.545298Z",
+    "observed_prediction": "truck",
+    "observed_confidence": 0.734165,
+    "expected_label": "automobile",
+    "input_sha256": "4f1694ce9865f23c5468a9c180903730463fc93f3cab734621b1474b5384a33a"
+  },
+  "evidence_sources": {
+    "app_log": true,
+    "artifact_listing": true,
+    "metrics": true,
+    "mlflow": true,
+    "forensic": false
+  },
+  "observations_used": 217,
+  "hops": {
+    "inference": {
+      "name": "inference",
+      "status": "IDENTIFIED",
+      "confidence": "MODERATE",
+      "basis": [
+        "request_id REQ-00038 recorded in app_log"
+      ],
+      "value": {
+        "request_id": "REQ-00038",
+        "time": "2026-09-28T11:07:35.554772Z",
+        "predicted_label": "truck",
+        "prediction_matches_ticket": true
+      }
+    },
+    "deployment": {
+      "name": "deployment",
+      "status": "IDENTIFIED",
+      "confidence": "WEAK",
+      "basis": [
+        "latest recorded deployment before the incident (time ordering)",
+        "registry alias production -> version 11"
+      ],
+      "value": {
+        "time": "2026-09-28T11:07:34.411849Z",
+        "deployed_path": "models/deployed/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/model.pt",
+        "source_path": "models/checkpoints/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/model_final.pt",
+        "registry_version": "11"
+      }
+    },
+    "model": {
+      "name": "model",
+      "status": "IDENTIFIED",
+      "confidence": "MODERATE",
+      "basis": [
+        "registry version 11 (MLflow model registry)",
+        "deployed file copied from recorded model path",
+        "model file hashed post hoc (current state, not historical)"
+      ],
+      "value": {
+        "registry_version": "11",
+        "run_id": "df12246e50a8423b96fc7ca4068f86fd",
+        "time": "2026-09-28T11:07:30.951895Z",
+        "path": "models/checkpoints/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/model_final.pt",
+        "post_hoc_sha256": "c09adc48df35f5002099131d68ce85b71848f87ef8dc16a6707b3e03ab35a757"
+      }
+    },
+    "training_run": {
+      "name": "training_run",
+      "status": "IDENTIFIED",
+      "confidence": "MODERATE",
+      "basis": [
+        "MLflow model version lineage (run_id)"
+      ],
+      "value": {
+        "run_id": "df12246e50a8423b96fc7ca4068f86fd",
+        "start_time": "2026-09-28T10:55:55.474302Z",
+        "end_time": "2026-09-28T11:07:29.105308Z",
+        "parameters": {
+          "epochs": "30",
+          "batch_size": "128",
+          "optimizer": "sgd",
+          "learning_rate": "0.1",
+          "momentum": "0.9",
+          "weight_decay": "0.0005",
+          "nesterov": "False",
+          "lr_scheduler": "cosine",
+          "loss": "cross_entropy",
+          "amp": "True",
+          "seed": "2",
+          "augmentation": "{\"horizontal_flip\": true, \"random_crop_padding\": 4}",
+          "model_architecture": "resnet18",
+          "model_cifar_stem": "True",
+          "model_pretrained": "False",
+          "model_parameters": "11173962",
+          "train_dataset_name": "cifar10_train",
+          "train_dataset_source": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz",
+          "train_dataset_digest": "f92f93f9"
+        },
+        "code_version": "b143d9a3e0bc5c630299ddf653996f92f84b1aa5"
+      }
+    },
+    "training_dataset": {
+      "name": "training_dataset",
+      "status": "IDENTIFIED",
+      "confidence": "MODERATE",
+      "basis": [
+        "MLflow dataset input of the training run",
+        "training data store logged as loaded before training"
+      ],
+      "value": {
+        "mlflow_digest": "f92f93f9",
+        "mlflow_source": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz",
+        "profile": {
+          "airplane": 5000,
+          "automobile": 2500,
+          "bird": 5000,
+          "cat": 5000,
+          "deer": 5000,
+          "dog": 5000,
+          "frog": 5000,
+          "horse": 5000,
+          "ship": 5000,
+          "truck": 7500
+        },
+        "store": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz",
+        "load_time": "2026-09-28T10:55:54.919154Z",
+        "num_samples": 50000
+      }
+    },
+    "prior_dataset": {
+      "name": "prior_dataset",
+      "status": "IDENTIFIED",
+      "confidence": "MODERATE",
+      "basis": [
+        "MLflow data-registration run (recorded registration run ID)",
+        "registration of the same data store logged earlier"
+      ],
+      "value": {
+        "mlflow_digest": "f133e984",
+        "mlflow_source": "data/stores/RUN-3a696eb9-d299-4b22-b172-acea428ffc6d/cifar10_train.npz",
+        "time": "2026-09-28T10:55:51.486000Z",
+        "profile": {
+          "airplane": 5000,
+          "automobile": 5000,
+          "bird": 5000,
+          "cat": 5000,
+          "deer": 5000,
+          "dog": 5000,
+          "frog": 5000,
+          "horse": 5000,
+          "ship": 5000,
+          "truck": 5000
+        },
+        "store": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz",
+        "num_samples": 50000
+      }
+    }
+  },
+  "events": [
+    {
+      "event_class": "DATASET_REGISTERED",
+      "time": "2026-09-28T10:55:51.486000Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "mlflow_digest": "f133e984",
+        "store": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz"
+      },
+      "evidence_basis": [
+        "MLflow data-registration run (recorded registration run ID)",
+        "registration of the same data store logged earlier"
+      ],
+      "confidence": "MODERATE",
+      "order": 1
+    },
+    {
+      "event_class": "DATASET_MODIFIED",
+      "time": null,
+      "time_basis": "bounded",
+      "time_lower": "2026-09-28T10:55:51.486000Z",
+      "time_upper": "2026-09-28T10:55:54.919154Z",
+      "artifact_refs": {
+        "mlflow_digest": "f92f93f9",
+        "store": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz"
+      },
+      "evidence_basis": [
+        "MLflow dataset digests (partial coverage: first 10,000 values per array)"
+      ],
+      "confidence": "MODERATE",
+      "order": 2
+    },
+    {
+      "event_class": "TRAINING_STARTED",
+      "time": "2026-09-28T10:55:55.474302Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "run_id": "df12246e50a8423b96fc7ca4068f86fd",
+        "mlflow_digest": "f92f93f9",
+        "store": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz"
+      },
+      "evidence_basis": [
+        "MLflow model version lineage (run_id)"
+      ],
+      "confidence": "MODERATE",
+      "order": 3
+    },
+    {
+      "event_class": "TRAINING_COMPLETED",
+      "time": "2026-09-28T11:07:29.105308Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "run_id": "df12246e50a8423b96fc7ca4068f86fd",
+        "mlflow_digest": "f92f93f9",
+        "store": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz"
+      },
+      "evidence_basis": [
+        "MLflow model version lineage (run_id)"
+      ],
+      "confidence": "MODERATE",
+      "order": 4
+    },
+    {
+      "event_class": "MODEL_CREATED",
+      "time": "2026-09-28T11:07:30.951895Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "model_path": "models/checkpoints/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/model_final.pt",
+        "registry_version": "11"
+      },
+      "evidence_basis": [
+        "registry version 11 (MLflow model registry)",
+        "deployed file copied from recorded model path",
+        "model file hashed post hoc (current state, not historical)"
+      ],
+      "confidence": "MODERATE",
+      "order": 5
+    },
+    {
+      "event_class": "MODEL_DEPLOYED",
+      "time": "2026-09-28T11:07:34.411849Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "model_path": "models/checkpoints/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/model_final.pt",
+        "registry_version": "11",
+        "deployed_path": "models/deployed/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/model.pt"
+      },
+      "evidence_basis": [
+        "latest recorded deployment before the incident (time ordering)",
+        "registry alias production -> version 11"
+      ],
+      "confidence": "WEAK",
+      "order": 6
+    },
+    {
+      "event_class": "INPUT_SUBMITTED",
+      "time": "2026-09-28T11:07:35.554772Z",
+      "time_basis": "inferred",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "request_id": "REQ-00038"
+      },
+      "evidence_basis": [
+        "only the served result is recorded; submission time taken as result time"
+      ],
+      "confidence": "MODERATE",
+      "order": 7
+    },
+    {
+      "event_class": "INCIDENT_PREDICTION",
+      "time": "2026-09-28T11:07:35.554772Z",
+      "time_basis": "exact",
+      "time_lower": null,
+      "time_upper": null,
+      "artifact_refs": {
+        "request_id": "REQ-00038",
+        "predicted_label": "truck"
+      },
+      "evidence_basis": [
+        "request_id REQ-00038 recorded in app_log"
+      ],
+      "confidence": "MODERATE",
+      "order": 8
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "dataset_modification",
+        "window": [
+          "2026-09-28T10:55:51.486000Z",
+          "2026-09-28T10:55:54.919154Z"
+        ],
+        "kind": "activity",
+        "type": "modification"
+      },
+      {
+        "id": "deployment",
+        "confidence": "WEAK",
+        "label": "models/deployed/RUN-b9cb",
+        "kind": "activity",
+        "type": "deployment"
+      },
+      {
+        "id": "incident_input",
+        "label": "not recorded",
+        "kind": "entity",
+        "type": "inference_input"
+      },
+      {
+        "id": "inference",
+        "confidence": "MODERATE",
+        "label": "REQ-00038",
+        "kind": "activity",
+        "type": "inference"
+      },
+      {
+        "id": "model",
+        "confidence": "MODERATE",
+        "label": "11",
+        "kind": "entity",
+        "type": "model"
+      },
+      {
+        "id": "registered_dataset",
+        "confidence": "MODERATE",
+        "label": "f133e984",
+        "kind": "entity",
+        "type": "dataset"
+      },
+      {
+        "id": "training",
+        "confidence": "MODERATE",
+        "label": "df12246e50a8423b96fc7ca4",
+        "kind": "activity",
+        "type": "training"
+      },
+      {
+        "id": "training_dataset",
+        "confidence": "MODERATE",
+        "label": "f92f93f9",
+        "kind": "entity",
+        "type": "dataset"
+      }
+    ],
+    "relations": [
+      {
+        "from": "dataset_modification",
+        "relation": "USED",
+        "to": "registered_dataset"
+      },
+      {
+        "from": "deployment",
+        "relation": "USED",
+        "to": "model"
+      },
+      {
+        "from": "inference",
+        "relation": "USED",
+        "to": "incident_input"
+      },
+      {
+        "from": "inference",
+        "relation": "USED",
+        "to": "model"
+      },
+      {
+        "from": "inference",
+        "relation": "WAS_INFORMED_BY",
+        "to": "deployment"
+      },
+      {
+        "from": "model",
+        "relation": "WAS_GENERATED_BY",
+        "to": "training"
+      },
+      {
+        "from": "training",
+        "relation": "USED",
+        "to": "training_dataset"
+      },
+      {
+        "from": "training_dataset",
+        "relation": "WAS_DERIVED_FROM",
+        "to": "registered_dataset"
+      },
+      {
+        "from": "training_dataset",
+        "relation": "WAS_GENERATED_BY",
+        "to": "dataset_modification"
+      }
+    ]
+  },
+  "integrity": {
+    "evidence_chain": {
+      "status": "NOT_OBSERVABLE"
+    },
+    "dataset_check": {
+      "status": "NOT_OBSERVABLE"
+    },
+    "deployed_model_check": {
+      "status": "POST_HOC",
+      "result": "MATCH",
+      "basis": "deployed and trained model files hashed during the investigation (current state only)"
+    }
+  },
+  "dataset_change": {
+    "changed": true,
+    "basis": "MLflow dataset digests (partial coverage: first 10,000 values per array)",
+    "finding": "DATASET_MODIFIED_UNSPECIFIED",
+    "changed_sample_ids": null,
+    "change_type": null,
+    "label_transitions": null,
+    "profile_delta": {
+      "automobile": -2500,
+      "truck": 2500
+    },
+    "modification_window": [
+      "2026-09-28T10:55:51.486000Z",
+      "2026-09-28T10:55:54.919154Z"
+    ]
+  },
+  "identified": {
+    "model": {
+      "registry_version": "11",
+      "run_id": "df12246e50a8423b96fc7ca4068f86fd",
+      "time": "2026-09-28T11:07:30.951895Z",
+      "path": "models/checkpoints/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/model_final.pt",
+      "post_hoc_sha256": "c09adc48df35f5002099131d68ce85b71848f87ef8dc16a6707b3e03ab35a757"
+    },
+    "training_run": {
+      "run_id": "df12246e50a8423b96fc7ca4068f86fd",
+      "start_time": "2026-09-28T10:55:55.474302Z",
+      "end_time": "2026-09-28T11:07:29.105308Z",
+      "parameters": {
+        "epochs": "30",
+        "batch_size": "128",
+        "optimizer": "sgd",
+        "learning_rate": "0.1",
+        "momentum": "0.9",
+        "weight_decay": "0.0005",
+        "nesterov": "False",
+        "lr_scheduler": "cosine",
+        "loss": "cross_entropy",
+        "amp": "True",
+        "seed": "2",
+        "augmentation": "{\"horizontal_flip\": true, \"random_crop_padding\": 4}",
+        "model_architecture": "resnet18",
+        "model_cifar_stem": "True",
+        "model_pretrained": "False",
+        "model_parameters": "11173962",
+        "train_dataset_name": "cifar10_train",
+        "train_dataset_source": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz",
+        "train_dataset_digest": "f92f93f9"
+      },
+      "code_version": "b143d9a3e0bc5c630299ddf653996f92f84b1aa5"
+    },
+    "training_dataset": {
+      "mlflow_digest": "f92f93f9",
+      "mlflow_source": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz",
+      "profile": {
+        "airplane": 5000,
+        "automobile": 2500,
+        "bird": 5000,
+        "cat": 5000,
+        "deer": 5000,
+        "dog": 5000,
+        "frog": 5000,
+        "horse": 5000,
+        "ship": 5000,
+        "truck": 7500
+      },
+      "store": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz",
+      "load_time": "2026-09-28T10:55:54.919154Z",
+      "num_samples": 50000
+    },
+    "prior_dataset": {
+      "mlflow_digest": "f133e984",
+      "mlflow_source": "data/stores/RUN-3a696eb9-d299-4b22-b172-acea428ffc6d/cifar10_train.npz",
+      "time": "2026-09-28T10:55:51.486000Z",
+      "profile": {
+        "airplane": 5000,
+        "automobile": 5000,
+        "bird": 5000,
+        "cat": 5000,
+        "deer": 5000,
+        "dog": 5000,
+        "frog": 5000,
+        "horse": 5000,
+        "ship": 5000,
+        "truck": 5000
+      },
+      "store": "data/stores/RUN-b9cbe476-9864-45da-8caa-74cf647e6bd0/cifar10_train.npz",
+      "num_samples": 50000
+    }
+  },
+  "root_cause": {
+    "finding": "DATASET_MODIFIED_UNSPECIFIED",
+    "changed_sample_ids": null,
+    "change_type": null
+  },
+  "missing_evidence": [
+    "evidence source not available: forensic",
+    "which samples changed: NOT_OBSERVABLE (no per-sample manifests)",
+    "integrity/evidence_chain: NOT_OBSERVABLE",
+    "integrity/dataset_check: NOT_OBSERVABLE"
+  ],
+  "limitations": [
+    "Only investigator-visible evidence of this pipeline was used; no external reference data.",
+    "Post-hoc file hashes show the current state of a file, not its state at the time of the event.",
+    "MLflow dataset digests cover only the first 10,000 values of each array; equal digests do not prove identical datasets.",
+    "The forensic hash chain gives tamper evidence, not tamper prevention."
+  ],
+  "runtime_seconds": 0.13966240000445396
+}

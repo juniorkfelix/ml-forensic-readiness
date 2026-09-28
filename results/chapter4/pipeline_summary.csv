@@ -1,13 +1,14 @@
 metric,conventional_A,provenance_B,forensic_C
-"Clean Accuracy (full protocol, 30 epochs)",0.9334 (n=1),NOT AVAILABLE,NOT AVAILABLE
-"Clean Accuracy (1-epoch smoke, clean)","0.3880 (n=1, smoke)",NOT AVAILABLE,"0.3880 (n=1, smoke)"
-Attack Success Rate,NOT AVAILABLE,NOT AVAILABLE,"0.0644 (n=1, 1-epoch smoke, BD 5%); dev check without pipeline: 1.0000"
-Evidence Completeness,NOT AVAILABLE,NOT AVAILABLE,"100.0% (n=1, clean control, smoke)"
-Event Recovery Rate,NOT AVAILABLE,NOT AVAILABLE,"1.000 (n=1, clean, smoke)"
-Timeline Accuracy (Kendall tau-b),NOT AVAILABLE,NOT AVAILABLE,"1.000 (n=1, 5 events, smoke)"
-Root Cause Identification,NOT AVAILABLE,NOT AVAILABLE,NOT APPLICABLE for the only evaluated run (clean control; finding correct)
-Reconstruction Time (s),NOT AVAILABLE,NOT AVAILABLE,"0.228 (n=1, smoke)"
-"Evidence Storage (MB, excl. MLflow logged model)",NOT AVAILABLE,NOT AVAILABLE,6.092 (clean smoke); 11.415 (BD smoke)
-Storage Overhead (%),NOT AVAILABLE,NOT AVAILABLE,NOT AVAILABLE (no A baseline storage)
-Training Runtime (s),"693.861 (30 epochs, n=1); 23.999 (1-epoch smoke)",NOT AVAILABLE,35.142 (clean smoke); 33.928 (BD smoke)
-Runtime Overhead (%),reference,NOT AVAILABLE,"46.43% (smoke, NOT a valid estimate)"
+Clean Accuracy (all runs),0.9217 ± 0.0159 (n=6),0.9217 ± 0.0159 (n=6),0.9217 ± 0.0159 (n=6)
+Attack Success Rate (backdoor),1.0000 ± 0.0000 (n=2),1.0000 ± 0.0000 (n=2),1.0000 ± 0.0000 (n=2)
+Evidence Completeness % (attacked),50.0 ± 0.0 (n=4),70.0 ± 0.0 (n=4),100.0 ± 0.0 (n=4)
+Evidence Completeness % (clean control),55.6 ± 0.0 (n=2),72.2 ± 0.0 (n=2),100.0 ± 0.0 (n=2)
+Event Recovery Rate (attacked),0.866 ± 0.010 (n=4),1.000 ± 0.000 (n=4),1.000 ± 0.000 (n=4)
+"Timeline Accuracy, Kendall tau-b (all)",1.000 ± 0.000 (n=6),1.000 ± 0.000 (n=6),1.000 ± 0.000 (n=6)
+Root Cause Identification score (attacked),0.750 ± 0.000 (n=4),0.750 ± 0.000 (n=4),1.000 ± 0.000 (n=4)
+Reconstruction Time s (all),0.084 ± 0.013 (n=6),0.599 ± 1.125 (n=6),0.199 ± 0.029 (n=6)
+Evidence Storage MB (excl. MLflow model),0.055 ± 0.000 (n=6),0.056 ± 0.000 (n=6),9.659 ± 2.754 (n=6)
+Evidence Storage MB (incl. MLflow logged model),0.055 ± 0.000 (n=6),42.762 ± 0.000 (n=6),52.365 ± 2.754 (n=6)
+Storage Overhead % vs matched A,0.0 ± 0.0 (n=6),2.2 ± 0.1 (n=6),17448.8 ± 4992.0 (n=6)
+Training Runtime s (all; absolute values confounded by GPU power state),807.3 ± 204.7 (n=6),792.2 ± 164.2 (n=6),783.3 ± 152.1 (n=6)
+Runtime Overhead % vs matched A (each A/B/C triple shares one GPU power state),0.0 ± 0.0 (n=6),-1.0 ± 4.5 (n=6),-1.9 ± 5.3 (n=6)

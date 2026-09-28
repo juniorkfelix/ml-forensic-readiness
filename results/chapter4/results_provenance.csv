@@ -1,20 +1,121 @@
 metric_name,experiment_id,reported_value,unit,status,source_file,source_field,calculation_script,calculation_formula,git_commit
-clean_test_accuracy,EXP-CLEAN-A-00-S001,0.9334,proportion,MEASURED,experiments/pilot/EXP-CLEAN-A-00-S001/run_summary.json,clean_test_accuracy / harness_metrics,,,9d731ac (current main: 8dcb331)
-training_time,EXP-CLEAN-A-00-S001,693.861,s,MEASURED,experiments/pilot/EXP-CLEAN-A-00-S001/run_summary.json,timings.training_seconds,,,9d731ac (current main: 8dcb331)
-clean_test_accuracy,EXP-CLEAN-A-00-S001,0.388,proportion,MEASURED,experiments/smoke/EXP-CLEAN-A-00-S001/run_summary.json,clean_test_accuracy / harness_metrics,,,282554c (current main: 1657866)
-training_time,EXP-CLEAN-A-00-S001,23.999,s,MEASURED,experiments/smoke/EXP-CLEAN-A-00-S001/run_summary.json,timings.training_seconds,,,282554c (current main: 1657866)
-clean_test_accuracy,EXP-CLEAN-C-00-S001,0.388,proportion,MEASURED,experiments/smoke/EXP-CLEAN-C-00-S001/run_summary.json,clean_test_accuracy / harness_metrics,,,3a6639d (current main: 9f4bd1f)
-training_time,EXP-CLEAN-C-00-S001,35.142,s,MEASURED,experiments/smoke/EXP-CLEAN-C-00-S001/run_summary.json,timings.training_seconds,,,3a6639d (current main: 9f4bd1f)
-label_flip_number_poisoned,EXP-LF-C-05-S001,250,samples,MEASURED,ground_truth/ground_truth.sqlite,gt_attacks.number_poisoned,,,NOT AVAILABLE
-clean_test_accuracy,EXP-BD-C-05-S001,0.4039,proportion,MEASURED,experiments/smoke/EXP-BD-C-05-S001/run_summary.json,harness_metrics.clean_test_accuracy,,,3a6639d (current main: 9f4bd1f)
-attack_success_rate,EXP-BD-C-05-S001,0.06444444444444444,proportion,MEASURED,experiments/smoke/EXP-BD-C-05-S001/run_summary.json,harness_metrics.attack_success_rate,,,3a6639d (current main: 9f4bd1f)
-attack_success_rate,attack_sanity_backdoor_S001,1.0,proportion,MEASURED,results/pilot/dev_checks/attack_sanity_backdoor_S001.json,attack_success_rate.asr,,,12f2bdb (current main: unmapped)
-clean_test_accuracy,attack_sanity_backdoor_S001,0.9316,proportion,MEASURED,results/pilot/dev_checks/attack_sanity_backdoor_S001.json,clean_test_accuracy,,,12f2bdb (current main: unmapped)
-evidence_completeness,EXP-CLEAN-C-00-S001,100.0,%,MEASURED,experiments/smoke/EXP-CLEAN-C-00-S001/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,3a6639d (current main: 9f4bd1f)
-event_recovery_rate,EXP-CLEAN-C-00-S001,1.0,proportion,MEASURED,experiments/smoke/EXP-CLEAN-C-00-S001/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,3a6639d (current main: 9f4bd1f)
-timeline_kendall_tau_b,EXP-CLEAN-C-00-S001,0.9999999999999999,tau,MEASURED,experiments/smoke/EXP-CLEAN-C-00-S001/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, variant='b')",3a6639d (current main: 9f4bd1f)
-clean_control_correct,EXP-CLEAN-C-00-S001,True,boolean,MEASURED,experiments/smoke/EXP-CLEAN-C-00-S001/evaluation.json,clean_control.correct,,,NOT AVAILABLE
-reconstruction_time,EXP-CLEAN-C-00-S001,0.2279750999296084,s,MEASURED,experiments/smoke/EXP-CLEAN-C-00-S001/reconstruction.json,runtime_seconds,,,3a6639d (current main: 9f4bd1f)
-evidence_storage,EXP-BD-C-05-S001,11.415,MB,MEASURED,experiments/smoke/EXP-BD-C-05-S001/run_summary.json,storage_bytes (excluding model_files),,,3a6639d (current main: 9f4bd1f)
-evidence_storage,EXP-CLEAN-C-00-S001,6.092,MB,MEASURED,experiments/smoke/EXP-CLEAN-C-00-S001/run_summary.json,storage_bytes (excluding model_files),,,3a6639d (current main: 9f4bd1f)
-runtime_overhead_C_vs_A_smoke,EXP-CLEAN-C-00-S001 vs EXP-CLEAN-A-00-S001 (smoke),46.43,%,CALCULATED,experiments/smoke/EXP-CLEAN-A-00-S001/run_summary.json; experiments/smoke/EXP-CLEAN-C-00-S001/run_summary.json,timings.training_seconds,scripts/chapter4_audit.py,(T_C - T_A) / T_A x 100,NOT AVAILABLE
+clean_test_accuracy,EXP-CLEAN-A-00-S001,0.9334,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S001/run_summary.json,harness_metrics.clean_test_accuracy,,,b143d9a
+clean_test_accuracy,EXP-CLEAN-A-00-S002,0.9284,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S002/run_summary.json,harness_metrics.clean_test_accuracy,,,b143d9a
+clean_test_accuracy,EXP-CLEAN-B-00-S001,0.9334,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S001/run_summary.json,harness_metrics.clean_test_accuracy,,,b143d9a
+clean_test_accuracy,EXP-CLEAN-B-00-S002,0.9284,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S002/run_summary.json,harness_metrics.clean_test_accuracy,,,b143d9a
+clean_test_accuracy,EXP-CLEAN-C-00-S001,0.9334,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S001/run_summary.json,harness_metrics.clean_test_accuracy,,,b143d9a
+clean_test_accuracy,EXP-CLEAN-C-00-S002,0.9284,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S002/run_summary.json,harness_metrics.clean_test_accuracy,,,b143d9a
+source_to_target_rate,EXP-LF-A-05-S001,0.386,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S001/run_summary.json,harness_metrics.source_to_target_rate,,,b143d9a
+source_to_target_rate,EXP-LF-A-05-S002,0.382,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S002/run_summary.json,harness_metrics.source_to_target_rate,,,b143d9a
+source_to_target_rate,EXP-LF-B-05-S001,0.386,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S001/run_summary.json,harness_metrics.source_to_target_rate,,,b143d9a
+source_to_target_rate,EXP-LF-B-05-S002,0.382,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S002/run_summary.json,harness_metrics.source_to_target_rate,,,b143d9a
+source_to_target_rate,EXP-LF-C-05-S001,0.386,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S001/run_summary.json,harness_metrics.source_to_target_rate,,,b143d9a
+source_to_target_rate,EXP-LF-C-05-S002,0.382,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S002/run_summary.json,harness_metrics.source_to_target_rate,,,b143d9a
+attack_success_rate,EXP-BD-A-05-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/run_summary.json,harness_metrics.attack_success_rate,,"triggered non-target test images predicted as target / 9,000",b143d9a
+attack_success_rate,EXP-BD-A-05-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S002/run_summary.json,harness_metrics.attack_success_rate,,"triggered non-target test images predicted as target / 9,000",b143d9a
+attack_success_rate,EXP-BD-B-05-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S001/run_summary.json,harness_metrics.attack_success_rate,,"triggered non-target test images predicted as target / 9,000",b143d9a
+attack_success_rate,EXP-BD-B-05-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S002/run_summary.json,harness_metrics.attack_success_rate,,"triggered non-target test images predicted as target / 9,000",b143d9a
+attack_success_rate,EXP-BD-C-05-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S001/run_summary.json,harness_metrics.attack_success_rate,,"triggered non-target test images predicted as target / 9,000",b143d9a
+attack_success_rate,EXP-BD-C-05-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S002/run_summary.json,harness_metrics.attack_success_rate,,"triggered non-target test images predicted as target / 9,000",b143d9a
+evidence_completeness,EXP-BD-A-05-S001,50.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-BD-A-05-S001,0.875,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-BD-A-05-S001,1.0,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-BD-A-05-S001,0.75,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-BD-A-05-S001,0.07577530003618449,s,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-BD-A-05-S002,50.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S002/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-BD-A-05-S002,0.875,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S002/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-BD-A-05-S002,1.0,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S002/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-BD-A-05-S002,0.75,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S002/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-BD-A-05-S002,0.07979700004216284,s,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S002/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-BD-B-05-S001,70.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S001/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-BD-B-05-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S001/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-BD-B-05-S001,0.9999999999999998,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S001/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-BD-B-05-S001,0.75,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S001/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-BD-B-05-S001,2.894989400054328,s,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S001/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-BD-B-05-S002,70.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S002/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-BD-B-05-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S002/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-BD-B-05-S002,0.9999999999999998,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S002/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-BD-B-05-S002,0.75,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S002/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-BD-B-05-S002,0.13919700006954372,s,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S002/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-BD-C-05-S001,100.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S001/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-BD-C-05-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S001/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-BD-C-05-S001,0.9999999999999998,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S001/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-BD-C-05-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S001/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-BD-C-05-S001,0.17325130000244826,s,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S001/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-BD-C-05-S002,100.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S002/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-BD-C-05-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S002/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-BD-C-05-S002,0.9999999999999998,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S002/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-BD-C-05-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S002/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-BD-C-05-S002,0.1833686000900343,s,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S002/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-CLEAN-A-00-S001,55.56,%,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S001/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-CLEAN-A-00-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S001/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-CLEAN-A-00-S001,0.9999999999999999,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S001/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+reconstruction_time,EXP-CLEAN-A-00-S001,0.07573799998499453,s,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S001/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-CLEAN-A-00-S002,55.56,%,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S002/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-CLEAN-A-00-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S002/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-CLEAN-A-00-S002,0.9999999999999999,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S002/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+reconstruction_time,EXP-CLEAN-A-00-S002,0.07930969994049519,s,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S002/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-CLEAN-B-00-S001,72.22,%,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S001/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-CLEAN-B-00-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S001/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-CLEAN-B-00-S001,0.9999999999999999,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S001/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+reconstruction_time,EXP-CLEAN-B-00-S001,0.13637700001709163,s,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S001/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-CLEAN-B-00-S002,72.22,%,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S002/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-CLEAN-B-00-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S002/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-CLEAN-B-00-S002,0.9999999999999999,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S002/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+reconstruction_time,EXP-CLEAN-B-00-S002,0.14915339997969568,s,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S002/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-CLEAN-C-00-S001,100.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S001/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-CLEAN-C-00-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S001/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-CLEAN-C-00-S001,0.9999999999999999,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S001/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+reconstruction_time,EXP-CLEAN-C-00-S001,0.16947059996891767,s,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S001/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-CLEAN-C-00-S002,100.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S002/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-CLEAN-C-00-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S002/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-CLEAN-C-00-S002,0.9999999999999999,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S002/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+reconstruction_time,EXP-CLEAN-C-00-S002,0.21009260008577257,s,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S002/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-LF-A-05-S001,50.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S001/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-LF-A-05-S001,0.8571428571428571,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S001/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-LF-A-05-S001,0.9999999999999999,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S001/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-LF-A-05-S001,0.75,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S001/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-LF-A-05-S001,0.08552409999538213,s,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S001/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-LF-A-05-S002,50.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S002/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-LF-A-05-S002,0.8571428571428571,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S002/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-LF-A-05-S002,0.9999999999999999,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S002/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-LF-A-05-S002,0.75,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S002/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-LF-A-05-S002,0.11044349998701364,s,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S002/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-LF-B-05-S001,70.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S001/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-LF-B-05-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S001/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-LF-B-05-S001,1.0,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S001/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-LF-B-05-S001,0.75,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S001/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-LF-B-05-S001,0.13620099995750934,s,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S001/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-LF-B-05-S002,70.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S002/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-LF-B-05-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S002/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-LF-B-05-S002,1.0,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S002/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-LF-B-05-S002,0.75,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S002/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-LF-B-05-S002,0.13966240000445396,s,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S002/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-LF-C-05-S001,100.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S001/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-LF-C-05-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S001/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-LF-C-05-S001,1.0,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S001/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-LF-C-05-S001,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S001/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-LF-C-05-S001,0.21178400004282594,s,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S001/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_completeness,EXP-LF-C-05-S002,100.0,%,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S002/evaluation.json,evidence_completeness.ec,,recovered applicable items / applicable items x 100,b143d9a
+event_recovery_rate,EXP-LF-C-05-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S002/evaluation.json,event_recovery.err,,recovered required GT events / required GT events,b143d9a
+timeline_kendall_tau_b,EXP-LF-C-05-S002,1.0,tau,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S002/evaluation.json,timeline.kendall_tau_b,,"scipy.stats.kendalltau(GT order, reconstructed order, b)",b143d9a
+rci_score,EXP-LF-C-05-S002,1.0,proportion,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S002/evaluation.json,root_cause.rci_score,,correct components / 4,b143d9a
+reconstruction_time,EXP-LF-C-05-S002,0.24507539998739958,s,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S002/reconstruction.json,runtime_seconds,,,b143d9a
+evidence_storage_mb,EXP-BD-A-05-S001,0.055100440979003906,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-BD-A-05-S002,0.055080413818359375,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S002/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-BD-B-05-S001,0.05621623992919922,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S001/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-BD-B-05-S002,0.056242942810058594,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-B-05-S002/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-BD-C-05-S001,11.436549186706543,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S001/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-BD-C-05-S002,11.436541557312012,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-C-05-S002/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-CLEAN-A-00-S001,0.054581642150878906,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S001/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-CLEAN-A-00-S002,0.05534934997558594,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S002/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-CLEAN-B-00-S001,0.055825233459472656,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S001/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-CLEAN-B-00-S002,0.05664348602294922,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S002/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-CLEAN-C-00-S001,6.103537559509277,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S001/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-CLEAN-C-00-S002,6.1042633056640625,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S002/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-LF-A-05-S001,0.054642677307128906,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S001/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-LF-A-05-S002,0.05542945861816406,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S002/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-LF-B-05-S001,0.055891990661621094,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S001/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-LF-B-05-S002,0.05664253234863281,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S002/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-LF-C-05-S001,11.436205863952637,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S001/run_summary.json,storage_bytes excl. model_files,,,b143d9a
+evidence_storage_mb,EXP-LF-C-05-S002,11.43690013885498,MB,MEASURED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S002/run_summary.json,storage_bytes excl. model_files,,,b143d9a

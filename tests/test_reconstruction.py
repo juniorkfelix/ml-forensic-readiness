@@ -278,3 +278,16 @@ def test_single_code_path_no_mode_branching():
             "reconstruct_forensic",
         ):
             assert word not in text, f"{path.name}: {word}"
+
+
+def test_provenance_link_survives_mlflow_dataset_deduplication(tmp_path):
+    """D-060/D-061 regression: MLflow reuses one dataset record per (name, digest), so a second
+    run with identical clean data sees the FIRST run's source path. The engine must link the
+    registration run through the recorded registration-run ID, not the source path."""
+    first = _run(tmp_path, "B", tamper=True)
+    second = _run(tmp_path, "B", tamper=True)
+    for r in (first, second):
+        rec = reconstruct(r["evidence"], r["ticket"], r["root"])
+        assert rec["hops"]["prior_dataset"]["confidence"] == "MODERATE"
+        assert rec["dataset_change"]["changed"] is True
+        assert rec["dataset_change"]["finding"] == "DATASET_MODIFIED_UNSPECIFIED"
