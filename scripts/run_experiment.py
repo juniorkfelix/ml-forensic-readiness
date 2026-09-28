@@ -151,7 +151,10 @@ def run(cfg: dict, force: bool = False) -> dict:
     results_root = PROJECT_ROOT / "results" / (phase if phase in ("smoke", "pilot_cpu") else "")
     run_index = RUN_INDEX if phase in ("pilot", "main") else results_root / "run_index.csv"
     setup_logging("INFO", PROJECT_ROOT / "logs" / f"{exp_id}_{uid[:8]}.log", experiment_id=exp_id)
-    pkg = PROJECT_ROOT / "experiments" / phase / exp_id
+    # Pipeline-runner packages for pilot/main live under pipeline_runs/, kept apart from the
+    # earlier clean-baseline-script package (experiments/pilot/EXP-CLEAN-A-00-S001) (D-058).
+    sub = "pipeline_runs" if phase in ("pilot", "main") else ""
+    pkg = PROJECT_ROOT / "experiments" / phase / sub / exp_id
     if pkg.exists():
         if not force:
             raise SystemExit(f"{pkg} exists; use --force (old package is kept)")
