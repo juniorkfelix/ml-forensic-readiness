@@ -1,0 +1,124 @@
+{
+  "checked_at_utc": "2026-09-27T19:49:58.737684+00:00",
+  "python": {
+    "version": "3.14.3",
+    "implementation": "CPython",
+    "executable_in_project_venv": true,
+    "preferred_version": "3.11",
+    "matches_preferred": false
+  },
+  "os": {
+    "system": "Windows",
+    "release": "11",
+    "version": "10.0.26100",
+    "machine": "AMD64"
+  },
+  "required_packages": {
+    "torch": {
+      "available": true,
+      "version": "2.14.0+cu130"
+    },
+    "torchvision": {
+      "available": true,
+      "version": "0.29.0+cu130"
+    },
+    "mlflow": {
+      "available": true,
+      "version": "3.16.1"
+    },
+    "numpy": {
+      "available": true,
+      "version": "2.5.2"
+    },
+    "pandas": {
+      "available": true,
+      "version": "3.0.6"
+    },
+    "scipy": {
+      "available": true,
+      "version": "1.18.1"
+    },
+    "statsmodels": {
+      "available": true,
+      "version": "0.15.0"
+    },
+    "scikit-learn": {
+      "available": true,
+      "version": "1.9.1"
+    },
+    "matplotlib": {
+      "available": true,
+      "version": "3.11.2"
+    },
+    "PyYAML": {
+      "available": true,
+      "version": "6.0.3"
+    },
+    "psutil": {
+      "available": true,
+      "version": "7.2.2"
+    },
+    "pytest": {
+      "available": true,
+      "version": "9.1.1"
+    }
+  },
+  "optional_packages": {
+    "networkx": {
+      "available": true,
+      "version": "3.6.1"
+    },
+    "ruff": {
+      "available": true,
+      "version": "unknown"
+    },
+    "black": {
+      "available": true,
+      "version": "26.5.1"
+    }
+  },
+  "cuda": {
+    "checked": true,
+    "torch_cuda_build": "13.0",
+    "cuda_available": true,
+    "cudnn_version": 92400,
+    "device_count": 1,
+    "gpu_name": "NVIDIA RTX 1000 Ada Generation Laptop GPU",
+    "gpu_total_memory_mb": 6140,
+    "compute_capability": "8.9",
+    "gpu_smoke_test_passed": true
+  },
+  "directories": {
+    "config": true,
+    "data/raw": true,
+    "data/clean": true,
+    "data/poisoned": true,
+    "data/manifests": true,
+    "models/checkpoints": true,
+    "models/deployed": true,
+    "evidence/conventional": true,
+    "evidence/provenance": true,
+    "evidence/forensic": true,
+    "ground_truth": true,
+    "mlruns": true,
+    "experiments/pilot": true,
+    "experiments/main": true,
+    "results/raw": true,
+    "results/environment": true,
+    "logs": true,
+    "scripts": true,
+    "src/mlfref": true,
+    "tests": true,
+    "docs": true
+  },
+  "git": {
+    "is_repo": true,
+    "repo_root_is_project_root": true,
+    "head_commit": "6d5f1d704ec1f9c113d946ce0f8ccab7e44bc640"
+  },
+  "warnings": [
+    "Python 3.14.3 differs from preferred 3.11 (documented deviation)"
+  ],
+  "failures": [],
+  "status": "PASS"
+}

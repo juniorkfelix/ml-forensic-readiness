@@ -1,0 +1,101 @@
+{
+  "backdoor_trigger_example.png": {
+    "created_utc": "2026-09-27T20:51:35+00:00",
+    "description": "clean vs triggered training images, sample_ids [47, 54, 96, 130]",
+    "experiments_included": [],
+    "filename": "backdoor_trigger_example.png",
+    "generation_script": "scripts/inspect_backdoor.py",
+    "git_commit": "5a03d8f3e1d26a7e9485ce208954cf321d00eb95",
+    "git_dirty": true,
+    "metric": "none (illustrative trigger)",
+    "source_data": [
+      "data/clean/cifar10_train.npz",
+      "config/pilot_backdoor.yaml"
+    ]
+  },
+  "baseline_accuracy.png": {
+    "created_utc": "2026-09-27T20:39:43+00:00",
+    "description": "",
+    "experiments_included": [
+      "EXP-CLEAN-A-00-S001"
+    ],
+    "filename": "baseline_accuracy.png",
+    "generation_script": "scripts/run_clean_baseline.py",
+    "git_commit": "9d731ac50873afc834efe92a3b9693187347ec19",
+    "git_dirty": true,
+    "metric": "train/test accuracy",
+    "source_data": [
+      "experiments/pilot/EXP-CLEAN-A-00-S001/training_metrics.csv"
+    ]
+  },
+  "baseline_training_loss.png": {
+    "created_utc": "2026-09-27T20:39:42+00:00",
+    "description": "",
+    "experiments_included": [
+      "EXP-CLEAN-A-00-S001"
+    ],
+    "filename": "baseline_training_loss.png",
+    "generation_script": "scripts/run_clean_baseline.py",
+    "git_commit": "9d731ac50873afc834efe92a3b9693187347ec19",
+    "git_dirty": true,
+    "metric": "train/test loss",
+    "source_data": [
+      "experiments/pilot/EXP-CLEAN-A-00-S001/training_metrics.csv"
+    ]
+  },
+  "cifar10_clean_samples.png": {
+    "created_utc": "2026-09-27T20:44:42+00:00",
+    "description": "First 8 training images per class; sample_ids [29, 30, 35]... (80 total)",
+    "experiments_included": [],
+    "filename": "cifar10_clean_samples.png",
+    "generation_script": "scripts/prepare_dataset.py",
+    "git_commit": "5d732195289a59b9318a68238bf1ea3936871225",
+    "git_dirty": true,
+    "metric": "none (illustrative dataset samples)",
+    "source_data": [
+      "data/clean/cifar10_train.npz"
+    ]
+  },
+  "figure01_architecture.png": {
+    "created_utc": "2026-09-27T22:10:54+00:00",
+    "description": "architecture",
+    "experiments_included": [],
+    "filename": "figure01_architecture.png",
+    "generation_script": "scripts/generate_thesis_figures.py",
+    "git_commit": "9780b7dc1f73d58380100f8b61364aafff23772f",
+    "git_dirty": true,
+    "metric": "none (diagram)",
+    "source_data": [
+      "docs/architecture.md",
+      "docs/evidence_schema.md"
+    ]
+  },
+  "figure02_evidence_points.png": {
+    "created_utc": "2026-09-27T22:10:54+00:00",
+    "description": "evidence points",
+    "experiments_included": [],
+    "filename": "figure02_evidence_points.png",
+    "generation_script": "scripts/generate_thesis_figures.py",
+    "git_commit": "9780b7dc1f73d58380100f8b61364aafff23772f",
+    "git_dirty": true,
+    "metric": "none (diagram)",
+    "source_data": [
+      "docs/architecture.md",
+      "docs/evidence_schema.md"
+    ]
+  },
+  "figure03_attack_lifecycle.png": {
+    "created_utc": "2026-09-27T22:10:55+00:00",
+    "description": "attack lifecycle",
+    "experiments_included": [],
+    "filename": "figure03_attack_lifecycle.png",
+    "generation_script": "scripts/generate_thesis_figures.py",
+    "git_commit": "9780b7dc1f73d58380100f8b61364aafff23772f",
+    "git_dirty": true,
+    "metric": "none (diagram)",
+    "source_data": [
+      "docs/architecture.md",
+      "docs/evidence_schema.md"
+    ]
+  }
+}

@@ -63,3 +63,6 @@ logs/*
 # Smoke-test outputs (pipeline checks, never results)
 results/smoke/
 experiments/smoke/
+
+# Archived untracked run artefacts (evidence, GT, MLflow, models, stores)
+archive_local/

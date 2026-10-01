@@ -10,6 +10,7 @@ descriptions. Re-run after any new experiment:
 from __future__ import annotations
 
 import csv
+import json
 import statistics as st
 from pathlib import Path
 
@@ -70,7 +71,11 @@ def main() -> int:
     env = {r["item"]: r["value"] for r in rows("experimental_environment.csv", False)}
     inv = rows("experiment_inventory.csv", False)
     stats = rows("statistical_tests.csv", False)
-    resc = rows("rescoring_engine_v1_0_vs_v1_1.csv")
+    resc = (
+        rows("rescoring_engine_v1_0_vs_v1_1.csv")
+        if (C4 / "rescoring_engine_v1_0_vs_v1_1.csv").exists()
+        else []
+    )
     L: list[str] = []
     A = L.append
 
@@ -136,10 +141,13 @@ def main() -> int:
         "observe the change at all."
     )
     A("- **No clean-control investigation attributed a modification** in any pipeline.")
+    excl_m = {p: st.mean(col(p, "evidence_storage_mb")) for p in "ABC"}
+    incl_m = {p: st.mean(col(p, "evidence_storage_incl_mlflow_model_mb")) for p in "ABC"}
     A(
-        "- **No measurable training-time overhead** for B or C. C's extra evidence costs about "
-        "9.6 MB per run beyond B. Most of B's and C's storage is MLflow's logged model copy "
-        "(≈ 42.7 MB)."
+        f"- **Training-time difference vs matched A:** B {st.mean(ovh['B']):.1f} %, "
+        f"C {st.mean(ovh['C']):.1f} %. C's extra evidence costs "
+        f"{excl_m['C'] - excl_m['B']:.1f} MB per run beyond B; MLflow's logged model copy "
+        f"adds {incl_m['B'] - excl_m['B']:.1f} MB to B and C."
     )
     A(
         "- **Statistics are exploratory** (6 blocks). No pairwise difference survives Holm "
@@ -287,12 +295,32 @@ def main() -> int:
             ],
         )
     )
-    A(
+    hashes = {}
+    for r in (
+        rows("clean_baseline_results.csv")
+        + rows("label_flip_results.csv")
+        + rows("backdoor_results.csv")
+    ):
+        key = (r["experiment_id"].split("-")[1], r["experiment_id"][-4:])
+        hashes.setdefault(key, set()).add(r["model_sha256"])
+    identical = all(len(v) == 1 for v in hashes.values())
+    bfile = ROOT / "experiments/pilot/EXP-CLEAN-A-00-S001/model_hash.txt"
+    base_hash = bfile.read_text().split()[0] if bfile.exists() else None
+    pilot_c1 = sorted(hashes.get(("CLEAN", "S001"), {""}))[0]
+    msg = (
         "\nFor every condition and seed, A, B and C produced **bit-identical models** (same "
-        "SHA-256; see also §5.2–5.3), so instrumentation did not affect training. The clean "
-        "seed-1 model (a57d5e95…) is also identical to the pre-pilot baseline trained with the "
-        "separate clean-baseline script (§12).\n"
+        "SHA-256), so instrumentation did not affect training."
+        if identical
+        else "\nModels were NOT bit-identical across A/B/C for every condition "
+        "and seed (see model hashes in 5.1-5.3)."
     )
+    if base_hash:
+        same = "identical" if base_hash == pilot_c1 else "NOT identical"
+        msg += (
+            f" The clean seed-1 pilot model ({pilot_c1[:8]}...) is {same} to the clean "
+            "baseline trained with the separate clean-baseline script (section 12)."
+        )
+    A(msg + "\n")
     A(
         img(
             "chapter4/figures/figure4_1_clean_baseline_pilot.png",
@@ -965,99 +993,128 @@ def main() -> int:
     )
 
     # ================================================================ engine versions
-    A("## 11. Reconstruction engine v1.0 vs v1.1 (pilot-detected defect)\n")
-    A(
-        "MLflow keeps one dataset record per (name, digest) across the tracking store, so runs "
-        "with identical data report the source path of the first run that logged it (D-060). "
-        "Engine v1.0 linked B's registration run by that path. v1.1 uses the registration-run ID "
-        "that B records (the same rule for every pipeline). All 18 runs were re-scored from stored "
-        "evidence with no retraining (D-061). The v1.0 outputs are preserved.\n"
-    )
-    A(
-        table(
-            [
-                "Experiment",
-                "EC v1.0",
-                "EC v1.1",
-                "ERR v1.0",
-                "ERR v1.1",
-                "RCI v1.0",
-                "RCI v1.1",
-                "Finding v1.0",
-                "Finding v1.1",
-                "Changed",
-            ],
-            [
-                [
-                    r["experiment_id"],
-                    f(r["ec_v1_0"]),
-                    f(r["ec_v1_1"]),
-                    f(r["err_v1_0"]),
-                    f(r["err_v1_1"]),
-                    f(r["rci_v1_0"], 2),
-                    f(r["rci_v1_1"], 2),
-                    r["finding_v1_0"],
-                    r["finding_v1_1"],
-                    r["changed"],
-                ]
-                for r in resc
-            ],
+    A("## 11. Reconstruction engine version\n")
+    if resc:
+        A(
+            "MLflow keeps one dataset record per (name, digest), so runs with identical data report "
+            "the source path of the first run that logged it (D-060). Engine v1.0 linked B's "
+            "registration run by that path; v1.1 uses the registration-run ID B records (D-061). "
+            "All runs were re-scored from stored evidence; v1.0 outputs are preserved.\n"
         )
-    )
+        A(
+            table(
+                [
+                    "Experiment",
+                    "EC v1.0",
+                    "EC v1.1",
+                    "ERR v1.0",
+                    "ERR v1.1",
+                    "RCI v1.0",
+                    "RCI v1.1",
+                    "Finding v1.0",
+                    "Finding v1.1",
+                    "Changed",
+                ],
+                [
+                    [
+                        r["experiment_id"],
+                        f(r["ec_v1_0"]),
+                        f(r["ec_v1_1"]),
+                        f(r["err_v1_0"]),
+                        f(r["err_v1_1"]),
+                        f(r["rci_v1_0"], 2),
+                        f(r["rci_v1_1"], 2),
+                        r["finding_v1_0"],
+                        r["finding_v1_1"],
+                        r["changed"],
+                    ]
+                    for r in resc
+                ],
+            )
+        )
+    else:
+        A(
+            "This run used reconstruction engine v1.1 from the start (D-061: B's MLflow "
+            "registration run is linked through the recorded registration-run ID). The engine "
+            "v1.0 vs v1.1 comparison from the first run is archived in "
+            "`archive/run1_2026-09-28/results/chapter4/rescoring_engine_v1_0_vs_v1_1.csv`."
+        )
     A("")
 
     # ================================================================ preliminary
-    A("## 12. Preliminary and non-pilot runs (for completeness; excluded from the analysis)\n")
-    pre = [
-        r
-        for r in (ROOT / "results/chapter4_pre_pilot_audit/master_experimental_results.csv").open(
-            encoding="utf-8"
+    A("## 12. Preliminary runs (excluded from the A/B/C analysis)\n")
+    pre = []
+    bs = ROOT / "experiments/pilot/EXP-CLEAN-A-00-S001/run_summary.json"
+    if bs.exists():
+        b_ = json.loads(bs.read_text(encoding="utf-8"))
+        pre.append(
+            [
+                "EXP-CLEAN-A-00-S001",
+                "clean-baseline script",
+                "A",
+                "CLEAN",
+                30,
+                f(b_["clean_test_accuracy"], 4),
+                "-",
+                f(b_["timings"]["training_seconds"], 1),
+                f"model {b_['model_sha256'][:12]}; peak RAM "
+                f"{b_['resources']['peak_rss_mb']} MB",
+            ]
         )
-    ]
-    pre_rows = list(csv.DictReader(pre))
-    A(
-        table(
+    dv = ROOT / "results/pilot/dev_checks/attack_sanity_backdoor_S001.json"
+    if dv.exists():
+        d_ = json.loads(dv.read_text(encoding="utf-8"))
+        asr_ = d_["attack_success_rate"]
+        pre.append(
             [
-                "Run",
-                "Phase",
-                "Pipeline",
-                "Attack",
-                "Epochs",
-                "Clean acc.",
-                "ASR",
-                "Training (s)",
-                "Status / note",
-            ],
-            [
+                "attack_sanity_backdoor_S001",
+                "development check (no pipeline)",
+                "none",
+                "BD 5 %",
+                d_["epochs"],
+                f(d_["clean_test_accuracy"], 4),
+                f(asr_["asr"], 4),
+                f(d_["training_seconds"], 1),
+                f"{asr_['successes']}/{asr_['n']} triggered images -> target",
+            ]
+        )
+    if pre:
+        A(
+            table(
                 [
-                    r["experiment_id"],
-                    "pre-pilot baseline (baseline script)" if r["phase"] == "pilot" else r["phase"],
-                    r["pipeline"],
-                    r["attack"],
-                    r["epochs"],
-                    f(r["clean_accuracy"], 4),
-                    f(r["attack_success_rate"], 4),
-                    f(r["training_time_sec"], 1),
-                    f"{r['status']}; {r['notes']}"[:90],
-                ]
-                for r in pre_rows
-            ],
+                    "Run",
+                    "Type",
+                    "Pipeline",
+                    "Attack",
+                    "Epochs",
+                    "Clean acc.",
+                    "ASR",
+                    "Training (s)",
+                    "Note",
+                ],
+                pre,
+            )
         )
-    )
-    A(
-        "\n- **Calibration** (planning only): AMP ≈ 67 ms/step (≈ 26 s/epoch), fp32 ≈ 100 ms/step "
-        "(`results/pilot/calibration_training_speed.json`)."
-    )
-    A(
-        "- **Pre-pilot clean baseline** (clean-baseline script, 30 epochs, seed 1): 0.9334. This is "
-        "the same accuracy as pilot EXP-CLEAN-*-00-S001."
-    )
-    A(
-        img(
-            "figures/baseline_accuracy.png",
-            "Pre-pilot clean baseline accuracy by epoch (EXP-CLEAN-A-00-S001, baseline script)",
+    else:
+        A("No preliminary runs were performed in this run.")
+    cal = ROOT / "results/pilot/calibration_training_speed.json"
+    if cal.exists():
+        c_ = json.loads(cal.read_text(encoding="utf-8"))["results"]
+        A(
+            f"\n- **Calibration** (planning only): AMP "
+            f"{c_['amp_fp16']['seconds_per_step'] * 1000:.0f} ms/step "
+            f"(~{c_['amp_fp16']['estimated_seconds_per_epoch_train_only']:.0f} s/epoch); fp32 "
+            f"{c_['fp32']['seconds_per_step'] * 1000:.0f} ms/step "
+            f"(~{c_['fp32']['estimated_seconds_per_epoch_train_only']:.0f} s/epoch)."
         )
-    )
+    if (ROOT / "results/figures/baseline_accuracy.png").exists():
+        A(
+            "\n"
+            + img(
+                "figures/baseline_accuracy.png",
+                "Clean baseline accuracy by epoch (clean-baseline script, seed 1)",
+            )
+        )
 
     # ================================================================ hypotheses
     A("## 13. Pre-stated hypotheses vs observed data (descriptive; exploratory statistics)\n")
@@ -1107,8 +1164,8 @@ def main() -> int:
         ],
         [
             "H3.2 B detects the change but not the samples",
-            f"B: DATASET_MODIFIED_UNSPECIFIED in {b_change}/4 (engine v1.1; v1.0: 1/4)",
-            "consistent (after v1.1 fix)",
+            f"B: DATASET_MODIFIED_UNSPECIFIED in {b_change}/4 (engine v1.1)",
+            "consistent" if b_change == 4 else "partly",
         ],
         [
             "H3.3 RCI(C) > RCI(B) ≥ RCI(A)",
@@ -1173,6 +1230,97 @@ def main() -> int:
         "failures: `results/raw/failed_runs.csv`; decisions: `docs/methodology_decisions.md` "
         "(D-001–D-061); hypotheses: `docs/hypotheses.md`.\n"
     )
+    # ================================================================ reproducibility
+    arch = ROOT / "archive/run1_2026-09-28/results/chapter4/master_experimental_results.csv"
+    if arch.exists() and not resc:
+        A("## 17. Reproducibility: this run vs the archived first run (2026-09-28)\n")
+        A(
+            "Same code version of the pipeline, same seeds, same data (official files re-verified "
+            "by SHA-256), same machine; both scored with engine v1.1 (first run re-scored). Model "
+            "hashes are compared from the run packages.\n"
+        )
+        old_rows = {
+            r["experiment_id"]: r
+            for r in csv.DictReader(arch.open(encoding="utf-8"))
+            if r["experiment_id"].startswith("EXP")
+        }
+
+        def mh(base, exp):
+            fp = base / exp / "model_hash.txt"
+            return fp.read_text().split()[0] if fp.exists() else None
+
+        keys = (
+            "clean_accuracy",
+            "attack_success_rate",
+            "evidence_completeness",
+            "event_recovery_rate",
+            "timeline_accuracy_kendall_tau_b",
+            "root_cause_score",
+        )
+
+        def same(a_, b_):
+            if (a_ or "") == (b_ or ""):
+                return True
+            try:
+                return abs(float(a_) - float(b_)) < 1e-9
+            except (TypeError, ValueError):
+                return False
+
+        body, n_model, n_metrics = [], 0, 0
+        for r in sorted(M, key=lambda r: (r["attack"], r["seed"], r["pipeline"])):
+            o = old_rows.get(r["experiment_id"])
+            if not o:
+                continue
+            h_new = mh(ROOT / "experiments/pilot/pipeline_runs", r["experiment_id"])
+            h_old = mh(
+                ROOT / "archive/run1_2026-09-28/experiments/pilot/pipeline_runs", r["experiment_id"]
+            )
+            eq = all(same(o[k], r[k]) for k in keys)
+            n_model += h_new == h_old
+            n_metrics += eq
+            body.append(
+                [
+                    r["experiment_id"],
+                    f(o["clean_accuracy"], 4),
+                    f(r["clean_accuracy"], 4),
+                    f(o["attack_success_rate"], 4),
+                    f(r["attack_success_rate"], 4),
+                    f(o["evidence_completeness"]),
+                    f(r["evidence_completeness"]),
+                    f(o["root_cause_score"], 2),
+                    f(r["root_cause_score"], 2),
+                    "yes" if h_new == h_old else "NO",
+                    "yes" if eq else "NO",
+                    f(o["training_time_sec"], 1),
+                    f(r["training_time_sec"], 1),
+                ]
+            )
+        A(
+            table(
+                [
+                    "Experiment",
+                    "CA run 1",
+                    "CA run 2",
+                    "ASR run 1",
+                    "ASR run 2",
+                    "EC run 1",
+                    "EC run 2",
+                    "RCI run 1",
+                    "RCI run 2",
+                    "Same model hash",
+                    "Same metrics",
+                    "Train s run 1",
+                    "Train s run 2",
+                ],
+                body,
+            )
+        )
+        A(
+            f"\nIdentical model SHA-256 in {n_model}/{len(body)} runs; identical accuracy, attack, "
+            f"evidence and reconstruction metrics in {n_metrics}/{len(body)} runs. Training times "
+            "are not expected to match (GPU power state and system load are not controlled).\n"
+        )
+
     OUT.write_text("\n".join(L), encoding="utf-8")
     print(f"written {OUT.relative_to(ROOT)} ({len(L)} blocks)")
     return 0
