@@ -1,0 +1,75 @@
+experiment:
+  name: ml-fref
+  seed: 1
+  phase: pilot
+dataset:
+  name: CIFAR10
+  data_dir: data/raw
+  clean_dataset_id: CIFAR10-CLEAN-V1
+  download: true
+  validation_split: 0.0
+model:
+  architecture: resnet18
+  num_classes: 10
+  pretrained: false
+  cifar_stem: true
+training:
+  epochs: 30
+  batch_size: 128
+  optimizer: sgd
+  learning_rate: 0.1
+  momentum: 0.9
+  weight_decay: 0.0005
+  nesterov: false
+  lr_scheduler: cosine
+  loss: cross_entropy
+  augmentation:
+    random_crop_padding: 4
+    horizontal_flip: true
+  amp: true
+  num_workers: 0
+  device: auto
+reproducibility:
+  deterministic: true
+  cudnn_benchmark: false
+  warn_only: true
+attack:
+  type: label_flip
+  poison_rate: 0.05
+  source_class: automobile
+  target_class: truck
+pipeline:
+  mode: provenance
+mlflow:
+  enabled: true
+  tracking_uri: sqlite:///mlruns/mlflow.db
+  artifact_location: mlruns/artifacts
+  experiment_name: ml-fref
+evidence:
+  forensic_enabled: false
+  forensic_db: evidence/forensic/forensic_evidence.sqlite
+  event_chain_hashing: false
+  export_jsonl: false
+deployment:
+  simulate: true
+  inference_requests: 200
+ground_truth:
+  db: ground_truth/ground_truth.sqlite
+output:
+  experiments_dir: experiments
+  results_dir: results
+  models_dir: models
+  logs_dir: logs
+  manifests_dir: data/manifests
+logging:
+  level: INFO
+_meta:
+  layers:
+  - experiment.yaml
+  - provenance.yaml
+  - pilot_label_flip.yaml
+  overrides:
+  - experiment.seed=1
+  - experiment.phase=pilot
+  - attack.poison_rate=0.05
+  config_sha256: 1d20ecfe2590b96a210d733125d3dd8f18a26d0122314808fb5a88f6e7c01441

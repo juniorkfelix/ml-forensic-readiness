@@ -13,12 +13,13 @@ EXP-CLEAN-C-00-S001,C,CLEAN,0.0,1,5,4,6,6,1.0,0.8,1.0,0.08333333333333333,COMPUT
 EXP-CLEAN-C-00-S002,C,CLEAN,0.0,2,5,5,10,10,1.0,1.0,0.9999999999999999,0.016666666666666666,COMPUTED,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S002/evaluation.json,,,,,,,,,,
 EXP-LF-A-05-S001,A,LF,0.05,1,7,6,15,15,1.0,0.8571428571428571,0.9999999999999999,0.002777777777777778,COMPUTED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S001/evaluation.json,,,,,,,,,,
 EXP-LF-A-05-S002,A,LF,0.05,2,7,6,15,15,1.0,0.8571428571428571,0.9999999999999999,0.002777777777777778,COMPUTED,experiments/pilot/pipeline_runs/EXP-LF-A-05-S002/evaluation.json,,,,,,,,,,
+EXP-LF-B-05-S001,B,LF,0.05,1,7,7,21,21,1.0,1.0,1.0,0.0003968253968253968,COMPUTED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S001/evaluation.json,,,,,,,,,,
 EXP-LF-B-05-S002,B,LF,0.05,2,7,7,21,21,1.0,1.0,1.0,0.0003968253968253968,COMPUTED,experiments/pilot/pipeline_runs/EXP-LF-B-05-S002/evaluation.json,,,,,,,,,,
 EXP-LF-C-05-S001,C,LF,0.05,1,7,7,21,21,1.0,1.0,1.0,0.0003968253968253968,COMPUTED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S001/evaluation.json,,,,,,,,,,
 EXP-LF-C-05-S002,C,LF,0.05,2,7,7,21,21,1.0,1.0,1.0,0.0003968253968253968,COMPUTED,experiments/pilot/pipeline_runs/EXP-LF-C-05-S002/evaluation.json,,,,,,,,,,
 AGGREGATE A (all),,,,,,,,,,,,,,,kendall_tau_b,6,1.0,0.9999999999999999,9.930136612989092e-17,0.9999999999999999,1.0,0.9999999999999999,1.0,"t (95%, df=5)"
-AGGREGATE B (all),,,,,,,,,,,,,,,kendall_tau_b,5,1.0,0.9999999999999999,1.7554167342883506e-16,0.9999999999999998,1.0,0.9999999999999998,1.0000000000000002,"t (95%, df=4)"
+AGGREGATE B (all),,,,,,,,,,,,,,,kendall_tau_b,6,1.0,0.9999999999999999,1.5700924586837752e-16,0.9999999999999998,1.0,0.9999999999999999,1.0000000000000002,"t (95%, df=5)"
 AGGREGATE C (all),,,,,,,,,,,,,,,kendall_tau_b,6,1.0,1.0,1.4895204919483638e-16,0.9999999999999998,1.0,0.9999999999999999,1.0000000000000002,"t (95%, df=5)"
 AGGREGATE A (all),,,,,,,,,,,,,,,pairwise_order_accuracy,6,1.0,1.0,0.0,1.0,1.0,1.0,1.0,degenerate (sd=0)
-AGGREGATE B (all),,,,,,,,,,,,,,,pairwise_order_accuracy,5,1.0,1.0,0.0,1.0,1.0,1.0,1.0,degenerate (sd=0)
+AGGREGATE B (all),,,,,,,,,,,,,,,pairwise_order_accuracy,6,1.0,1.0,0.0,1.0,1.0,1.0,1.0,degenerate (sd=0)
 AGGREGATE C (all),,,,,,,,,,,,,,,pairwise_order_accuracy,6,1.0,1.0,0.0,1.0,1.0,1.0,1.0,degenerate (sd=0)

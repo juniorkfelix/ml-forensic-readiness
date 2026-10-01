@@ -1,8 +1,8 @@
 {
-  "manifest_created_utc": "2026-10-01T11:53:38.697205+00:00",
+  "manifest_created_utc": "2026-10-01T11:23:30.150450+00:00",
   "experiment": {
     "experiment_id": "EXP-LF-B-05-S001",
-    "experiment_uuid": "097e01ae-eaea-41fa-a9fe-2dc0a5330784"
+    "experiment_uuid": "adc1c76b-65cd-4b9f-b264-efd8da29aabf"
   },
   "seed": 1,
   "config_sha256": "1d20ecfe2590b96a210d733125d3dd8f18a26d0122314808fb5a88f6e7c01441",
@@ -47,7 +47,7 @@
     ]
   },
   "git": {
-    "commit": "cb19c8f5f243200c4e20ecb0db1b93266edd78e6",
+    "commit": "5eb0beca287a6d4f2bf05e05bfc2fdfc2b5bbb4d",
     "branch": "main",
     "dirty": true,
     "available": true

@@ -1,7 +1,49 @@
 {
   "experiment_id": "EXP-LF-B-05-S001",
-  "experiment_uuid": "adc1c76b-65cd-4b9f-b264-efd8da29aabf",
-  "status": "failed",
-  "failure_stage": "attack",
-  "error": "[Errno 13] Permission denied: 'C:\\\\Users\\\\onsaref\\\\Documents\\\\projects\\\\uel-thesis-project\\\\data\\\\stores\\\\RUN-adc1c76b-65cd-4b9f-b264-efd8da29aabf\\\\cifar10_train.npz'"
+  "experiment_uuid": "097e01ae-eaea-41fa-a9fe-2dc0a5330784",
+  "status": "completed",
+  "phase": "pilot",
+  "pipeline": "provenance",
+  "attack_type": "label_flip",
+  "poison_rate": 0.05,
+  "seed": 1,
+  "config_sha256": "e218e75664043cfdd9a0af53c5784849c1c221d3ec675b1cbf052ebd65a591fc",
+  "git_commit": "cb19c8f5f243200c4e20ecb0db1b93266edd78e6",
+  "harness_metrics": {
+    "clean_test_accuracy": 0.9011,
+    "source_to_target_rate": 0.386
+  },
+  "incident": true,
+  "timings": {
+    "setup_seconds": 1.731,
+    "dataset_registration_seconds": 1.072,
+    "attack_seconds": 1.163,
+    "data_loading_seconds": 0.245,
+    "training_seconds": 714.028,
+    "evaluation_seconds": 1.333,
+    "save_model_seconds": 3.884,
+    "deployment_seconds": 0.538,
+    "inference_seconds": 2.446,
+    "evidence_finalize_seconds": 0.025,
+    "reconstruction_seconds": 0.383
+  },
+  "resources": {
+    "peak_rss_mb": 2233.9,
+    "mean_cpu_percent": 105.4,
+    "resource_samples": 708,
+    "peak_gpu_allocated_mb": 765.5,
+    "peak_gpu_reserved_mb": 1192.0
+  },
+  "storage_bytes": {
+    "forensic_sqlite": 0,
+    "forensic_jsonl": 0,
+    "manifests": 0,
+    "logs": 39903,
+    "other_evidence": 17836,
+    "model_files": 89540630,
+    "mlflow_artifacts": 938
+  },
+  "evidence_logging_seconds": 0.0,
+  "reconstruction_seconds": 0.382397000095807,
+  "root_cause_finding": "DATASET_MODIFIED_UNSPECIFIED"
 }

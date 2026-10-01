@@ -15,10 +15,10 @@ NumPy,2.5.2,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environmen
 pandas,3.0.6,MEASURED,requirements-lock.txt
 scikit-learn,1.9.1,MEASURED,requirements-lock.txt
 SciPy,1.18.1,MEASURED,requirements-lock.txt
-Git commit of all pilot runs,5eb0bec,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+Git commit of all pilot runs,"5eb0bec, cb19c8f",MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
 Git branch,main,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
 Git working tree clean at run start,False,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
 Config SHA-256 (EXP-BD-C-05-S001),511591cf28c7f8addd981b2fa9d60d45581a660fbc1240746cc923750bc4d6c4,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
 Clean dataset manifest SHA-256 (CIFAR10-CLEAN-V1),f7285605e556be1f453be1f05ea295de43e5e5a1c1d01b7de8d3f449dedb1649,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
 Evaluation schema,FROZEN; freeze commit 96a509d (recorded as 9bccbc0 pre-rewrite),MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
-Repository HEAD at analysis,5eb0bec,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+Repository HEAD at analysis,cb19c8f,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json

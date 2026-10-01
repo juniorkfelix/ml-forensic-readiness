@@ -1128,10 +1128,15 @@ def main() -> int:
         and r["attack"] != "CLEAN"
         and r["root_cause_finding"] == "DATASET_MODIFIED_UNSPECIFIED"
     )
-    fried_p = next(
-        float(x["p_value"])
+    omni = next(
+        x
         for x in stats
-        if x["metric"] == "training_seconds" and x["test"] == "Friedman"
+        if x["metric"] == "training_seconds" and x["test"] and not x["test"].startswith("post hoc")
+    )
+    omni_txt = (
+        f"{omni['test']} p = {float(omni['p_value']):.2f}"
+        if omni.get("p_value") not in ("", None)
+        else omni["test"]
     )
     hyp = [
         [
@@ -1180,7 +1185,7 @@ def main() -> int:
         ],
         [
             "H4.1 small training-time overhead",
-            f"B {st.mean(ovh['B']):.1f} %, C {st.mean(ovh['C']):.1f} % (Friedman p = {fried_p:.2f})",
+            f"B {st.mean(ovh['B']):.1f} %, C {st.mean(ovh['C']):.1f} % ({omni_txt})",
             "consistent (no measurable overhead)",
         ],
         [
