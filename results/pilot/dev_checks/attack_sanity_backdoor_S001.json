@@ -1,0 +1,71 @@
+{
+  "check": "attack effect (development check, NOT a pilot/final result)",
+  "created_utc": "2026-10-01T07:58:16.713409Z",
+  "attack": {
+    "target_class": 0,
+    "target_class_name": "airplane",
+    "poison_rate": 0.05,
+    "rate_base": "whole_training_set",
+    "exclude_target_class": true,
+    "seed": 1,
+    "trigger": {
+      "size": 3,
+      "position": "bottom_right",
+      "offset": 1,
+      "pattern": "checkerboard",
+      "rows": [
+        28,
+        31
+      ],
+      "cols": [
+        28,
+        31
+      ],
+      "pattern_values": [
+        [
+          255,
+          0,
+          255
+        ],
+        [
+          0,
+          255,
+          0
+        ],
+        [
+          255,
+          0,
+          255
+        ]
+      ]
+    }
+  },
+  "number_poisoned": 2500,
+  "seed": 1,
+  "epochs": 30,
+  "config_sha256": "fd51886649d21fed7479bc3b0f9479f37b40a26c312f054324ec001109aecc61",
+  "git_commit": "5eb0beca287a6d4f2bf05e05bfc2fdfc2b5bbb4d",
+  "git_dirty": true,
+  "device": "cuda",
+  "training_seconds": 671.6,
+  "clean_test_accuracy": 0.9316,
+  "clean_per_class_accuracy": {
+    "airplane": 0.955,
+    "automobile": 0.975,
+    "bird": 0.889,
+    "cat": 0.856,
+    "deer": 0.942,
+    "dog": 0.882,
+    "frog": 0.949,
+    "horse": 0.955,
+    "ship": 0.965,
+    "truck": 0.948
+  },
+  "attack_success_rate": {
+    "asr": 1.0,
+    "n": 9000,
+    "successes": 9000,
+    "target_class": 0,
+    "target_class_name": "airplane"
+  }
+}

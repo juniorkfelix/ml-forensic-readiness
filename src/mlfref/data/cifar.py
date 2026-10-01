@@ -158,11 +158,32 @@ def channel_statistics(images: np.ndarray) -> dict[str, list[float]]:
 # --------------------------------------------------------------------------- stores
 
 
-def write_store(path: str | Path, arrays: CifarArrays) -> Path:
+def write_store(
+    path: str | Path, arrays: CifarArrays, retries: int = 20, delay_s: float = 0.5
+) -> Path:
+    """Write a data store atomically: temp file in the same folder, then ``os.replace``.
+
+    On Windows a freshly written large file can be briefly locked by another process
+    (typically antivirus scanning it), which made overwriting the store fail with
+    ``PermissionError`` (D-063). The replace is retried with a short backoff; the
+    bytes written are unchanged.
+    """
+    import os
+    import time
+
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("wb") as fh:  # file handle: prevents numpy from appending '.npz'
+    tmp = path.with_name(path.name + ".tmp")
+    with tmp.open("wb") as fh:  # file handle: prevents numpy from appending '.npz'
         np.savez(fh, images=arrays.images, labels=arrays.labels, sample_ids=arrays.sample_ids)
+    for attempt in range(retries + 1):
+        try:
+            os.replace(tmp, path)
+            return path
+        except PermissionError:
+            if attempt == retries:
+                raise
+            time.sleep(delay_s * (attempt + 1))
     return path
 
 

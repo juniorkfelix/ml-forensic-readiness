@@ -1,172 +1,233 @@
-# ML-FREF — Machine Learning Forensic Readiness Experimental Framework
+# ML-FREF: Machine Learning Forensic Readiness Experimental Framework
 
-> Research prototype for the MSc dissertation (Information Security and Digital Forensics):
-> *"A Forensic-Ready Framework for Multi-Source Evidence Collection and Reconstruction of
-> Data Poisoning Attacks in Machine Learning Systems"*.
+ML-FREF is a controlled experiment. It trains a ResNet-18 on CIFAR-10, poisons the training
+data (label flipping or a backdoor trigger), deploys the model, and then tries to **reconstruct
+the poisoning incident from the evidence the pipeline recorded**. The same ML pipeline runs at
+three levels of evidence instrumentation:
 
-**Status:** under construction. Phases 1–2 (repository and environment setup, configuration and
-reproducibility) are implemented. **No experimental results exist yet.** Any number that
-appears in `results/` was produced by code that actually ran.
+| Pipeline | Evidence recorded |
+|---|---|
+| **A** conventional | application log, model file, evaluation output |
+| **B** provenance | A + MLflow tracking (runs, parameters, dataset digests, registered model) |
+| **C** forensic-ready | B + hash-chained forensic event store (SQLite), SHA-256 artefact hashes, per-sample dataset manifests, deployment and inference events |
+
+Each run's reconstruction is scored against a separately recorded ground truth, which the
+reconstruction engine never reads.
 
 ---
 
-## 1. Project purpose
+## 1. Requirements
 
-ML-FREF is a controlled experiment. It tests whether **forensic readiness** helps investigators
-reconstruct **data-poisoning attacks** against an ML system after the fact. There is one shared
-ML pipeline (CIFAR-10 → ResNet-18 → deployment → inference). The only independent variable is how
-much evidence instrumentation that pipeline has:
+| | Minimum | Tested with |
+|---|---|---|
+| OS | Windows 10/11, Linux or macOS | Windows 11 |
+| Python | 3.11 or newer | 3.14.3 |
+| GPU | optional (CPU works but is very slow); NVIDIA with ≥ 4 GB VRAM recommended | RTX 1000 Ada Laptop, 6 GB |
+| RAM | 8 GB | 32 GB |
+| Disk | ~10 GB free for a full pilot run | |
+| Network | ~2.5 GB of downloads (PyTorch CUDA wheels + CIFAR-10) | |
+| Other | Git | |
 
-| Config | Name            | Evidence available to the investigator                              |
-|--------|-----------------|---------------------------------------------------------------------|
-| A      | `conventional`  | trained model, normal application logs, standard evaluation output  |
-| B      | `provenance`    | A + MLflow experiment tracking (params, metrics, datasets, artefacts)|
-| C      | `forensic`      | B + dedicated forensic evidence store (hash-chained events, SHA-256 artefact hashes, deployment/inference records) |
+## 2. Installation
 
-## 2. Research questions
-
-- **RQ1:** Which forensic artefacts produced across the ML lifecycle are useful evidence when
-  investigating data poisoning?
-- **RQ2:** How can evidence from dataset provenance, training records, model artefacts and
-  inference activity be correlated to reconstruct the sequence of events?
-- **RQ3:** How much does a forensic-ready pipeline improve evidence availability and incident
-  reconstruction compared with a conventional pipeline?
-- **RQ4:** How much computational and storage overhead does forensic readiness add?
-
-See `docs/research_traceability.md` (to be written) for the metric → RQ mapping.
-
-## 3. Architecture (summary)
-
-```
-            config/*.yaml ──► resolved config (hashed, archived)
-                                   │
-CIFAR-10 ─► preprocessing ─► [attack] ─► training ─► model ─► deployment ─► inference
-                │               │           │          │           │            │
-                └──────── evidence instrumentation (depends on A / B / C) ──────┘
-                                   │
-                       evidence/<pipeline>/   (investigator-visible)
-                                   │
-                        reconstruction engine ─► results/reconstruction/
-                                   │
-ground_truth/ (hidden) ──────► evaluator ─► metrics ─► statistics ─► thesis tables/figures
+```bash
+git clone https://github.com/juniorkfelix/ml-forensic-readiness.git
+cd ml-forensic-readiness
 ```
 
-**Critical rule:** ground truth is kept apart from investigator-visible evidence. The
-reconstruction engine (`mlfref.reconstruction`) never imports, opens or reads anything under
-`ground_truth/` or `mlfref.ground_truth`. Automated tests enforce this.
+Create and activate a virtual environment:
 
-Full description: `docs/architecture.md` (to be written).
-
-## 4. Installation
-
-### 4.1 Prerequisites
-- Python ≥ 3.11 (the spec prefers 3.11; this workstation uses 3.14 — see *Known limitations*)
-- Git
-- Optional: an NVIDIA GPU with a recent driver (training on CPU works but is much slower)
-
-### 4.2 Create the virtual environment
-
-Windows (PowerShell):
 ```powershell
+# Windows (PowerShell)
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
 ```
-
-Linux / macOS:
 ```bash
+# Linux / macOS
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
 ```
 
-### 4.3 Install PyTorch (choose ONE, matching your hardware)
+Install PyTorch for your hardware (**pick one**), then the rest:
 
 ```bash
-# NVIDIA GPU, driver supporting CUDA 13.x (used for the dissertation runs)
+python -m pip install --upgrade pip
+# NVIDIA GPU, driver supporting CUDA 13.x
 python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
 # NVIDIA GPU, older driver (CUDA 12.8)
 python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
 # CPU only
 python -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-```
 
-### 4.4 Install the remaining dependencies and the package
-
-```bash
 python -m pip install -r requirements.txt
 python -m pip install -e .
 ```
 
-To reproduce the exact dissertation environment, use `requirements-lock.txt` instead.
+The exact package versions used for the reported results are pinned in `requirements-lock.txt`
+(`python -m pip install -r requirements-lock.txt`).
 
-### 4.5 Verify the environment
+## 3. Verify the setup
 
 ```bash
-python scripts/setup_environment.py
+python scripts/setup_environment.py     # checks Python, packages, CUDA, folders, Git -> PASS/FAIL
+python -m pytest                         # ~210 tests, about 1-5 minutes
 ```
-This writes `results/environment/environment_check.json` and prints PASS or FAIL.
 
-## 5. GPU / CPU
-`training.device: auto` uses CUDA when it is available and falls back to CPU otherwise. The device
-used for each run is recorded in that run's environment manifest.
+`setup_environment.py` writes `results/environment/environment_check.json` and
+`environment_manifest.json`.
 
-## 6. Dataset preparation
+## 4. Prepare the dataset (once)
 
 ```bash
 python scripts/prepare_dataset.py
 ```
-- Downloads CIFAR-10 (python version, ~163 MB) into `data/raw/` once. torchvision verifies the
-  archive MD5. The official files are never modified.
-- On the first run, records the SHA-256 of every official file in
-  `data/manifests/cifar10_raw_integrity.json`. Later runs **verify** the files against it and
-  abort on any mismatch.
-- Builds the pipeline data stores `data/clean/cifar10_train.npz` (from `data_batch_1..5`) and
-  `data/clean/cifar10_test.npz` (from `test_batch`), and writes
-  `data/manifests/cifar10_clean_summary.json` and `results/figures/cifar10_clean_samples.png`.
 
-## 7. MLflow setup — *Phase 10*
+This downloads CIFAR-10 (~163 MB) into `data/raw/`, records or verifies the SHA-256 of every
+official file, and builds the clean data stores in `data/clean/`. Later runs verify the files
+against `data/manifests/cifar10_raw_integrity.json` and stop if anything changed.
 
-## 8. Baseline execution
+## 5. Quick check (≈ 2 minutes)
+
+A 1-epoch end-to-end run. Its output goes to `experiments/smoke/` and `results/smoke/`, never into
+the results:
 
 ```bash
-python scripts/run_clean_baseline.py --config config/baseline.yaml --seed 1
-python scripts/run_clean_baseline.py --smoke          # 1-epoch check; outputs isolated
+python scripts/run_experiment.py --attack none --pipeline C --seed 1 --epochs 1 --phase smoke
 ```
-Trains ResNet-18 (CIFAR stem, from scratch) for 30 epochs with AMP, then writes:
-- the run package `experiments/pilot/EXP-CLEAN-A-00-S001/` (config, environment manifest, per-epoch
-  metrics, model metadata and SHA-256, evaluation, resource samples, run summary)
-- one appended row in `results/raw/baseline_results.csv`
-- `results/figures/baseline_training_loss.png` and `baseline_accuracy.png`
-- `results/tables/baseline_summary.csv`, regenerated from all baseline runs on record
 
-Rerunning an existing experiment ID needs `--force`. The old package is moved to
-`experiments/<phase>/_superseded/`, never deleted. Failed runs are recorded in
-`results/raw/failed_runs.csv`.
+## 6. Run the full study
 
-Training-speed calibration (planning only): `python scripts/calibrate_training_speed.py`.
-## 9. Attack execution — *Phases 8–9*
-## 10. Pipeline configurations
+### Option A: everything in one command (≈ 4.5–5 h on a laptop GPU)
 
-Configuration is layered: `experiment.yaml` (shared defaults) → pipeline overlay
-(`baseline.yaml` = A, `provenance.yaml` = B, `forensic.yaml` = C) → attack overlay
-(`pilot_label_flip.yaml`, `pilot_backdoor.yaml`) → command-line overrides. The fully resolved
-configuration is saved with every run, and its SHA-256 hash is recorded.
-
-## 11. Reconstruction — *Phase 14*
-## 12. Evaluation — *Phase 15*
-## 13. Result generation — *Phases 16–20*
-
-## 14. Testing
 ```bash
-python -m pytest
+python scripts/run_full_reproduction.py
 ```
 
-## 15. Known limitations
-- **Python version:** the workstation uses Python 3.14.3 inside a project venv instead of the
-  preferred 3.11, because the researcher chose not to install an extra interpreter. PyTorch
-  2.14.0 (cu130) and MLflow publish wheels for 3.14. Exact versions are recorded in
-  `requirements-lock.txt` and in every environment manifest.
-- **GPU determinism:** full bitwise determinism on CUDA is not guaranteed for every operation.
-  Operations that lack deterministic kernels are logged (see `mlfref.reproducibility`).
-- More to be added as phases complete.
+Steps in order:
+1. Environment check, tests and dataset preparation.
+2. Speed calibration.
+3. 30-epoch clean baseline.
+4. Backdoor development check.
+5. The pilot matrix: {clean, label flip 5 %, backdoor 5 %} × pipelines {A, B, C} × seeds {1, 2} =
+   18 runs. Any failed pilot run is retried once.
+6. The Chapter 4 analysis and `results/results_final.md`.
+
+Each step is logged in `results/raw/reproduction_log.csv`.
+
+### Option B: step by step
+
+```bash
+python scripts/run_clean_baseline.py --config config/baseline.yaml --seed 1   # ~12 min
+python scripts/run_pilot.py --seeds 1 2                                        # 18 runs, ~13 min each
+python scripts/chapter4_results.py                                             # analysis -> results/chapter4/
+python scripts/build_results_final.py                                          # -> results/results_final.md
+```
+
+A single experiment:
+
+```bash
+python scripts/run_experiment.py --attack label_flip --pipeline B --poison-rate 0.05 --seed 1
+#   --attack   none | label_flip | backdoor
+#   --pipeline A | B | C   (or conventional | provenance | forensic)
+#   --epochs N, --set key=value (config override), --force (re-run; old package is kept)
+```
+
+Each run reconstructs and evaluates its own incident automatically. To re-run reconstruction or
+evaluation for a finished run:
+
+```bash
+python scripts/reconstruct_incident.py --experiment EXP-BD-C-05-S001
+python scripts/evaluate_reconstruction.py --experiment EXP-BD-C-05-S001
+```
+
+Experiment IDs follow `EXP-{CLEAN|LF|BD}-{A|B|C}-{rate %}-S{seed}`.
+
+## 7. Where the results are
+
+| Location | Contents |
+|---|---|
+| `results/results_final.md` | **all results in one document** (tables, figures, conditions) |
+| `results/chapter4/` | per-metric CSVs, statistical tests, figures 4.1–4.11, case study, provenance of every value |
+| `results/raw/run_index.csv` | one row per completed run |
+| `results/raw/failed_runs.csv` | failed attempts (never deleted) |
+| `experiments/pilot/pipeline_runs/<EXP-ID>/` | run package: config, environment, metrics, model hash, reconstruction, evaluation |
+| `results/reconstruction/`, `results/evaluation/` | per-run reconstruction reports (JSON + Markdown) and scores |
+| `evidence/<pipeline>/RUN-<uuid>/` | the investigator-visible evidence of each run |
+| `ground_truth/ground_truth.sqlite` | what actually happened (used only by the evaluator) |
+| `mlruns/` | MLflow tracking store (pipelines B and C) |
+| `archive/` | earlier runs, kept unchanged for comparison |
+
+Not stored in Git (regenerated by running): datasets, data stores, model weights, evidence stores,
+ground truth, MLflow store and logs.
+
+## 8. Inspecting evidence
+
+```bash
+# forensic event store of a pipeline-C run: event table, hash-chain check, integrity checks
+python scripts/view_evidence.py --db evidence/forensic/RUN-<uuid>/forensic_evidence.sqlite --verify
+
+# MLflow UI (pipelines B and C), then open http://127.0.0.1:5000
+mlflow ui --backend-store-uri sqlite:///mlruns/mlflow.db
+
+# what the attacks change (in memory only; nothing is written)
+python scripts/inspect_label_flip.py --seed 1
+python scripts/inspect_backdoor.py --seed 1
+```
+
+## 9. Configuration
+
+All parameters live in `config/`. They compose as `experiment.yaml` (shared defaults) →
+pipeline file (`baseline.yaml` = A, `provenance.yaml` = B, `forensic.yaml` = C) → attack file
+(`pilot_label_flip.yaml`, `pilot_backdoor.yaml`) → command-line `--set key=value`. The resolved
+config of every run is saved in its package, together with its SHA-256.
+
+| Setting | Default |
+|---|---|
+| Model | ResNet-18, CIFAR stem, trained from scratch |
+| Training | 30 epochs, SGD lr 0.1, momentum 0.9, batch 128, cosine LR, AMP fp16, crop + flip augmentation |
+| Label flip | automobile → truck, rate = fraction of the whole training set (5 % = 2,500 images) |
+| Backdoor | 3×3 checkerboard, bottom-right, target airplane, 5 % = 2,500 images |
+| Traffic | 200 inference requests per run (backdoor runs include 10 triggered inputs) |
+| Device | `training.device: auto` (CUDA if available) |
+
+`config/evaluation_schema.yaml` defines the evaluation metrics. It is **frozen** and must not be
+edited for comparable results.
+
+## 10. Project layout
+
+```
+config/        experiment, pipeline, attack and evaluation-schema YAML
+src/mlfref/    package: data, models, attacks, provenance (MLflow), forensic,
+               ground_truth, reconstruction, evaluation, reporting, pipeline.py
+scripts/       command-line entry points (see sections 3-8)
+tests/         pytest suite
+docs/          design: architecture, evidence schema, ground truth, reconstruction,
+               protocol, hypotheses, decision log (methodology_decisions.md)
+```
+
+## 11. Troubleshooting
+
+- **Training is much slower than ~22 s per epoch:** a laptop GPU on battery or in power-saving
+  mode runs at reduced clocks. Plug in and set the OS power mode to *Best performance*. Check
+  with `nvidia-smi` (look for the P0/P1 state and full SM clocks).
+- **`PermissionError` while writing `data/stores/...` (Windows):** a transient file lock, usually
+  antivirus scanning the new 150 MB file. Re-run that experiment with `--force`.
+  `run_full_reproduction.py` retries failed runs automatically.
+- **"package exists; use --force":** an experiment ID was already run. `--force` moves the old
+  package to `_superseded/` instead of deleting it.
+- **Slow downloads:** the PyTorch CUDA wheel is about 2 GB. Install it once, and pip reuses its
+  cache afterwards.
+- **CUDA not detected:** check the installed wheel with
+  `python -c "import torch; print(torch.cuda.is_available(), torch.version.cuda)"` and that the
+  driver supports that CUDA version (`nvidia-smi`).
+- **MLflow prints an "agent hint" message:** harmless. Silence it with
+  `MLFLOW_DISABLE_AGENT_HINT=1`.
+
+## 12. Notes for reproducibility
+
+- Seeds control Python, NumPy, PyTorch and CUDA. Deterministic algorithms are enabled, and any
+  remaining non-determinism is logged.
+- Each run records the Git commit, configuration hash, library versions and hardware in its
+  `environment.json`. Commit your changes before running, so this record is meaningful.
+- Runs on the same machine, seeds and data are expected to reproduce the same model hashes and
+  metrics. Training times depend on GPU power state and system load.

@@ -1,5 +1,5 @@
 ML-FREF test report
-Generated (UTC): 2026-10-01T06:44:59.071977+00:00
+Generated (UTC): 2026-10-01T07:34:50.157798+00:00
 
 ============================= test session starts =============================
 platform win32 -- Python 3.14.3, pytest-9.1.1, pluggy-1.6.0 -- <project>\.venv\Scripts\python.exe
@@ -248,4 +248,4 @@ tests/test_reconstruction.py::test_provenance_link_survives_mlflow_dataset_dedup
     with codecs.open(filename, mode="w", encoding=ENCODING) as handle:
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-================ 209 passed, 18 warnings in 307.19s (0:05:07) =================
+================= 209 passed, 18 warnings in 71.00s (0:01:11) =================

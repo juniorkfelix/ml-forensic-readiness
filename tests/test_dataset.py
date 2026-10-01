@@ -192,3 +192,24 @@ def test_cpu_and_gpu_batches_identical():
     cpu = [b[0] for b in cifar.TensorBatches(a, "cpu").iterate(8, True, _gen(9), aug)]
     gpu = [b[0].cpu() for b in cifar.TensorBatches(a, "cuda").iterate(8, True, _gen(9), aug)]
     assert all(torch.allclose(c, g, atol=1e-6) for c, g in zip(cpu, gpu, strict=True))
+
+
+def test_write_store_retries_when_target_is_briefly_locked(tmp_path, monkeypatch):
+    """D-063 regression: a transient PermissionError on replace is retried, not fatal."""
+    import os
+
+    arrays = _synthetic()
+    target = tmp_path / "store.npz"
+    real_replace, calls = os.replace, {"n": 0}
+
+    def flaky_replace(src, dst):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise PermissionError("locked by another process")
+        return real_replace(src, dst)
+
+    monkeypatch.setattr(os, "replace", flaky_replace)
+    cifar.write_store(target, arrays, delay_s=0.0)
+    assert calls["n"] == 3
+    assert cifar.content_digest(cifar.read_store(target)) == cifar.content_digest(arrays)
+    assert not (tmp_path / "store.npz.tmp").exists()

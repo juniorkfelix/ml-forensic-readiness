@@ -14,14 +14,14 @@
     ]
   },
   "baseline_accuracy.png": {
-    "created_utc": "2026-09-27T20:39:43+00:00",
+    "created_utc": "2026-10-01T07:46:53+00:00",
     "description": "",
     "experiments_included": [
       "EXP-CLEAN-A-00-S001"
     ],
     "filename": "baseline_accuracy.png",
     "generation_script": "scripts/run_clean_baseline.py",
-    "git_commit": "9d731ac50873afc834efe92a3b9693187347ec19",
+    "git_commit": "5eb0beca287a6d4f2bf05e05bfc2fdfc2b5bbb4d",
     "git_dirty": true,
     "metric": "train/test accuracy",
     "source_data": [
@@ -29,14 +29,14 @@
     ]
   },
   "baseline_training_loss.png": {
-    "created_utc": "2026-09-27T20:39:42+00:00",
+    "created_utc": "2026-10-01T07:46:53+00:00",
     "description": "",
     "experiments_included": [
       "EXP-CLEAN-A-00-S001"
     ],
     "filename": "baseline_training_loss.png",
     "generation_script": "scripts/run_clean_baseline.py",
-    "git_commit": "9d731ac50873afc834efe92a3b9693187347ec19",
+    "git_commit": "5eb0beca287a6d4f2bf05e05bfc2fdfc2b5bbb4d",
     "git_dirty": true,
     "metric": "train/test loss",
     "source_data": [
@@ -44,12 +44,12 @@
     ]
   },
   "cifar10_clean_samples.png": {
-    "created_utc": "2026-09-27T20:44:42+00:00",
+    "created_utc": "2026-10-01T07:35:02+00:00",
     "description": "First 8 training images per class; sample_ids [29, 30, 35]... (80 total)",
     "experiments_included": [],
     "filename": "cifar10_clean_samples.png",
     "generation_script": "scripts/prepare_dataset.py",
-    "git_commit": "5d732195289a59b9318a68238bf1ea3936871225",
+    "git_commit": "5eb0beca287a6d4f2bf05e05bfc2fdfc2b5bbb4d",
     "git_dirty": true,
     "metric": "none (illustrative dataset samples)",
     "source_data": [

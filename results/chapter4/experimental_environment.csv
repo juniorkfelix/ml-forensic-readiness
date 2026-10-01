@@ -1,0 +1,24 @@
+item,value,status,source_file
+Operating system,Windows 11 (10.0.26100),MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+Python,3.14.3,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+PyTorch,2.14.0+cu130,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+torchvision,0.29.0+cu130,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+CUDA (PyTorch build),13.0,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+cuDNN,92400,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+GPU,NVIDIA RTX 1000 Ada Generation Laptop GPU,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+GPU memory (MB),6140,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+CPU,Intel(R) Core(TM) Ultra 7 165H,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+CPU cores (physical/logical),16/22,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+System RAM (GB),31.5,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+MLflow,3.16.1,MEASURED,requirements-lock.txt
+NumPy,2.5.2,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+pandas,3.0.6,MEASURED,requirements-lock.txt
+scikit-learn,1.9.1,MEASURED,requirements-lock.txt
+SciPy,1.18.1,MEASURED,requirements-lock.txt
+Git commit of all pilot runs,5eb0bec,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+Git branch,main,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+Git working tree clean at run start,False,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+Config SHA-256 (EXP-BD-C-05-S001),511591cf28c7f8addd981b2fa9d60d45581a660fbc1240746cc923750bc4d6c4,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+Clean dataset manifest SHA-256 (CIFAR10-CLEAN-V1),f7285605e556be1f453be1f05ea295de43e5e5a1c1d01b7de8d3f449dedb1649,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+Evaluation schema,FROZEN; freeze commit 96a509d (recorded as 9bccbc0 pre-rewrite),MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json
+Repository HEAD at analysis,5eb0bec,MEASURED,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/environment.json

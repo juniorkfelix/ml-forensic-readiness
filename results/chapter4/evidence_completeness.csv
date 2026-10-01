@@ -1,0 +1,24 @@
+experiment_id,pipeline,attack,poison_rate,seed,required_items,recovered_items,missing_items,not_applicable_items,evidence_completeness_percent,source,metric,n,mean,median,sd,min,max,ci95_low,ci95_high,ci_method
+EXP-BD-A-05-S001,A,BD,0.05,1,20,10,DS3;DS4;DS5;TR1;TR5;MO2;IN2;IN3;IG1;IG3,none,50.0,experiments/pilot/pipeline_runs/EXP-BD-A-05-S001/evaluation.json,,,,,,,,,,
+EXP-BD-A-05-S002,A,BD,0.05,2,20,10,DS3;DS4;DS5;TR1;TR5;MO2;IN2;IN3;IG1;IG3,none,50.0,experiments/pilot/pipeline_runs/EXP-BD-A-05-S002/evaluation.json,,,,,,,,,,
+EXP-BD-B-05-S001,B,BD,0.05,1,20,14,DS5;MO2;IN2;IN3;IG1;IG3,none,70.0,experiments/pilot/pipeline_runs/EXP-BD-B-05-S001/evaluation.json,,,,,,,,,,
+EXP-BD-B-05-S002,B,BD,0.05,2,20,14,DS5;MO2;IN2;IN3;IG1;IG3,none,70.0,experiments/pilot/pipeline_runs/EXP-BD-B-05-S002/evaluation.json,,,,,,,,,,
+EXP-BD-C-05-S001,C,BD,0.05,1,20,20,none,none,100.0,experiments/pilot/pipeline_runs/EXP-BD-C-05-S001/evaluation.json,,,,,,,,,,
+EXP-BD-C-05-S002,C,BD,0.05,2,20,20,none,none,100.0,experiments/pilot/pipeline_runs/EXP-BD-C-05-S002/evaluation.json,,,,,,,,,,
+EXP-CLEAN-A-00-S001,A,CLEAN,0.0,1,18,10,DS4;TR1;TR5;MO2;IN2;IN3;IG1;IG3,DS3;DS5,55.56,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S001/evaluation.json,,,,,,,,,,
+EXP-CLEAN-A-00-S002,A,CLEAN,0.0,2,18,10,DS4;TR1;TR5;MO2;IN2;IN3;IG1;IG3,DS3;DS5,55.56,experiments/pilot/pipeline_runs/EXP-CLEAN-A-00-S002/evaluation.json,,,,,,,,,,
+EXP-CLEAN-B-00-S001,B,CLEAN,0.0,1,18,13,MO2;IN2;IN3;IG1;IG3,DS3;DS5,72.22,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S001/evaluation.json,,,,,,,,,,
+EXP-CLEAN-B-00-S002,B,CLEAN,0.0,2,18,13,MO2;IN2;IN3;IG1;IG3,DS3;DS5,72.22,experiments/pilot/pipeline_runs/EXP-CLEAN-B-00-S002/evaluation.json,,,,,,,,,,
+EXP-CLEAN-C-00-S001,C,CLEAN,0.0,1,18,18,none,DS3;DS5,100.0,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S001/evaluation.json,,,,,,,,,,
+EXP-CLEAN-C-00-S002,C,CLEAN,0.0,2,18,18,none,DS3;DS5,100.0,experiments/pilot/pipeline_runs/EXP-CLEAN-C-00-S002/evaluation.json,,,,,,,,,,
+EXP-LF-A-05-S001,A,LF,0.05,1,20,10,DS3;DS4;DS5;TR1;TR5;MO2;IN2;IN3;IG1;IG3,none,50.0,experiments/pilot/pipeline_runs/EXP-LF-A-05-S001/evaluation.json,,,,,,,,,,
+EXP-LF-A-05-S002,A,LF,0.05,2,20,10,DS3;DS4;DS5;TR1;TR5;MO2;IN2;IN3;IG1;IG3,none,50.0,experiments/pilot/pipeline_runs/EXP-LF-A-05-S002/evaluation.json,,,,,,,,,,
+EXP-LF-B-05-S002,B,LF,0.05,2,20,14,DS5;MO2;IN2;IN3;IG1;IG3,none,70.0,experiments/pilot/pipeline_runs/EXP-LF-B-05-S002/evaluation.json,,,,,,,,,,
+EXP-LF-C-05-S001,C,LF,0.05,1,20,20,none,none,100.0,experiments/pilot/pipeline_runs/EXP-LF-C-05-S001/evaluation.json,,,,,,,,,,
+EXP-LF-C-05-S002,C,LF,0.05,2,20,20,none,none,100.0,experiments/pilot/pipeline_runs/EXP-LF-C-05-S002/evaluation.json,,,,,,,,,,
+AGGREGATE A (all 6 runs),,,,,,,,,,,evidence_completeness_percent,6,51.85333333333333,50.0,2.8711716539884327,50.0,55.56,48.84022347137877,54.86644319528789,"t (95%, df=5)"
+AGGREGATE B (all 6 runs),,,,,,,,,,,evidence_completeness_percent,5,70.888,70.0,1.2159440776614683,70.0,72.22,69.37820601493868,72.39779398506133,"t (95%, df=4)"
+AGGREGATE C (all 6 runs),,,,,,,,,,,evidence_completeness_percent,6,100.0,100.0,0.0,100.0,100.0,100.0,100.0,degenerate (sd=0)
+"AGGREGATE A (attacked, 4 runs)",,,,,,,,,,,evidence_completeness_percent,4,50.0,50.0,0.0,50.0,50.0,50.0,50.0,degenerate (sd=0)
+"AGGREGATE B (attacked, 4 runs)",,,,,,,,,,,evidence_completeness_percent,3,70.0,70.0,0.0,70.0,70.0,70.0,70.0,degenerate (sd=0)
+"AGGREGATE C (attacked, 4 runs)",,,,,,,,,,,evidence_completeness_percent,4,100.0,100.0,0.0,100.0,100.0,100.0,100.0,degenerate (sd=0)

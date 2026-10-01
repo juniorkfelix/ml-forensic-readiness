@@ -1,0 +1,49 @@
+{
+  "experiment_id": "EXP-LF-B-05-S002",
+  "experiment_uuid": "6ba0e82c-d849-4d01-8110-2a6c4a811757",
+  "status": "completed",
+  "phase": "pilot",
+  "pipeline": "provenance",
+  "attack_type": "label_flip",
+  "poison_rate": 0.05,
+  "seed": 2,
+  "config_sha256": "b2a7d27314775f134a53a0c5a255965e60b1a66915e7b9200e663d7de3d696f3",
+  "git_commit": "5eb0beca287a6d4f2bf05e05bfc2fdfc2b5bbb4d",
+  "harness_metrics": {
+    "clean_test_accuracy": 0.9016,
+    "source_to_target_rate": 0.382
+  },
+  "incident": true,
+  "timings": {
+    "setup_seconds": 1.792,
+    "dataset_registration_seconds": 1.118,
+    "attack_seconds": 1.075,
+    "data_loading_seconds": 0.245,
+    "training_seconds": 729.682,
+    "evaluation_seconds": 1.396,
+    "save_model_seconds": 6.673,
+    "deployment_seconds": 0.781,
+    "inference_seconds": 3.87,
+    "evidence_finalize_seconds": 0.038,
+    "reconstruction_seconds": 0.563
+  },
+  "resources": {
+    "peak_rss_mb": 2233.1,
+    "mean_cpu_percent": 106.5,
+    "resource_samples": 724,
+    "peak_gpu_allocated_mb": 765.5,
+    "peak_gpu_reserved_mb": 1192.0
+  },
+  "storage_bytes": {
+    "forensic_sqlite": 0,
+    "forensic_jsonl": 0,
+    "manifests": 0,
+    "logs": 40053,
+    "other_evidence": 18519,
+    "model_files": 89540630,
+    "mlflow_artifacts": 938
+  },
+  "evidence_logging_seconds": 0.0,
+  "reconstruction_seconds": 0.5627738999901339,
+  "root_cause_finding": "DATASET_MODIFIED_UNSPECIFIED"
+}

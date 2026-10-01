@@ -1,0 +1,33 @@
+{
+  "architecture": "resnet18",
+  "implementation": "torchvision.models.resnet18",
+  "num_classes": 10,
+  "pretrained": false,
+  "cifar_stem": true,
+  "conv1": {
+    "kernel_size": [
+      3,
+      3
+    ],
+    "stride": [
+      1,
+      1
+    ],
+    "padding": [
+      1,
+      1
+    ]
+  },
+  "maxpool": "Identity",
+  "parameters_total": 11173962,
+  "parameters_trainable": 11173962,
+  "modifications": [
+    "conv1 7x7/2 -> 3x3/1",
+    "maxpool removed",
+    "fc -> 10"
+  ],
+  "path": "models/checkpoints/RUN-5814a4b4-96cf-4f5a-aa96-f0f7184a15c0/model_final.pt",
+  "size_bytes": 44770315,
+  "sha256": "a57d5e9561203953bfaf8e19d1c625b3bf51e947a1c1565a89ae3b62d274cf89",
+  "format": "torch.save(state_dict)"
+}

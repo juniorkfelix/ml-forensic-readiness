@@ -1,0 +1,7 @@
+{
+  "experiment_id": "EXP-LF-B-05-S001",
+  "experiment_uuid": "51a9b5f8-4e8c-4df8-be03-ffe1d710732e",
+  "status": "failed",
+  "failure_stage": "attack",
+  "error": "[Errno 13] Permission denied: 'C:\\\\Users\\\\onsaref\\\\Documents\\\\projects\\\\uel-thesis-project\\\\data\\\\stores\\\\RUN-51a9b5f8-4e8c-4df8-be03-ffe1d710732e\\\\cifar10_train.npz'"
+}

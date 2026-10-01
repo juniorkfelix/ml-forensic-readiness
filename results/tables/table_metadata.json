@@ -1,0 +1,17 @@
+{
+  "baseline_summary.csv": {
+    "created_utc": "2026-10-01T07:46:54+00:00",
+    "description": "",
+    "experiments_included": [
+      "EXP-CLEAN-A-00-S001"
+    ],
+    "filename": "baseline_summary.csv",
+    "generation_script": "scripts/run_clean_baseline.py",
+    "git_commit": "5eb0beca287a6d4f2bf05e05bfc2fdfc2b5bbb4d",
+    "git_dirty": true,
+    "metric": "descriptive statistics of clean baseline runs",
+    "source_data": [
+      "results\\raw\\baseline_results.csv"
+    ]
+  }
+}

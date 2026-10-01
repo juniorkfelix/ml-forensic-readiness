@@ -1,0 +1,13 @@
+step,command,start_utc,end_utc,seconds,exit_code
+01 environment check,scripts/setup_environment.py,2026-10-01T07:33:19+00:00,2026-10-01T07:33:34+00:00,14.7,0
+02 test suite,scripts/write_test_report.py,2026-10-01T07:33:34+00:00,2026-10-01T07:34:50+00:00,75.8,0
+03 dataset preparation,scripts/prepare_dataset.py,2026-10-01T07:34:50+00:00,2026-10-01T07:35:03+00:00,13.6,0
+04 calibration,scripts/calibrate_training_speed.py,2026-10-01T07:35:03+00:00,2026-10-01T07:35:23+00:00,19.3,0
+05 clean baseline,scripts/run_clean_baseline.py --config config/baseline.yaml --seed 1,2026-10-01T07:35:23+00:00,2026-10-01T07:46:56+00:00,693.0,0
+06 backdoor development check,scripts/check_attack_effect.py --attack backdoor --seed 1,2026-10-01T07:46:56+00:00,2026-10-01T07:58:20+00:00,684.0,0
+07 pilot matrix,scripts/run_pilot.py --seeds 1 2,2026-10-01T07:58:20+00:00,2026-10-01T11:22:58+00:00,12279.0,1
+08 retry EXP-LF-B-05-S001,scripts/run_experiment.py --attack label_flip --pipeline B --seed 1 --poison-rate 0.05 --phase pilot --force,2026-10-01T11:22:59+00:00,2026-10-01T11:23:40+00:00,41.5,1
+08 retry EXP-LF-B-05-S002,scripts/run_experiment.py --attack label_flip --pipeline B --seed 2 --poison-rate 0.05 --phase pilot --force,2026-10-01T11:23:40+00:00,2026-10-01T11:36:29+00:00,768.6,0
+08 retry EXP-BD-B-05-S002,scripts/run_experiment.py --attack backdoor --pipeline B --seed 2 --poison-rate 0.05 --phase pilot --force,2026-10-01T11:36:29+00:00,2026-10-01T11:49:58+00:00,809.6,0
+09 chapter 4 analysis,scripts/chapter4_results.py,2026-10-01T11:49:58+00:00,2026-10-01T11:50:10+00:00,11.8,1
+10 consolidated results,scripts/build_results_final.py,2026-10-01T11:50:10+00:00,2026-10-01T11:50:10+00:00,0.3,1

@@ -2,7 +2,7 @@
   "dataset_id": "CIFAR10-TRAIN-f7285605e556",
   "parent_dataset_id": null,
   "dataset_type": "train",
-  "created_at": "2026-09-27T20:44:39.319544Z",
+  "created_at": "2026-10-01T07:35:00.146646Z",
   "number_of_samples": 50000,
   "class_distribution": {
     "airplane": 5000,

@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-09-27T20:44:38.833231+00:00",
+  "created_at_utc": "2026-10-01T07:34:59.666792+00:00",
   "clean_dataset_id": "CIFAR10-CLEAN-V1",
   "train": {
     "store": "data/clean/cifar10_train.npz",
@@ -70,7 +70,7 @@
     ]
   },
   "timing_seconds": {
-    "download_or_check": 3.54,
-    "build_stores": 0.64
+    "download_or_check": 3.16,
+    "build_stores": 0.48
   }
 }
